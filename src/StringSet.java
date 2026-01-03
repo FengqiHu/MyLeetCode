@@ -1,8 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
-public class SubString {
+public class StringSet {
     /**
      * 3. Longest Substring Without Repeating Characters
      * @param s
