@@ -160,6 +160,9 @@ public class IntegerSet {
                 } else {
                     result.add(Arrays.asList(nums[i], nums[left], nums[right]));
                     right--;
+                    while(nums[left]==nums[left+1] && left<right){
+                        left++;
+                    }
                 }
             }
         }
@@ -167,7 +170,7 @@ public class IntegerSet {
     }
 
     public static void main(String[] args) {
-        int[] array = {-1, 0, 1, 2, -1, -4};
+        int[] array = {0,0,0};
         System.out.println(threeSum(array));
     }
 }
