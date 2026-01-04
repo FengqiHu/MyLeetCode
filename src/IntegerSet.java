@@ -28,7 +28,7 @@ public class IntegerSet {
 
     /**
      * 7. Reverse Integer
-     *
+     * 01/03/2026
      * @param x
      * @return
      */
@@ -49,7 +49,7 @@ public class IntegerSet {
 
     /**
      * 12. Integer to Roman - Medium
-     *
+     * 01/03/2026
      * @param num
      * @return
      */
@@ -128,27 +128,13 @@ public class IntegerSet {
 
     /**
      * 15. 3Sum - Medium
-     *
+     * 01/03/2026
      * @param nums
      * @return
      */
-    public static int[] insertSort(int[] num) {
-        for (int i = 1; i < num.length; i++) {
-            int j = i;
-            while (j > 0 && num[j] < num[j - 1]) {
-                int tmp = num[j];
-                num[j] = num[j - 1];
-                num[j - 1] = tmp;
-                j--;
-            }
-
-        }
-        return num;
-    }
-
     public static List<List<Integer>> threeSum(int[] nums) {
         Set<List<Integer>> result = new HashSet<>();
-        nums = insertSort(nums);
+        Arrays.sort(nums);
 
         for (int i = 0; i < nums.length - 2; i++) {
             int left = i + 1, right = nums.length - 1;
@@ -169,6 +155,13 @@ public class IntegerSet {
         return new ArrayList<>(result);
     }
 
+    /**
+     * 16. 3Sum Closest - Medium
+     * 01/03/2026
+     * @param nums
+     * @param target
+     * @return
+     */
     public static int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
         int mindiff = Integer.MAX_VALUE;
@@ -195,8 +188,44 @@ public class IntegerSet {
         return result;
     }
 
+
+    /**
+     * 17. Letter Combinations of a Phone Number - Medium
+     * 01/03/2026
+     * @param digits
+     * @return
+     */
+    public static List<String> letterCombinations(String digits) {
+        String str[] = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        List<String> result = new ArrayList<>();
+
+        // loop the digits, up to 4 times
+        for (int i = 0; i < digits.length(); i++) {
+            int num = Integer.parseInt(String.valueOf(digits.charAt(i)));
+            int times = result.size();
+
+            // loop the digits number of the string
+            // first time, directly insert number
+            if(result.isEmpty()){
+                for (int k = 0; k < str[num-2].length(); k++) {
+                    result.add(String.valueOf(str[num-2].charAt(k)));
+                }
+                continue;
+            }
+            for (int j = 0; j < times; j++) {
+                for (int k = 0; k < str[num-2].length(); k++) {
+                    result.add(result.get(j) + str[num-2].charAt(k));
+                }
+            }
+            for (int l = 0; l < times; l++) {
+                result.remove(0);
+            }
+
+        }
+        return result;
+    }
     public static void main(String[] args) {
         int[] array = {10,20,30,40,50,60,70,80,90};
-        System.out.println(threeSumClosest(array,1));
+        System.out.println(letterCombinations("234"));
     }
 }
