@@ -29,6 +29,7 @@ public class IntegerSet {
     /**
      * 7. Reverse Integer
      * 01/03/2026
+     *
      * @param x
      * @return
      */
@@ -50,6 +51,7 @@ public class IntegerSet {
     /**
      * 12. Integer to Roman - Medium
      * 01/03/2026
+     *
      * @param num
      * @return
      */
@@ -129,6 +131,7 @@ public class IntegerSet {
     /**
      * 15. 3Sum - Medium
      * 01/03/2026
+     *
      * @param nums
      * @return
      */
@@ -158,6 +161,7 @@ public class IntegerSet {
     /**
      * 16. 3Sum Closest - Medium
      * 01/03/2026
+     *
      * @param nums
      * @param target
      * @return
@@ -176,7 +180,7 @@ public class IntegerSet {
                     left++;
                 } else if (diff > 0) {
                     right--;
-                }else{
+                } else {
                     return sum;
                 }
                 if (Math.abs(diff) < Math.abs(mindiff)) {
@@ -192,11 +196,12 @@ public class IntegerSet {
     /**
      * 17. Letter Combinations of a Phone Number - Medium
      * 01/03/2026
+     *
      * @param digits
      * @return
      */
     public static List<String> letterCombinations(String digits) {
-        String str[] = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        String str[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         List<String> result = new ArrayList<>();
 
         // loop the digits, up to 4 times
@@ -206,15 +211,15 @@ public class IntegerSet {
 
             // loop the digits number of the string
             // first time, directly insert number
-            if(result.isEmpty()){
-                for (int k = 0; k < str[num-2].length(); k++) {
-                    result.add(String.valueOf(str[num-2].charAt(k)));
+            if (result.isEmpty()) {
+                for (int k = 0; k < str[num - 2].length(); k++) {
+                    result.add(String.valueOf(str[num - 2].charAt(k)));
                 }
                 continue;
             }
             for (int j = 0; j < times; j++) {
-                for (int k = 0; k < str[num-2].length(); k++) {
-                    result.add(result.get(j) + str[num-2].charAt(k));
+                for (int k = 0; k < str[num - 2].length(); k++) {
+                    result.add(result.get(j) + str[num - 2].charAt(k));
                 }
             }
             for (int l = 0; l < times; l++) {
@@ -224,8 +229,45 @@ public class IntegerSet {
         }
         return result;
     }
+
+    /**
+     * 27. Remove Duplicates - Easy
+     * 01/04/2026
+     *
+     * @param nums
+     * @param val
+     * @return
+     */
+    public static int removeElement(int[] nums, int val) {
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[sum] = nums[i];
+                sum++;
+            }
+        }
+
+        return sum;
+    }
+
+    public static int removeDuplicates(int[] nums) {
+        if (nums.length == 0) return 0;
+
+        int slow = 0;
+        for (int fast = 1; fast < nums.length; fast++) {
+            if (nums[fast] != nums[slow]) {
+                // slow records the unique number index
+                // fast detects future numbers
+                slow++;
+                nums[slow] = nums[fast];
+            }
+        }
+        return slow + 1;
+    }
+
     public static void main(String[] args) {
-        int[] array = {10,20,30,40,50,60,70,80,90};
-        System.out.println(letterCombinations("234"));
+        int[] array = {1,1,2,2,3,4,4};
+        System.out.println(removeDuplicates(array));
     }
 }
