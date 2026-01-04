@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class IntegerSet {
     public int[] twoSumBasic(int[] nums, int target) {
@@ -48,7 +48,7 @@ public class IntegerSet {
     }
 
     /**
-     * 12. Integer to Roman
+     * 12. Integer to Roman - Medium
      *
      * @param num
      * @return
@@ -122,10 +122,65 @@ public class IntegerSet {
         String C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
         String X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
         String I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
-        return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+        return M[num / 1000] + C[(num % 1000) / 100] + X[(num % 100) / 10] + I[num % 10];
+    }
+
+
+    /**
+     * 15. 3Sum - Medium
+     *
+     * @param nums
+     * @return
+     */
+    public static int[] insertSort(int[] num) {
+        for (int i = 1; i < num.length; i++) {
+            int j = i;
+            while (j > 0 && num[j] < num[j - 1]) {
+                int tmp = num[j];
+                num[j] = num[j - 1];
+                num[j - 1] = tmp;
+                j--;
+            }
+
+        }
+        return num;
+    }
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
+        nums = insertSort(nums);
+        List<Integer> listnum = new ArrayList<>();
+
+        for (int i : nums) {
+            listnum.add(i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    List<Integer> list = new ArrayList<>();
+                    int target = -(nums[i] + nums[j]);
+                    if (listnum.indexOf(target)!=-1 && listnum.indexOf(target)>j) {
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(target);
+                        result.add(list);
+                    }
+                }
+            }
+        }
+
+        List<List<Integer>> finalResult = new ArrayList<>();
+        if (!result.isEmpty()) {
+            finalResult.addAll(result);
+        } else {
+            return finalResult;
+        }
+        return finalResult;
     }
 
     public static void main(String[] args) {
-        System.out.println(intToRoman(3749));
+        int[] array = {-1, 0, 1, 2, -1, -4};
+        System.out.println(threeSum(array));
     }
 }
