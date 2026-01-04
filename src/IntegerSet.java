@@ -149,34 +149,21 @@ public class IntegerSet {
     public static List<List<Integer>> threeSum(int[] nums) {
         Set<List<Integer>> result = new HashSet<>();
         nums = insertSort(nums);
-        List<Integer> listnum = new ArrayList<>();
 
-        for (int i : nums) {
-            listnum.add(i);
-        }
-
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    List<Integer> list = new ArrayList<>();
-                    int target = -(nums[i] + nums[j]);
-                    if (listnum.indexOf(target)!=-1 && listnum.indexOf(target)>j) {
-                        list.add(nums[i]);
-                        list.add(nums[j]);
-                        list.add(target);
-                        result.add(list);
-                    }
+        for (int i = 0; i < nums.length - 2; i++) {
+            int left = i + 1, right = nums.length - 1;
+            while(left<right) {
+                if (nums[i] + nums[left] + nums[right] < 0) {
+                    left++;
+                } else if (nums[i] + nums[left] + nums[right] > 0) {
+                    right--;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    right--;
                 }
             }
         }
-
-        List<List<Integer>> finalResult = new ArrayList<>();
-        if (!result.isEmpty()) {
-            finalResult.addAll(result);
-        } else {
-            return finalResult;
-        }
-        return finalResult;
+        return new ArrayList<>(result);
     }
 
     public static void main(String[] args) {
