@@ -152,7 +152,7 @@ public class IntegerSet {
 
         for (int i = 0; i < nums.length - 2; i++) {
             int left = i + 1, right = nums.length - 1;
-            while(left<right) {
+            while (left < right) {
                 if (nums[i] + nums[left] + nums[right] < 0) {
                     left++;
                 } else if (nums[i] + nums[left] + nums[right] > 0) {
@@ -160,7 +160,7 @@ public class IntegerSet {
                 } else {
                     result.add(Arrays.asList(nums[i], nums[left], nums[right]));
                     right--;
-                    while(nums[left]==nums[left+1] && left<right){
+                    while (nums[left] == nums[left + 1] && left < right) {
                         left++;
                     }
                 }
@@ -169,8 +169,34 @@ public class IntegerSet {
         return new ArrayList<>(result);
     }
 
+    public static int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int mindiff = Integer.MAX_VALUE;
+        int result = 0;
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            int left = i + 1, right = nums.length - 1;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                int diff = sum - target;
+                if (diff < 0) {
+                    left++;
+                } else if (diff > 0) {
+                    right--;
+                }else{
+                    return sum;
+                }
+                if (Math.abs(diff) < Math.abs(mindiff)) {
+                    mindiff = diff;
+                    result = sum;
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        int[] array = {0,0,0};
-        System.out.println(threeSum(array));
+        int[] array = {10,20,30,40,50,60,70,80,90};
+        System.out.println(threeSumClosest(array,1));
     }
 }
