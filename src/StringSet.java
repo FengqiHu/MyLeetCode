@@ -166,10 +166,27 @@ public class StringSet {
         return true;
     }
 
+    /**
+     * 28. find the index of the first occurrence in a string
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public static int strStr(String haystack, String needle) {
+        int target = needle.length();
+        for (int i = 0; i <= haystack.length()-target; i++) {
+            // extract the substring, the second parameter is the end index, not the length
+            if (haystack.substring(i, i + target).equals(needle)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     public static void main(String[] args) {
         String str = " ";
-        System.out.println(longestPalindrome("babad"));
+        System.out.println(strStr("abcde","bad"));
 //        System.out.println(Integer.MIN_VALUE);
 //        System.out.println(Integer.MAX_VALUE);
 
