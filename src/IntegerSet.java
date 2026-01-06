@@ -235,22 +235,8 @@ public class IntegerSet {
      * 01/04/2026
      *
      * @param nums
-     * @param val
      * @return
      */
-    public static int removeElement(int[] nums, int val) {
-        int sum = 0;
-
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != val) {
-                nums[sum] = nums[i];
-                sum++;
-            }
-        }
-
-        return sum;
-    }
-
     public static int removeDuplicates(int[] nums) {
         if (nums.length == 0) return 0;
 
@@ -266,8 +252,65 @@ public class IntegerSet {
         return slow + 1;
     }
 
+
+    /**
+     * 36. Valid Sudoku - Medium
+     * 01/05/2026
+     *
+     * @param board
+     * @return
+     */
+    public boolean isValidSudoku(char[][] board) {
+        for (int i = 0; i < 9; i = i + 3) {
+            for (int j = 0; j < 8; j = j + 3) {
+                // fix the corner starter
+                List<Character> list = new ArrayList<>();
+                for (int k = i; k < i + 3; k++) {
+                    for (int l = j; l < j + 3; l++) {
+                        if (board[k][l] == '.') {
+                            if (list.contains(board[k][l])) {
+                                return false;
+                            } else {
+                                list.add(board[k][l]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // check  row
+        for (int i = 0; i < 9; i++) {
+            List<Character> list = new ArrayList<>();
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') {
+                    if (list.contains(board[i][j])) {
+                        return false;
+                    } else {
+                        list.add(board[i][j]);
+                    }
+                }
+            }
+        }
+        // check  column
+        for (int i = 0; i < 9; i++) {
+            List<Character> list = new ArrayList<>();
+            for (int j = 0; j < 9; j++) {
+                if (board[j][i] == '.') {
+                    if (list.contains(board[j][i])) {
+                        return false;
+                    } else {
+                        list.add(board[j][i]);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        int[] array = {1,1,2,2,3,4,4};
+        int[] array = {1, 1, 2, 2, 3, 4, 4};
         System.out.println(removeDuplicates(array));
+
+
     }
 }
