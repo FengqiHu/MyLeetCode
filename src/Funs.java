@@ -180,36 +180,48 @@ public class Funs {
      */
     public static int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length;
-        int sum = 0;
+//        int sum = 0;
+//        for (int i = 0; i < n; i++) {
+//            sum += gas[i] - cost[i];
+//        }
+//        if (sum<0){
+//            return -1;
+//        }
+//        for (int i = 0; i < n; i++) {
+//            int time = 0, pos = i, fuel = gas[i];
+//            while (time != n) {
+//                // prevent overflow
+//                if (pos == n) {
+//                    pos = 0;
+//                }
+//                if (fuel == 0){
+//                    break;
+//                }
+//                if (fuel - cost[pos] < 0) {
+//                    break;
+//                } else if (cost[pos] == gas[(pos+1)%n]) {
+//                    pos++;
+//                }else {
+//                    fuel = fuel - cost[pos] + gas[(pos + 1) % n];
+//                    pos++;
+//                }
+//                time++;
+//            }
+//            if (time == n) {
+//                return i;
+//            }
+//        }
+        int sumtank = 0, curtank = 0, startpos = 0;
         for (int i = 0; i < n; i++) {
-            sum += gas[i] - cost[i];
-        }
-        if (sum<0){
-            return -1;
-        }
-        for (int i = 0; i < n; i++) {
-            int time = 0, pos = i, fuel = gas[i];
-            while (time != n) {
-                // prevent overflow
-                if (pos == n) {
-                    pos = 0;
-                }
-                if (fuel == 0){
-                    break;
-                }
-                if (fuel - cost[pos] < 0) {
-                    break;
-                } else if (cost[pos] == gas[(pos+1)%n]) {
-                    pos++;
-                }else {
-                    fuel = fuel - cost[pos] + gas[(pos + 1) % n];
-                    pos++;
-                }
-                time++;
+            curtank += gas[i] - cost[i];
+            sumtank += gas[i] - cost[i];
+            if (curtank < 0) {
+                curtank = 0;
+                startpos = i + 1;
             }
-            if (time == n) {
-                return i;
-            }
+        }
+        if (sumtank >= 0) {
+            return startpos;
         }
         return -1;
     }
