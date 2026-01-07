@@ -226,6 +226,7 @@ public class Funs {
         return -1;
     }
 
+
     public static void main(String[] args) {
         int height[] = {2,3,4};
         int max[] = {3,4,3};
