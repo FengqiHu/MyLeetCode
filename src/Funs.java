@@ -159,6 +159,7 @@ public class Funs {
         // from right to left
         for (int i = n - 2; i >= 0; i--) {
             if (ratings[i] > ratings[i + 1]) {
+                // choosing the biggest one between neighbors
                 candies[i] = Math.max(candies[i], candies[i + 1] + 1);
             }
         }
@@ -169,9 +170,54 @@ public class Funs {
         return sum;
     }
 
+    /**
+     * 134. Gas Station - Medium
+     * 01/06/2026
+     *
+     * @param gas
+     * @param cost
+     * @return
+     */
+    public static int canCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += gas[i] - cost[i];
+        }
+        if (sum<0){
+            return -1;
+        }
+        for (int i = 0; i < n; i++) {
+            int time = 0, pos = i, fuel = gas[i];
+            while (time != n) {
+                // prevent overflow
+                if (pos == n) {
+                    pos = 0;
+                }
+                if (fuel == 0){
+                    break;
+                }
+                if (fuel - cost[pos] < 0) {
+                    break;
+                } else if (cost[pos] == gas[(pos+1)%n]) {
+                    pos++;
+                }else {
+                    fuel = fuel - cost[pos] + gas[(pos + 1) % n];
+                    pos++;
+                }
+                time++;
+            }
+            if (time == n) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
-        int height[] = {1, 2, 87, 87, 87, 2, 1};
-        System.out.println(candy(height));
+        int height[] = {2,3,4};
+        int max[] = {3,4,3};
+        System.out.println(canCompleteCircuit(height,max));
     }
 
 }
