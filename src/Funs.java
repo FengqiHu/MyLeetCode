@@ -116,9 +116,62 @@ public class Funs {
     }
 
 
+    /**
+     * 135. Candy - Hard
+     *
+     * @param ratings
+     * @return
+     */
+    public static int candy(int[] ratings) {
+        int[] candies = new int[ratings.length];
+
+        // init array, every child get at least one candy
+        Arrays.fill(candies, 1);
+
+//        Boolean flag = false;
+//        int sum = ratings.length;
+//        while (!flag) {
+//            flag = true;
+//            for (int i = 0; i < ratings.length; i++) {
+//                //check left
+//                if(i>0 && (ratings[i]>ratings[i-1]) && (candies[i]<=candies[i-1])){
+//                    sum++;
+//                    candies[i]++;
+//                    flag = false;
+//                }
+//                if (i<ratings.length-1 &&(ratings[i]>ratings[i+1])&& (candies[i] <= candies[i+1])){
+//                    sum++;
+//                    candies[i]++;
+//                    flag = false;
+//                }
+//            }
+//
+//        }
+        int n = ratings.length;
+        int sum = 0;
+        // from left to right
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                candies[i] = candies[i - 1] + 1;
+            }
+        }
+
+        // from right to left
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                candies[i] = Math.max(candies[i], candies[i + 1] + 1);
+            }
+        }
+
+        for (int i = 0; i < ratings.length; i++) {
+            sum += candies[i];
+        }
+        return sum;
+    }
+
     public static void main(String[] args) {
-        int height[] = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-        System.out.println(generateParenthesis(3));
+        int height[] = {1, 2, 87, 87, 87, 2, 1};
+        System.out.println(candy(height));
     }
 
 }
