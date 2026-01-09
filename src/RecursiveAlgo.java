@@ -74,9 +74,6 @@ public class RecursiveAlgo {
     /**
      * 55. Jump Game - Medium
      * 01/08/2026
-     *
-     * @param nums
-     * @return
      */
     public static boolean canJumpOptimize(int[] nums) {
         // only care about the farest position we can achieve
@@ -125,7 +122,6 @@ public class RecursiveAlgo {
      * 01/09/2026
      *
      * @param n
-     * @return
      */
     public static int climbStairs(int n) {
         int[] memo = new int[n + 1];
