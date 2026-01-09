@@ -87,6 +87,7 @@ public class RecursiveAlgo {
         }
         return true;
     }
+
     public static boolean canJump(int[] nums) {
         int n = nums.length;
         Boolean memo[] = new Boolean[n];
@@ -119,8 +120,51 @@ public class RecursiveAlgo {
         return false;
     }
 
+    /**
+     * 70. Climbing Stairs - Easy
+     * 01/09/2026
+     *
+     * @param n
+     * @return
+     */
+    public static int climbStairs(int n) {
+        int[] memo = new int[n + 1];
+        return dfsforclimb(0, n, memo);
+    }
+
+    public static int dfsforclimb(int pos, int n, int[] memo) {
+        if (pos == n) {
+            return 1;
+        }
+        if (pos > n) return 0;
+
+
+        int end = Math.min(n - pos, 2);
+        int ways = 0;
+
+        for (int i = 1; i <= end; i++) {
+            if (memo[pos + i] != 0)
+                ways += memo[pos+i];
+            else
+                ways += dfsforclimb(pos + i, n, memo);
+        }
+        memo[pos] = ways;
+        return ways;
+    }
+    public static int climbStairsDP(int n) {
+        int[] dp = new int[n + 2];
+        dp[n] = 1;
+        dp[n + 1] = 0;
+
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i] = dp[i + 1] + dp[i + 2];
+        }
+
+        return dp[0];
+    }
+
     public static void main(String[] args) {
-        int nums[] = {2,3,1,1,4};
-        System.out.println(canJumpOptimize(nums));
+        int nums[] = {2, 3, 1, 1, 4};
+        System.out.println(climbStairs(44));
     }
 }
