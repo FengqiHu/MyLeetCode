@@ -307,9 +307,44 @@ public class IntegerSet {
         return true;
     }
 
+    /**
+     * 202. Happy Number - Easy
+     *
+     * @param n
+     * @return
+     */
+    public static boolean isHappy(int n) {
+
+        if (n == 1){
+            return true;
+        }
+        List<Integer> list = new ArrayList<>();
+        list.add(n);
+        while (n > 0) {
+            int sum = 0;
+            // get the sum of each number
+            while (n > 0) {
+                int temp = n % 10;
+                sum += temp * temp;
+                n = n / 10;
+            }
+
+            if (list.contains(sum)){
+                return false;
+            }
+            if (sum == 1) {
+                return true;
+            } else {
+                n = sum;
+                list.add(n);
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         int[] array = {1, 1, 2, 2, 3, 4, 4};
-        System.out.println(removeDuplicates(array));
+        System.out.println(isHappy(19));
 
 
     }
