@@ -12,7 +12,7 @@ public class RecursiveAlgo {
     public static void possibleCombinations(int n) {
         List<List<Integer>> lists = new ArrayList<>();
 //        dfs(n, n, new ArrayList<>(), lists);
-        dfs2(n,n,1, new ArrayList<>(), lists);
+        dfs2(n, n, 1, new ArrayList<>(), lists);
         for (List<Integer> list : lists) {
             System.out.println(list);
         }
@@ -71,7 +71,56 @@ public class RecursiveAlgo {
         }
     }
 
+    /**
+     * 55. Jump Game - Medium
+     * 01/08/2026
+     *
+     * @param nums
+     * @return
+     */
+    public static boolean canJumpOptimize(int[] nums) {
+        // only care about the farest position we can achieve
+        int maxReach = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > maxReach) return false;
+            maxReach = Math.max(maxReach, i + nums[i]);
+        }
+        return true;
+    }
+    public static boolean canJump(int[] nums) {
+        int n = nums.length;
+        Boolean memo[] = new Boolean[n];
+        return dfs(0, n, nums, memo);
+    }
+
+    public static boolean dfs(int pos, int n, int[] nums, Boolean[] memo) {
+        // reached the end
+        if (pos >= n - 1) {
+            //exit
+            return true;
+        }
+        if (pos != n - 1 && nums[pos] == 0)
+            return false;
+
+        // means pos can reach the end
+        if (memo[pos] != null) return memo[pos];
+
+        int furthest = Math.min(pos + nums[pos], n - 1);
+        // start with next pos
+        for (int i = pos + 1; i <= furthest; i++) {
+            if (dfs(i, n, nums, memo) == true) {
+                // can reach the final
+                memo[pos] = true;
+                return true;
+            }
+        }
+        // default value
+        memo[pos] = false;
+        return false;
+    }
+
     public static void main(String[] args) {
-        possibleCombinations(4);
+        int nums[] = {2,3,1,1,4};
+        System.out.println(canJumpOptimize(nums));
     }
 }
