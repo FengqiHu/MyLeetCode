@@ -7,10 +7,11 @@ public class BinarySearch {
 
     /**
      * 35. Search Insert Position - Easy
-     * @Date 01/09/2026
+     *
      * @param nums
      * @param target
      * @return
+     * @Date 01/09/2026
      */
     public int searchInsert(int[] nums, int target) {
         int i = 0, j = nums.length - 1;
@@ -35,10 +36,11 @@ public class BinarySearch {
 
     /**
      * 74. Search a 2D Matrix - Medium
-     * @Date 01/09/2026
+     *
      * @param matrix
      * @param target
      * @return
+     * @Date 01/09/2026
      */
     public boolean searchMatrix(int[][] matrix, int target) {
         int start = 0, end = matrix.length - 1, targetRow = 0;
@@ -69,6 +71,32 @@ public class BinarySearch {
         }
         return false;
     }
+
+    /**
+     * 162. Find Peak Element - Medium
+     * @Date 01/09/2026
+     * @param nums
+     * @return
+     */
+    public int findPeakElement(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > nums[mid + 1]) {
+                // if already greater than the right, then must has lower value on the left
+                // searching lower value
+                right = mid;
+            } else {
+                //
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+
 }
 
 
