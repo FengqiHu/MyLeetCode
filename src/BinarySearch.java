@@ -42,15 +42,25 @@ public class BinarySearch {
      */
     public boolean searchMatrix(int[][] matrix, int target) {
         int start = 0, end = matrix.length - 1, targetRow = 0;
-
-        for (int i = matrix.length - 1; i >0 ; i--) {
-            if (matrix[i][0]< target){
-                targetRow = i;
-                break;
-            }else if (matrix[i][0] == target){
-                return true;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            if (matrix[mid][0] <= target) {
+                // find the first row that the first number greater than the target
+                targetRow = mid;
+                start = mid + 1;
+            } else {
+                end = mid - 1;
             }
         }
+
+//        for (int i = matrix.length - 1; i >0 ; i--) {
+//            if (matrix[i][0]< target){
+//                targetRow = i;
+//                break;
+//            }else if (matrix[i][0] == target){
+//                return true;
+//            }
+//        }
 
         for (int i = 0; i < matrix[targetRow].length; i++) {
             if (matrix[targetRow][i] == target) {
