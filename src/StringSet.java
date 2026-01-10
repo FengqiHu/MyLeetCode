@@ -215,6 +215,17 @@ public class StringSet {
         }
         return true;
     }
+
+    /**
+     * 58. Length of Last Word - Easy
+     * @Date 01/10/2026
+     * @param s
+     * @return
+     */
+    public int lengthOfLastWord(String s) {
+        String words[] = s.split(" ");
+        return words[words.length-1].length();
+    }
     public static void main(String[] args) {
         String str = " ";
         System.out.println(canConstruct("fihjjjjei","hjibagacbhadfaefdjaeaebgi"));
