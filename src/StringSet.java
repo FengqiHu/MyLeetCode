@@ -226,9 +226,36 @@ public class StringSet {
         String words[] = s.split(" ");
         return words[words.length-1].length();
     }
+
+    /**
+     * 125. Valid Palindrome - Easy
+     * @Date 01/10/2026
+     * @param s
+     * @return
+     */
+    public static boolean isPalindrome1(String s) {
+        String newStr = "";
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetter(s.charAt(i)) || Character.isDigit(s.charAt(i))){
+                newStr += Character.toLowerCase(s.charAt(i));
+            }
+        }
+        int left = 0, right = newStr.length()-1;
+
+        while(left<right){
+            if (newStr.charAt(left)!=newStr.charAt(right)){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
         String str = " ";
-        System.out.println(canConstruct("fihjjjjei","hjibagacbhadfaefdjaeaebgi"));
+        System.out.println(isPalindrome1("A man, a plan, a canal: Panama"));
 //        System.out.println(Integer.MIN_VALUE);
 //        System.out.println(Integer.MAX_VALUE);
 
