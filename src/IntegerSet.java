@@ -315,7 +315,7 @@ public class IntegerSet {
      */
     public static boolean isHappy(int n) {
 
-        if (n == 1){
+        if (n == 1) {
             return true;
         }
         List<Integer> list = new ArrayList<>();
@@ -329,7 +329,7 @@ public class IntegerSet {
                 n = n / 10;
             }
 
-            if (list.contains(sum)){
+            if (list.contains(sum)) {
                 return false;
             }
             if (sum == 1) {
@@ -342,8 +342,28 @@ public class IntegerSet {
         return false;
     }
 
+    /**
+     * 121. Best Time to Buy and Sell Stock - Easy
+     *
+     * @param prices
+     * @return
+     * @Date 01/10/2026
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int max = 0,buyPrice = prices[0];
+        for (int i = 1; i < n; i++) {
+            if (prices[i]<buyPrice){
+                buyPrice = prices[i];
+            }
+            max = Math.max(max, prices[i] - buyPrice);
+        }
+        return max;
+    }
+
+
     public static void main(String[] args) {
         int[] array = {1, 1, 2, 2, 3, 4, 4};
-        System.out.println(isHappy(19));
+        System.out.println();
     }
 }
