@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,13 +64,13 @@ public class DynamicPlan {
         int dp[] = new int[amount + 1];
 
         // set the initialize amount. +1 is to avoid the case that minimum amount = amount
-        Arrays.fill(dp, amount+1);
+        Arrays.fill(dp, amount + 1);
         dp[0] = 0;
         // amount start at 1
         for (int i = 1; i <= amount; i++) {
-            for( int coin: coins){
+            for (int coin : coins) {
                 // has remains
-                if (i - coin >= 0){
+                if (i - coin >= 0) {
                     // dp[i]: the minimum number to achieve the amount
                     // dp[i - coin]: after use the coin, the minimum number to achieve the remain amount
                     // +1: add the current coin
@@ -80,6 +81,7 @@ public class DynamicPlan {
         // if the result is still the maximum amount (no solution tag), return -1
         return dp[amount] == amount + 1 ? -1 : dp[amount];
     }
+
     public int coinChange(int[] coins, int amount) {
         // the minimum number of coins in index i to achieve the amount
         int memo[][] = new int[amount + 1][coins.length];
@@ -115,4 +117,27 @@ public class DynamicPlan {
         return min;
     }
 
+
+    /**
+     * 300. Longest Increasing Subsequence - Medium
+     *
+     * @param nums
+     * @return
+     */
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int maxL = 1;
+        // the max increasing length
+        int dp[] = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+               if (nums[i] > nums[j]){
+                   dp[i] = Math.max(dp[i], dp[j] + 1);
+               }
+            }
+            maxL = Math.max(maxL, dp[i]);
+        }
+        return maxL;
+    }
 }
