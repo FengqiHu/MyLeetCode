@@ -351,14 +351,36 @@ public class IntegerSet {
      */
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        int max = 0,buyPrice = prices[0];
+        int max = 0, buyPrice = prices[0];
         for (int i = 1; i < n; i++) {
-            if (prices[i]<buyPrice){
+            // scan the best price to buy and calculate the profit
+            if (prices[i] < buyPrice) {
                 buyPrice = prices[i];
             }
             max = Math.max(max, prices[i] - buyPrice);
         }
         return max;
+    }
+
+    /**
+     * 169. Majority Element - Easy
+     *
+     * @param nums
+     * @return
+     * @Date 01/10/2026
+     */
+    public int majorityElement(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int maxValue = 1, maxIndex = nums[0];
+        for (int i : nums) {
+            map.put(i, 1 + map.getOrDefault(i, 0));
+
+            if (maxValue < map.get(i) + 1) {
+                maxValue = map.get(i) + 1;
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
     }
 
 
