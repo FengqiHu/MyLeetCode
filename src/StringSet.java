@@ -234,12 +234,8 @@ public class StringSet {
      * @return
      */
     public static boolean isPalindrome1(String s) {
-        String newStr = "";
-        for (int i = 0; i < s.length(); i++) {
-            if (Character.isLetter(s.charAt(i)) || Character.isDigit(s.charAt(i))){
-                newStr += Character.toLowerCase(s.charAt(i));
-            }
-        }
+        String newStr = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+
         int left = 0, right = newStr.length()-1;
 
         while(left<right){
