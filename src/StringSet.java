@@ -275,6 +275,7 @@ public class StringSet {
             Arrays.sort(chars);
             String key = new String(chars);
 
+            // use sorted string as key
             if (!map.containsKey(key)) {
                 map.put(key, new ArrayList<>());
             }
