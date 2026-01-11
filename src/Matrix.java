@@ -9,9 +9,10 @@ import java.util.List;
 public class Matrix {
     /**
      * 54. Spiral Matrix - Medium
-     * @Date 01/10/2026
+     *
      * @param matrix
      * @return
+     * @Date 01/10/2026
      */
     public List<Integer> spiralOrder(int[][] matrix) {
         // row direction, true is right, false is left
@@ -50,19 +51,75 @@ public class Matrix {
 
     /**
      * 48. Rotate Image - Medium
-     * @Date 01/10/2026
+     *
      * @param matrix
+     * @Date 01/10/2026
      */
     public void rotate(int[][] matrix) {
         int n = matrix.length;
         int tmp[][] = new int[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j <n; j++) {
-                tmp[n-j][i]=matrix[i][j];
+            for (int j = 0; j < n; j++) {
+                tmp[n - j][i] = matrix[i][j];
             }
         }
-        for (int i = 0; i < n; i++){
-            matrix[i]=tmp[i];
+        for (int i = 0; i < n; i++) {
+            matrix[i] = tmp[i];
+        }
+    }
+
+    public void rotate1(int[][] matrix) {
+        int n = matrix.length;
+        // 1. transpose
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+
+        // 2. reverse row
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - 1 - j];
+                matrix[i][n - 1 - j] = tmp;
+            }
+        }
+    }
+
+    /**
+     * 73. Set Matrix Zeroes - Medium
+     * @Date 01/10/2026
+     * @param matrix
+     */
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int row[] = new int[m];
+        int col[] = new int[n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            if (row[i] == 1){
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (col[i] == 1){
+                for (int j = 0; j < m; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
         }
     }
 
