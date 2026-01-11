@@ -232,4 +232,26 @@ public class Funs {
         System.out.println(canCompleteCircuit(height,max));
     }
 
+    /**
+     * 274. H-Index - Medium
+     * @Date 01/11/2026
+     * @param citations
+     * @return
+     */
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int h = 0;
+        Arrays.sort(citations);
+        for (int i = 0; i < citations.length / 2; i++) {
+            int temp = citations[i];
+            citations[i] = citations[n -1 -i];
+            citations[n - 1 - i] = temp;
+        }
+
+        for (int i = 0; i < n; i++) {
+            h = Math.max(h, Math.min(citations[i], i+1));
+        }
+        return h;
+    }
+
 }
