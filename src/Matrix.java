@@ -91,8 +91,9 @@ public class Matrix {
 
     /**
      * 73. Set Matrix Zeroes - Medium
-     * @Date 01/10/2026
+     *
      * @param matrix
+     * @Date 01/10/2026
      */
     public void setZeroes(int[][] matrix) {
         int m = matrix.length;
@@ -108,14 +109,14 @@ public class Matrix {
             }
         }
         for (int i = 0; i < m; i++) {
-            if (row[i] == 1){
+            if (row[i] == 1) {
                 for (int j = 0; j < n; j++) {
                     matrix[i][j] = 0;
                 }
             }
         }
         for (int i = 0; i < n; i++) {
-            if (col[i] == 1){
+            if (col[i] == 1) {
                 for (int j = 0; j < m; j++) {
                     matrix[j][i] = 0;
                 }
@@ -123,4 +124,63 @@ public class Matrix {
         }
     }
 
+    public void setZeroesO1(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean firstRow = false, firstCol = false;
+
+        for (int i = 0; i < n; i++) {
+            if (matrix[0][i] == 0) {
+                firstRow = true;
+                break;
+            }
+
+        }
+
+        //check if first row has zero
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                firstCol = true;
+                break;
+            }
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                // use the first row and column as tag
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        // scan rows ->>>>>>
+        for (int i = 1; i < m; i++) {
+            // clear rows
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < n; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        // scan columns |
+        for (int i = 1; i < n; i++) {
+            // clear columns
+            if (matrix[0][i] == 0) {
+                for (int j = 1; j < m; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+
+        if (firstRow== true){
+            for (int i = 0; i < n; i++){
+                matrix[0][i] = 0;
+            }
+        }
+        if (firstCol== true){
+            for (int i = 0; i < m; i++){
+                matrix[i][0] = 0;
+            }
+        }
+    }
 }
