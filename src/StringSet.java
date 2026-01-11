@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StringSet {
     /**
      * 3. Longest Substring Without Repeating Characters
+     *
      * @param s
      * @return
      */
@@ -37,6 +40,7 @@ public class StringSet {
 
     /**
      * 6. Zigzag Conversion
+     *
      * @param s
      * @param numRows
      * @return
@@ -75,6 +79,7 @@ public class StringSet {
 
     /**
      * 8. String to Integer (atoi)
+     *
      * @param s
      * @return
      */
@@ -99,7 +104,7 @@ public class StringSet {
             Character c = s.charAt(j);
             if (c >= '0' && c <= '9') {
                 System.out.println(result);
-                System.out.println("sign: " + sign + ", c :" + (c-'0'));
+                System.out.println("sign: " + sign + ", c :" + (c - '0'));
                 if (result > Integer.MAX_VALUE / 10 || (result == Integer.MAX_VALUE / 10 && c - '0' >= (sign == 1 ? 7 : 8))) {
                     if (sign == -1) {
                         result = Integer.MIN_VALUE;
@@ -137,19 +142,20 @@ public class StringSet {
 
     /**
      * #5 Longest Palindromic Substring
+     *
      * @param s
      * @return
      */
     public static String longestPalindrome(String s) {
         String maxString = "";
         for (int i = 0; i < s.length(); i++) {
-            for (int j = s.length()-1; j >=i; j--) {
-                String sub = s.substring(i, j+1);
-                if (isPalindrome(sub)){
-                    if (maxString.length()< j-i+1){
+            for (int j = s.length() - 1; j >= i; j--) {
+                String sub = s.substring(i, j + 1);
+                if (isPalindrome(sub)) {
+                    if (maxString.length() < j - i + 1) {
                         maxString = sub;
                     }
-                    if(maxString.length()>3)
+                    if (maxString.length() > 3)
                         return maxString;
                 }
             }
@@ -159,7 +165,7 @@ public class StringSet {
 
     private static boolean isPalindrome(String s) {
         for (int i = 0; i < s.length() / 2; i++) {
-            if (s.charAt(i)!= s.charAt(s.length()-i-1)){
+            if (s.charAt(i) != s.charAt(s.length() - i - 1)) {
                 return false;
             }
         }
@@ -168,13 +174,14 @@ public class StringSet {
 
     /**
      * 28. find the index of the first occurrence in a string
+     *
      * @param haystack
      * @param needle
      * @return
      */
     public static int strStr(String haystack, String needle) {
         int target = needle.length();
-        for (int i = 0; i <= haystack.length()-target; i++) {
+        for (int i = 0; i <= haystack.length() - target; i++) {
             // extract the substring, the second parameter is the end index, not the length
             if (haystack.substring(i, i + target).equals(needle)) {
                 return i;
@@ -187,6 +194,7 @@ public class StringSet {
     /**
      * 383. Ransom Note - Easy
      * 01/09/2026
+     *
      * @param ransomNote
      * @param magazine
      * @return
@@ -195,21 +203,21 @@ public class StringSet {
         HashMap<Character, Integer> map1 = new HashMap<>();
         HashMap<Character, Integer> map2 = new HashMap<>();
         for (int i = 0; i < ransomNote.length(); i++) {
-            if (map1.containsKey(ransomNote.charAt(i))){
-                map1.put(ransomNote.charAt(i), map1.get(ransomNote.charAt(i))+1);
+            if (map1.containsKey(ransomNote.charAt(i))) {
+                map1.put(ransomNote.charAt(i), map1.get(ransomNote.charAt(i)) + 1);
             } else {
                 map1.put(ransomNote.charAt(i), 1);
             }
         }
         for (int i = 0; i < magazine.length(); i++) {
-            if (map2.containsKey(magazine.charAt(i))){
-                map2.put(magazine.charAt(i), map2.get(magazine.charAt(i))+1);
+            if (map2.containsKey(magazine.charAt(i))) {
+                map2.put(magazine.charAt(i), map2.get(magazine.charAt(i)) + 1);
             } else {
                 map2.put(magazine.charAt(i), 1);
             }
         }
-        for(Character c: map1.keySet()){
-            if (!map2.containsKey(c) || map1.get(c)> map2.get(c)){
+        for (Character c : map1.keySet()) {
+            if (!map2.containsKey(c) || map1.get(c) > map2.get(c)) {
                 return false;
             }
         }
@@ -218,40 +226,83 @@ public class StringSet {
 
     /**
      * 58. Length of Last Word - Easy
-     * @Date 01/10/2026
+     *
      * @param s
      * @return
+     * @Date 01/10/2026
      */
     public int lengthOfLastWord(String s) {
         String words[] = s.split(" ");
-        return words[words.length-1].length();
+        return words[words.length - 1].length();
     }
 
     /**
      * 125. Valid Palindrome - Easy
-     * @Date 01/10/2026
+     *
      * @param s
      * @return
+     * @Date 01/10/2026
      */
     public static boolean isPalindrome1(String s) {
-        int left = 0, right = s.length()-1;
+        int left = 0, right = s.length() - 1;
         s = s.toLowerCase();
 
-        while(left<right){
-            if (!(Character.isLetter(s.charAt(left)) || Character.isDigit(s.charAt(left)))){
+        while (left < right) {
+            if (!(Character.isLetter(s.charAt(left)) || Character.isDigit(s.charAt(left)))) {
                 left++;
                 continue;
-            }else if (!(Character.isLetter(s.charAt(right)) || Character.isDigit(s.charAt(right)))){
+            } else if (!(Character.isLetter(s.charAt(right)) || Character.isDigit(s.charAt(right)))) {
                 right--;
                 continue;
             }
-            if (s.charAt(left)!=s.charAt(right)){
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
             left++;
             right--;
         }
         return true;
+    }
+
+    /**
+     * 54. Spiral Matrix - Medium
+     *
+     * @param matrix
+     * @return
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // row direction, true is right, false is left
+        // col direction, true is down, false is up
+        int left = 0, right = matrix[0].length - 1;
+        int top = 0, bottom = matrix.length - 1;
+        List<Integer> res = new ArrayList<>();
+        while (left <= right && top <= bottom) {
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++;
+            for (int i = top; i <= bottom; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--;
+            // if only left one row, no need to go right again
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    res.add(matrix[bottom][i]);
+                }
+                bottom--;
+
+            }
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    res.add(matrix[i][left]);
+                }
+                left++;
+
+            }
+
+        }
+        return res;
     }
 
 
