@@ -227,16 +227,17 @@ public class Funs {
     }
 
     public static void main(String[] args) {
-        int height[] = {2,3,4};
-        int max[] = {3,4,3};
-        System.out.println(canCompleteCircuit(height,max));
+        int height[] = {2, 3, 4};
+        int max[] = {3, 4, 3};
+        System.out.println(canCompleteCircuit(height, max));
     }
 
     /**
      * 274. H-Index - Medium
-     * @Date 01/11/2026
+     *
      * @param citations
      * @return
+     * @Date 01/11/2026
      */
     public int hIndex(int[] citations) {
         int n = citations.length;
@@ -244,14 +245,49 @@ public class Funs {
         Arrays.sort(citations);
         for (int i = 0; i < citations.length / 2; i++) {
             int temp = citations[i];
-            citations[i] = citations[n -1 -i];
+            citations[i] = citations[n - 1 - i];
             citations[n - 1 - i] = temp;
         }
 
         for (int i = 0; i < n; i++) {
-            h = Math.max(h, Math.min(citations[i], i+1));
+            h = Math.max(h, Math.min(citations[i], i + 1));
         }
         return h;
+    }
+
+    /**
+     * 33. Search in Rotated Sorted Array - Medium
+     *
+     * @param nums
+     * @param target
+     * @return
+     * @Date 01/11/2026
+     */
+    public int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (target < nums[mid]) {
+                // search right side
+                for (int i = mid + 1; i < right; i++) {
+                    if (nums[i] == target) {
+                        return i;
+                    }
+                }
+                right = mid - 1;
+            } else {
+                // search left side
+                for (int i = left; i < mid - 1; i++) {
+                    if (nums[i] == target) {
+                        return i;
+                    }
+                }
+                left = mid + 1;
+            }
+        }
+        return -1;
     }
 
 }
