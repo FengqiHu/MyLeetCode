@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class IntegerSet {
@@ -384,8 +385,52 @@ public class IntegerSet {
     }
 
 
+    /**
+     * 128. Longest Consecutive Sequence - Medium
+     *
+     * @param nums
+     * @return
+     * @Date 01/11/2026
+     */
+    public int longestConsecutive(int[] nums) {
+        int max = 1, res = 0;
+        Map<Integer, Integer> map = new LinkedHashMap<>();
+        Arrays.sort(nums);
+        for (int i : nums) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+        List<Integer> list = new ArrayList<>(map.keySet());
+        for (int i = 0; i < list.size(); i++) {
+            // get the ith key
+            int current = list.get(i);
+            if (i < list.size() - 1 && current + 1 == list.get(i + 1)) {
+                max++;
+            } else {
+                res = Math.max(res, max);
+                max = 1;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
-        int[] array = {1, 1, 2, 2, 3, 4, 4};
-        System.out.println();
+        // Create a LinkedHashMap to preserve insertion order
+        Map<String, Integer> map = new LinkedHashMap<>();
+        map.put("FirstKey", 10);
+        map.put("SecondKey", 20); // This is the key we want to retrieve
+        map.put("ThirdKey", 30);
+
+        // Get all keys as a Set, then convert to an ArrayList
+        List<String> keys = new ArrayList<>(map.keySet());
+
+        // Check if there are at least two items
+        if (keys.size() >= 2) {
+            String secondKey = keys.get(1);
+            System.out.println("The second key is: " + secondKey);
+            // You can then get the value associated with this key if needed:
+            // Integer secondValue = map.get(secondKey);
+        } else {
+            System.out.println("The map does not have a second key.");
+        }
     }
 }

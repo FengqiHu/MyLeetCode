@@ -153,7 +153,8 @@ public class Matrix {
                 }
             }
         }
-        // scan rows ->>>>>>
+        // scan rows ->>>>>> using col number
+        // start from 1 since need to protect the data in the first line
         for (int i = 1; i < m; i++) {
             // clear rows
             if (matrix[i][0] == 0) {
@@ -183,4 +184,7 @@ public class Matrix {
             }
         }
     }
+
+
+
 }
