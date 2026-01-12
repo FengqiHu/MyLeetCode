@@ -429,6 +429,31 @@ public class IntegerSet {
         Arrays.sort(nums1);
     }
 
+    /**
+     * 167. Two Sum II - Input Array Is Sorted - Medium
+     * @Date 01/11/2026
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum167(int[] numbers, int target) {
+        int left = 0, right = numbers.length - 1;
+        int res[] = new int[2];
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target){
+                res[0] = left+1;
+                res[1] = right+1;
+                return res;
+            }else if (sum > target){
+                right--;
+            }else {
+                left++;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         // Create a LinkedHashMap to preserve insertion order
         Map<String, Integer> map = new LinkedHashMap<>();
