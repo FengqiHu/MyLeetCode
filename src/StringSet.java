@@ -263,9 +263,10 @@ public class StringSet {
 
     /**
      * 49. Group Anagrams - Medium
-     * @Date 01/11/2026
+     *
      * @param strs
      * @return
+     * @Date 01/11/2026
      */
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
@@ -285,10 +286,72 @@ public class StringSet {
         return new ArrayList<>(map.values());
     }
 
+    /**
+     * 68. Text Justification - Hard
+     *
+     * @param words
+     * @param maxWidth
+     * @return
+     * @Date 01/11/2026
+     */
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        List<String> res = new ArrayList<>();
+        // index marks the end word position
+        int totalLength = 0, start = 0, end = 0;
+        int space[] = new int[maxWidth];
+        String str = "";
+        for (int i = 0; i < words.length; i++) {
+            str = "";
+            totalLength = -1;
+            Arrays.fill(space, 0);
+            while (end < words.length && totalLength + 1 + words[end].length() <= maxWidth) {
+                totalLength += words[end].length() + 1;
+                end++;
+            }
+            int spaceSum = maxWidth - totalLength + (end - start - 1);
+            int spaceCount = end - start - 1;
+
+            if (end != words.length) {
+                if (spaceCount != 0) {
+                    for (int j = 0; j < end - start - 1; j++) {
+                        space[j] = spaceSum / spaceCount;
+                    }
+                    for (int j = 0; j < spaceSum % spaceCount; j++) {
+                        space[j]++;
+                    }
+                } else {
+                    space[0] = spaceSum;
+                }
+            } else {
+                // the last sentence, need to add space to the end
+                for (int j = 0; j < end - start - 1; j++) {
+                    space[j]++;
+                }
+                // giving the rest space to the last one
+                space[end - start - 1] = spaceSum - (end - start - 1);
+            }
+
+            // calculate the plan for adding space
+            for (int j = start; j < end; j++) {
+                str += words[j];
+                if (space[j - start] != 0) {
+                    str += " ".repeat(space[j - start]);
+
+                }
+            }
+            start = end;
+            i = end - 1;
+            res.add(str);
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         String str = " ";
-        System.out.println(isPalindrome1("A man, a plan, a canal: Panama"));
+        str += "s".repeat(-1);
+
+        System.out.println(str);
 //        System.out.println(Integer.MIN_VALUE);
 //        System.out.println(Integer.MAX_VALUE);
 
