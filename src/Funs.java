@@ -315,6 +315,7 @@ public class Funs {
             }
             start = i;
         }
+        System.out.println();
         // add the last word
         str.add(s.substring(start, s.length()));
         for (int i = str.size() - 1; i >= 0; i--) {

@@ -413,6 +413,22 @@ public class IntegerSet {
         return res;
     }
 
+    /**
+     * 88. Merge Sorted Array - Easy
+     * @Date 01/11/2026
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int sum = m+n;
+        for(int i = m;i<sum;i++){
+            nums1[i] = nums2[i-m];
+        }
+        Arrays.sort(nums1);
+    }
+
     public static void main(String[] args) {
         // Create a LinkedHashMap to preserve insertion order
         Map<String, Integer> map = new LinkedHashMap<>();
