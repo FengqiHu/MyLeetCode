@@ -226,12 +226,6 @@ public class Funs {
         return -1;
     }
 
-    public static void main(String[] args) {
-        int height[] = {2, 3, 4};
-        int max[] = {3, 4, 3};
-        System.out.println(canCompleteCircuit(height, max));
-    }
-
     /**
      * 274. H-Index - Medium
      *
@@ -299,6 +293,39 @@ public class Funs {
             }
         }
         return -1;
+    }
+
+    /**
+     * 151. Reverse Words in a String - Medium
+     * @Date 01/11/2026
+     * @param s
+     * @return
+     */
+    public String reverseWords(String s) {
+        int start = 0;
+        String res = "";
+        List<String> str = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            while(i < s.length() && s.charAt(i) != ' '){
+                i++;
+            }
+            str.add(s.substring(start, i));
+            while(i < s.length()-1 && s.charAt(i)==' '){
+                i++;
+            }
+            start = i;
+        }
+        // add the last word
+        str.add(s.substring(start, s.length()));
+        for (int i = str.size() - 1; i >= 0; i--) {
+            res = res + str.get(i) + " ";
+        }
+        return res.trim();
+    }
+
+    public static void main(String[] args) {
+        String str = "sg";
+        System.out.println(str.substring(1, str.length()));
     }
 
 }
