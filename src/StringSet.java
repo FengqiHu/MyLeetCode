@@ -346,6 +346,33 @@ public class StringSet {
         return res;
     }
 
+    /**
+     * 392. Is Subsequence - Easy
+     * @Date 01/11/2026
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        // tract s
+        int j = 0;
+        if (s.length() == 0) {
+            return true;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            while (j < t.length()) {
+                if (i < s.length() && s.charAt(i) == t.charAt(j)) {
+                    i++;
+                }
+                j++;
+            }
+            if (i == s.length()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static void main(String[] args) {
         String str = " ";
