@@ -373,6 +373,35 @@ public class StringSet {
         return false;
     }
 
+    /**
+     * 205. Isomorphic Strings - Easy
+     * @Date 01/12/2026
+     * @param s
+     * @param t
+     * @return
+     */
+
+    public boolean isIsomorphic(String s, String t) {
+        HashMap<Character, Integer> mapS = new HashMap<>();
+        HashMap<Character, Integer> mapT = new HashMap<>();
+        if (s.length()!=t.length()){
+            return false;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            // marks every character's last position
+            if (!mapS.containsKey(s.charAt(i))){
+                mapS.put(s.charAt(i), i);
+            }
+            if (!mapT.containsKey(t.charAt(i))){
+                mapT.put(t.charAt(i), i);
+            }
+            if (mapS.get(s.charAt(i)) != mapT.get(t.charAt(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         String str = " ";
