@@ -18,9 +18,10 @@ public class LinkedList {
 
     /**
      * 141. Linked List Cycle -  Easy
-     * @Date 01/13/2026
+     *
      * @param head
      * @return
+     * @Date 01/13/2026
      */
     public boolean hasCycle(ListNode head) {
         ListNode fast = head;
@@ -44,10 +45,11 @@ public class LinkedList {
 
     /**
      * 2. Add Two Numbers-= Medium
-     * @Date 01/13/2026
+     *
      * @param l1
      * @param l2
      * @return
+     * @Date 01/13/2026
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
@@ -58,13 +60,13 @@ public class LinkedList {
         ListNode curr = dummy;
         int carry = 0;
 
-        while(l1 != null || l2!=null || carry == 1){
+        while (l1 != null || l2 != null || carry == 1) {
             int sum = 0;
-            if( l1!=null){
+            if (l1 != null) {
                 sum += l1.val;
                 l1 = l1.next;
             }
-            if( l2 != null){
+            if (l2 != null) {
                 sum += l2.val;
                 l2 = l2.next;
             }
@@ -72,7 +74,7 @@ public class LinkedList {
             sum += carry;
             carry = sum / 10;
             // store the unit value
-            ListNode node = new ListNode( sum % 10);
+            ListNode node = new ListNode(sum % 10);
             curr.next = node;
             curr = curr.next;
         }
@@ -81,27 +83,28 @@ public class LinkedList {
 
     /**
      * 21. Merge Two Sorted Lists - Medium
-     * @Date 01/13/2026
+     *
      * @param list1
      * @param list2
      * @return
+     * @Date 01/13/2026
      */
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode list = new ListNode(0);
         ListNode curr = list;
-        while(list1!=null || list2!=null){
-            if (list1!=null && list2!=null){
-                if(list1.val <= list2.val){
+        while (list1 != null || list2 != null) {
+            if (list1 != null && list2 != null) {
+                if (list1.val <= list2.val) {
                     curr.next = list1;
                     list1 = list1.next;
-                }else{
+                } else {
                     curr.next = list2;
                     list2 = list2.next;
                 }
-            }else if(list1!=null){
+            } else if (list1 != null) {
                 curr.next = list1;
                 list1 = list1.next;
-            }else{
+            } else {
                 curr.next = list2;
                 list2 = list2.next;
             }
@@ -109,5 +112,58 @@ public class LinkedList {
 
         }
         return list.next;
+    }
+
+    class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
+
+    /**
+     * 138. Copy List with Random Pointer - Medium
+     * @Date 01/13/2026
+     * @param head
+     * @return
+     */
+    public Node copyRandomList(Node head) {
+        Node headTrack = head;
+        // new list's head node
+        Node headNode = new Node(0);
+        Node curr = headNode;
+        // first assign value
+        while (headTrack != null) {
+            curr.next = new Node(headTrack.val);
+            curr = curr.next;
+            headTrack = headTrack.next;
+        }
+        headTrack = head;
+        curr = headNode.next;
+        while (curr != null) {
+            // the original random node
+            if (headTrack.random == null) {
+                curr.random = null;
+            } else {
+                Node target = headTrack.random;
+                Node targetTrack = head;
+                // track the target node in replicated list
+                Node repTrack = headNode.next;
+                while (targetTrack != target) {
+                    targetTrack = targetTrack.next;
+                    repTrack = repTrack.next;
+                }
+                // find the target node
+                curr.random = repTrack;
+            }
+            curr = curr.next;
+            headTrack = headTrack.next;
+        }
+        return headNode.next;
     }
 }
