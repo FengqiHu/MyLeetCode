@@ -77,6 +77,37 @@ public class LinkedList {
             curr = curr.next;
         }
         return dummy.next;
+    }
 
+    /**
+     * 21. Merge Two Sorted Lists - Medium
+     * @Date 01/13/2026
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode list = new ListNode(0);
+        ListNode curr = list;
+        while(list1!=null || list2!=null){
+            if (list1!=null && list2!=null){
+                if(list1.val <= list2.val){
+                    curr.next = list1;
+                    list1 = list1.next;
+                }else{
+                    curr.next = list2;
+                    list2 = list2.next;
+                }
+            }else if(list1!=null){
+                curr.next = list1;
+                list1 = list1.next;
+            }else{
+                curr.next = list2;
+                list2 = list2.next;
+            }
+            curr = curr.next;
+
+        }
+        return list.next;
     }
 }
