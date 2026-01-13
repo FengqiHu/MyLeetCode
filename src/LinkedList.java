@@ -41,4 +41,42 @@ public class LinkedList {
 
         return false;
     }
+
+    /**
+     * 2. Add Two Numbers-= Medium
+     * @Date 01/13/2026
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        // create a head node
+        ListNode dummy = new ListNode(0);
+
+        // locate current location in head node
+        ListNode curr = dummy;
+        int carry = 0;
+
+        while(l1 != null || l2!=null || carry == 1){
+            int sum = 0;
+            if( l1!=null){
+                sum += l1.val;
+                l1 = l1.next;
+            }
+            if( l2 != null){
+                sum += l2.val;
+                l2 = l2.next;
+            }
+            // the previous sum's carry
+            sum += carry;
+            carry = sum / 10;
+            // store the unit value
+            ListNode node = new ListNode( sum % 10);
+            curr.next = node;
+            curr = curr.next;
+        }
+        return dummy.next;
+
+    }
 }
