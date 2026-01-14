@@ -295,4 +295,26 @@ public class LinkedList {
         }
         return vhead.next;
     }
+    public ListNode removeNthFromEndO1(ListNode head, int n) {
+        ListNode fast=head;
+        ListNode slow=head;
+        for(int i=0;i<n;i++){
+            fast=fast.next;
+        }
+        // use the distance between fast and slow to find the target node
+        // 1 → 2 → 3 → 4 → 5    (n = 2)
+        // slow=1  fast=3
+        if(fast==null)return head.next;
+        while(fast.next!=null){
+            // let the fast to the end of the node,
+            // then the slow node is the previous node of the target node
+            // the distance n is the distance between slow and fast
+            // 1 → 2 → 3 → 4 → 5    (n = 2)
+            //         slow=1  fast=5
+            slow=slow.next;
+            fast=fast.next;
+        }
+        slow.next=slow.next.next;
+        return head;
+    }
 }
