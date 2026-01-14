@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * @author louishu
  * @date 1/13/26 17:37
@@ -128,9 +130,10 @@ public class LinkedList {
 
     /**
      * 138. Copy List with Random Pointer - Medium
-     * @Date 01/13/2026
+     *
      * @param head
      * @return
+     * @Date 01/13/2026
      */
     public Node copyRandomList(Node head) {
         Node headTrack = head;
@@ -165,5 +168,26 @@ public class LinkedList {
             headTrack = headTrack.next;
         }
         return headNode.next;
+    }
+
+    public Node copyRandomListWithHashMap(Node head) {
+        HashMap<Node, Node> list = new HashMap<>();
+        Node cur = head;
+
+        // copy nodes
+        while (cur != null) {
+            // every original node corresponds to a new node
+            list.put(cur, new Node(cur.val));
+            cur = cur.next;
+        }
+        cur = head;
+        while (cur != null) {
+            // get the replicated node
+            Node newNode = list.get(cur);
+            newNode.next = list.get(cur.next);
+            newNode.random = list.get(cur.random);
+            cur = cur.next;
+        }
+        return list.get(head);
     }
 }
