@@ -190,4 +190,38 @@ public class LinkedList {
         }
         return list.get(head);
     }
+
+    /**
+     * 92. Reverse Linked List II - Medium
+     *
+     * @param head
+     * @param left
+     * @param right
+     * @return
+     * @Date 01/13/2026
+     */
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode cur = head;
+        int index = 1;
+        while (index < left) {
+            cur = cur.next;
+            index++;
+        }
+        int step = right - left;
+        for (int i = 0; i < (right - left + 1) / 2; i++) {
+            ListNode target = cur;
+
+            for (int j = 0; j < step; j++) {
+                target = target.next;
+            }
+            int temp = cur.val;
+            cur.val = target.val;
+            target.val = temp;
+
+            cur = cur.next;
+            step = step - 2;
+        }
+        return head;
+    }
 }
