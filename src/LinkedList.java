@@ -224,4 +224,74 @@ public class LinkedList {
         }
         return head;
     }
+
+    /**
+     * 25. Reverse Nodes in k-Group - Hard
+     * @Date 01/13/2026
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // create a virtual head node as prev node for next insertion
+        ListNode pre = new ListNode(0);
+        pre.next = head;
+        ListNode cur = pre.next;
+        int sum=0;
+        // calculate the total number
+        while (cur != null) {
+            sum++;
+            cur = cur.next;
+        }
+        cur = head;
+        ListNode prev = pre;
+        for (int i = 0; i < sum / k; i++) {
+            // swap k times
+            ListNode tmp = cur.next;
+            // use head insertion to swap nodes
+            for (int j = 0; j < k-1; j++) {
+                tmp = cur.next;
+                cur.next = tmp.next;
+                tmp.next = prev.next;
+                prev.next = tmp;
+            }
+            // cur is the last node
+            prev = cur;
+            cur = cur.next;
+        }
+        return pre.next;
+    }
+
+    /**
+     * 19. Remove Nth Node From End of List - Medium
+     * @Date 01/14/2026
+     * @param head
+     * @param n
+     * @return
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode vhead = new ListNode(-1);
+        ListNode cur = vhead;
+        cur.next = head;
+        int sum = 0;
+        while(cur != null){
+            sum++;
+            cur = cur.next;
+        }
+        sum--;
+        if(sum == 1){
+            return null;
+        }
+        cur = vhead;
+        // To the previous one of the target node
+        for (int i = 0; i < sum-n; i++) {
+            cur = cur.next;
+        }
+        if (cur.next!=null && cur.next.next == null){
+            cur.next = null;
+        }else {
+            cur.next = cur.next.next;
+        }
+        return vhead.next;
+    }
 }
