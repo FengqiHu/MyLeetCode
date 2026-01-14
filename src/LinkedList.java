@@ -227,17 +227,18 @@ public class LinkedList {
 
     /**
      * 25. Reverse Nodes in k-Group - Hard
-     * @Date 01/13/2026
+     *
      * @param head
      * @param k
      * @return
+     * @Date 01/13/2026
      */
     public ListNode reverseKGroup(ListNode head, int k) {
         // create a virtual head node as prev node for next insertion
         ListNode pre = new ListNode(0);
         pre.next = head;
         ListNode cur = pre.next;
-        int sum=0;
+        int sum = 0;
         // calculate the total number
         while (cur != null) {
             sum++;
@@ -249,7 +250,7 @@ public class LinkedList {
             // swap k times
             ListNode tmp = cur.next;
             // use head insertion to swap nodes
-            for (int j = 0; j < k-1; j++) {
+            for (int j = 0; j < k - 1; j++) {
                 tmp = cur.next;
                 cur.next = tmp.next;
                 tmp.next = prev.next;
@@ -264,32 +265,32 @@ public class LinkedList {
 
     /**
      * 19. Remove Nth Node From End of List - Medium
-     * @Date 01/14/2026
+     *
      * @param head
      * @param n
      * @return
+     * @Date 01/14/2026
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode vhead = new ListNode(-1);
         ListNode cur = vhead;
         cur.next = head;
-        int sum = 0;
-        while(cur != null){
+        int sum = -1;
+        while (cur != null) {
             sum++;
             cur = cur.next;
         }
-        sum--;
-        if(sum == 1){
+        if (sum == 1) {
             return null;
         }
         cur = vhead;
         // To the previous one of the target node
-        for (int i = 0; i < sum-n; i++) {
+        for (int i = 0; i < sum - n; i++) {
             cur = cur.next;
         }
-        if (cur.next!=null && cur.next.next == null){
+        if (cur.next.next == null) {
             cur.next = null;
-        }else {
+        } else {
             cur.next = cur.next.next;
         }
         return vhead.next;
