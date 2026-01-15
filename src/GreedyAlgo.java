@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author louishu
@@ -126,6 +123,31 @@ public class GreedyAlgo {
             }
         }
         return dp[volume];
+    }
+
+    /**
+     * 416. Partition Equal Subset Sum - Medium
+     * @Date 01/15/2026
+     */
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 1; i < n; i++) {
+            sum += nums[i];
+        }
+        if (sum % 2 != 0)
+            return false;
+        int target = sum / 2;
+
+        int dp [] = new int[target+1];
+
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = Math.max(dp[j], dp[j - num] + num);
+            }
+        }
+        return !(dp[target] == target);
     }
 
 
