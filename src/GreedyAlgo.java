@@ -88,6 +88,46 @@ public class GreedyAlgo {
         return result;
     }
 
+    /**
+     *  This is global optimal solution, unlike PhoneCall problem.
+     */
+    static class Item{
+        int weight;
+        int value;
+        public Item(int weight, int value){
+            this.weight = weight;
+            this.value = value;
+        }
+    }
+
+    public static int backpackProblem(int volume, int weights[], int values[]){
+        int n = weights.length;
+        List<Item> items = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            items.add(new Item(weights[i], values[i]));
+        }
+//        Collections.sort(items, new Comparator<Item>(){
+//            @Override
+//            public int compare(Item a, Item b){
+//                return Integer.compare(a.weight, b.weight);
+//            }
+//        });
+        // the maximum value can get when volume remains j
+        // volume -> value
+        int[] dp = new int[volume + 1];
+
+        for (Item item : items) {
+            // reverse: avoid reusing the same item
+            for (int j = volume; j >= item.weight; j--) {
+                dp[j] = Math.max(
+                        dp[j],                      // not choose
+                        dp[j - item.weight] + item.value  // choose, calculate the new value, if choose the remain volume is [j - item.weight]
+                );
+            }
+        }
+        return dp[volume];
+    }
+
 
     public static void main(String[] args) {
         int[] start = {10,10,50,60,40};
