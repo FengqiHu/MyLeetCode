@@ -140,14 +140,17 @@ public class GreedyAlgo {
             return false;
         int target = sum / 2;
 
+        // the maximum value can get when volume remains j
         int dp [] = new int[target+1];
 
         for (int num : nums) {
             for (int j = target; j >= num; j--) {
+                // choose or not choose
+                // j- num : use the volume
                 dp[j] = Math.max(dp[j], dp[j - num] + num);
             }
         }
-        return !(dp[target] == target);
+        return (dp[target] == target);
     }
 
 
