@@ -357,4 +357,56 @@ public class LinkedList {
         cur.next = head;
         return vhead.next;
     }
+
+    /**
+     * 86. Partition List - Medium
+     * @Date - 01/15/2026
+     * @param head
+     * @param x
+     * @return
+     */
+    public ListNode partition(ListNode head, int x) {
+        ListNode vhead = new ListNode(0);
+        ListNode nvhead = new ListNode(0);
+        vhead.next = head;
+        ListNode cur = vhead;
+        ListNode ncur = nvhead;
+        while(cur.next!=null){
+            if (cur.next!=null && cur.next.val<x){
+                ncur.next = cur.next;
+                ncur = ncur.next;
+                cur.next = cur.next.next;
+            }else{
+                cur = cur.next;
+            }
+        }
+        cur.next = nvhead.next;
+        return vhead.next;
+    }
+
+    /**
+     * 82. Remove Duplicates from Sorted List II - Medium
+     * @Date - 01/16/2026
+     * @param head
+     * @return
+     */
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode vhead = new ListNode(0);
+        vhead.next = head;
+        ListNode cur = vhead;
+        ListNode track = vhead;
+        while(cur.next!=null){
+            if(cur.next.next!=null && cur.next.val==cur.next.next.val){
+                track = cur.next;
+                while(track.val == track.next.val){
+                    track = track.next;
+                }
+                cur.next = track.next;
+            }
+            cur = cur.next;
+        }
+        return vhead.next;
+
+    }
 }
