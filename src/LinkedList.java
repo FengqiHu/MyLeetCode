@@ -317,4 +317,44 @@ public class LinkedList {
         slow.next=slow.next.next;
         return head;
     }
+
+    /**
+     * 61. Rotate List - Medium
+     * @Date - 01/15/2026
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        ListNode vhead = new ListNode(0);
+        vhead.next = head;
+        ListNode cur = head;
+        int sum = 0;
+        while(cur != null){
+            sum++;
+            cur = cur.next;
+        }
+
+        if(sum==0){
+            return null;
+        }
+        k = k % sum;
+        if(k==0){
+            return head;
+        }
+        int res = sum-k;
+        cur = vhead;
+        // move to the previous node
+        for(int i = 0; i < res; i++){
+            cur = cur.next;
+        }
+        ListNode target = cur;
+        vhead.next = cur.next;
+        while(cur.next != null){
+            cur = cur.next;
+        }
+        target.next = null;
+        cur.next = head;
+        return vhead.next;
+    }
 }
