@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author louishu
  * @date 1/15/26 18:10
@@ -10,35 +15,40 @@ public class SlidingWindow {
      * @param s
      * @return
      */
-    public static long countVowelSubstrings(String s) {
-        long ans = 0;
+    public static int countVowelSubstrings(String s) {
+        int ans = 0;
         int l = 0;
         int mid = 0;
-        int vowelTypes = 0;
-        int[] counts = new int[128];
+        Map<Character, Integer> map = new HashMap<>();
 
         for (int r = 0; r < s.length(); r++) {
             char c = s.charAt(r);
 
+            // not vowel
             if (!isVowel(c)) {
+                // move to the next char
+                // l: the start index of the vowel substring
                 l = r + 1;
                 mid = r + 1;
-                vowelTypes = 0;
-                counts = new int[128];
+                // reset
+                map.clear();
                 continue;
             }
 
-            counts[c]++;
-            if (counts[c] == 1) {
-                vowelTypes++;
-            }
+            map.put(c, map.getOrDefault(c,0) + 1);
 
-            while (vowelTypes == 5 && counts[s.charAt(mid)] > 1) {
-                counts[s.charAt(mid)]--;
+            // trigger requirement: already has 5 different vowels and now encountered a duplicate first vowel
+            // find the max mid that fulfills requirement
+            while (map.size() == 5 && map.get(s.charAt(mid)) > 1) {
+                // minus the duplicate vowel, find the max mid
+                map.put(s.charAt(mid), map.get(s.charAt(mid))- 1);
                 mid++;
             }
 
-            if (vowelTypes == 5) {
+            // count substring
+            if (map.size()==5) {
+                // first add 1 - substring that has 5 vowels
+                // when has duplicate chars, expand the substring
                 ans += (mid - l + 1);
             }
         }
@@ -48,5 +58,10 @@ public class SlidingWindow {
 
     private static boolean isVowel(char c) {
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+
+    public static void main(String[] args) {
+        String str = "aeiouiae";
+        System.out.println(countVowelSubstrings(str));
     }
 }
