@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -140,13 +142,14 @@ public class RecursiveAlgo {
 
         for (int i = 1; i <= end; i++) {
             if (memo[pos + i] != 0)
-                ways += memo[pos+i];
+                ways += memo[pos + i];
             else
                 ways += dfsforclimb(pos + i, n, memo);
         }
         memo[pos] = ways;
         return ways;
     }
+
     public static int climbStairsDP(int n) {
         int[] dp = new int[n + 2];
         dp[n] = 1;
@@ -158,7 +161,6 @@ public class RecursiveAlgo {
 
         return dp[0];
     }
-
 
 
     /**
@@ -198,9 +200,10 @@ public class RecursiveAlgo {
 
     /**
      * 46. Permutations - Medium
-     * @Date 01/17/2026
+     *
      * @param nums
      * @return
+     * @Date 01/17/2026
      */
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -224,10 +227,11 @@ public class RecursiveAlgo {
 
     /**
      * 39. Combination Sum - Medium
-     * @Date - 01/17/2026
+     *
      * @param candidates
      * @param target
      * @return
+     * @Date - 01/17/2026
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
@@ -235,12 +239,12 @@ public class RecursiveAlgo {
         return res;
     }
 
-    private void combinationNums(int[] candidates, int target, List<List<Integer>> res, List<Integer> list,int start ) {
-        if (target==0){
+    private void combinationNums(int[] candidates, int target, List<List<Integer>> res, List<Integer> list, int start) {
+        if (target == 0) {
             res.add(new ArrayList<>(list));
             // must return, avoid execute target = -2
             return;
-        }else if (target < 0){
+        } else if (target < 0) {
             return;
         }
         for (int i = start; i < candidates.length; i++) {
@@ -250,6 +254,51 @@ public class RecursiveAlgo {
                 list.remove(list.size() - 1);
             }
         }
+    }
+
+    /**
+     * 79. Word Search - Medium
+     *
+     * @param board
+     * @param word
+     * @return
+     * @Date - 01/17/2026
+     */
+    public boolean exist(char[][] board, String word) {
+        boolean flag = false;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    boolean visit[][] = new boolean[board.length][board[0].length];
+                    flag = wordSearch(i, j, word, board, visit, 0);
+                    if (flag)
+                        return true;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public static Boolean wordSearch(int row, int col, String word, char[][] board, boolean visit[][], int start) {
+        int rows = board.length;
+        int cols = board[0].length;
+
+        if (row >= rows || col >= cols || row < 0 || col < 0 || visit[row][col] || board[row][col] != word.charAt(start)) {
+            return false;
+        }
+        if (start == word.length() - 1) {
+            return true;
+        }
+
+        // mark
+        visit[row][col] = true;
+        boolean flag = (wordSearch(row - 1, col, word, board, visit, start + 1)
+                || wordSearch(row + 1, col, word, board, visit, start + 1)
+                || wordSearch(row, col - 1, word, board, visit, start + 1)
+                || wordSearch(row, col + 1, word, board, visit, start + 1));
+        //backtrack
+        visit[row][col] = false;
+        return flag;
     }
 
 
