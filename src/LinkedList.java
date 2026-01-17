@@ -417,66 +417,6 @@ public class LinkedList {
 
     }
 
-    /**
-     * 77. Combinations - Medium
-     *
-     * @param n range [1,n]
-     * @param k number of elements
-     * @return
-     * @Date - 01/16/2026
-     */
-    public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> result = new ArrayList<>();
-        // the first number
-
-        result = combineLists(n, k, new ArrayList<>(), result);
-
-        return result;
-    }
-
-    /**
-     * @param list   the current processing list
-     * @param result add the list to result
-     * @return
-     */
-    public List<List<Integer>> combineLists(int n, int k, List<Integer> list, List<List<Integer>> result) {
-        if (k == 0) {
-            result.add(new ArrayList<>(list));
-            return result;
-        }
-        for (int i = n; i >= k; i--) {
-            list.add(i);
-            combineLists(i - 1, k - 1, list, result);
-            list.remove(list.size() - 1);
-        }
-        return result;
-    }
-
-    /**
-     * 46. Permutations - Medium
-     * @Date 01/17/2026
-     * @param nums
-     * @return
-     */
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        permuteNums(nums, res, new ArrayList<>());
-        return res;
-    }
-
-    public void permuteNums(int[] nums, List<List<Integer>> res, List<Integer> list) {
-        if (list.size() == nums.length) {
-            res.add(new ArrayList<>(list));
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (list.contains(nums[i])) {
-                continue;
-            }
-            list.add(nums[i]);
-            permuteNums(nums, res, list);
-            list.remove(list.size() - 1);
-        }
-    }
 
     public static void main(String[] args) {
         String str = "fhurfhiwe";
