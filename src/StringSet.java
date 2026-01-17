@@ -404,7 +404,41 @@ public class StringSet {
         return true;
     }
 
+    /**
+     * 290. Word Pattern - Easy
+     *
+     * @param pattern
+     * @param s
+     * @return
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split(" ");
+        HashMap<Character, String> map = new HashMap<>();
 
+        if (words.length != pattern.length()) {
+            return false;
+        }
+        for (int i = 0; i < pattern.length(); i++) {
+            // if already has the same character
+            char c = pattern.charAt(i);
+
+            if (map.containsKey(c)) {
+                // check the word
+                if (!map.get(c).equals(words[i])) {
+                    return false;
+                }
+            } else {
+                // no mapping
+                // the word has already been mapped
+                if (map.containsValue(words[i]))
+                    return false;
+                else
+                    map.put(c, words[i]);
+            }
+        }
+
+        return true;
+    }
 
 
     public static void main(String[] args) {
