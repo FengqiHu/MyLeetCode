@@ -297,62 +297,64 @@ public class LinkedList {
         }
         return vhead.next;
     }
+
     public ListNode removeNthFromEndO1(ListNode head, int n) {
-        ListNode fast=head;
-        ListNode slow=head;
-        for(int i=0;i<n;i++){
-            fast=fast.next;
+        ListNode fast = head;
+        ListNode slow = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
         }
         // use the distance between fast and slow to find the target node
         // 1 → 2 → 3 → 4 → 5    (n = 2)
         // slow=1  fast=3
-        if(fast==null)return head.next;
-        while(fast.next!=null){
+        if (fast == null) return head.next;
+        while (fast.next != null) {
             // let the fast to the end of the node,
             // then the slow node is the previous node of the target node
             // the distance n is the distance between slow and fast
             // 1 → 2 → 3 → 4 → 5    (n = 2)
             //         slow=1  fast=5
-            slow=slow.next;
-            fast=fast.next;
+            slow = slow.next;
+            fast = fast.next;
         }
-        slow.next=slow.next.next;
+        slow.next = slow.next.next;
         return head;
     }
 
     /**
      * 61. Rotate List - Medium
-     * @Date - 01/15/2026
+     *
      * @param head
      * @param k
      * @return
+     * @Date - 01/15/2026
      */
     public ListNode rotateRight(ListNode head, int k) {
         ListNode vhead = new ListNode(0);
         vhead.next = head;
         ListNode cur = head;
         int sum = 0;
-        while(cur != null){
+        while (cur != null) {
             sum++;
             cur = cur.next;
         }
 
-        if(sum==0){
+        if (sum == 0) {
             return null;
         }
         k = k % sum;
-        if(k==0){
+        if (k == 0) {
             return head;
         }
-        int res = sum-k;
+        int res = sum - k;
         cur = vhead;
         // move to the previous node
-        for(int i = 0; i < res; i++){
+        for (int i = 0; i < res; i++) {
             cur = cur.next;
         }
         ListNode target = cur;
         vhead.next = cur.next;
-        while(cur.next != null){
+        while (cur.next != null) {
             cur = cur.next;
         }
         target.next = null;
@@ -362,10 +364,11 @@ public class LinkedList {
 
     /**
      * 86. Partition List - Medium
-     * @Date - 01/15/2026
+     *
      * @param head
      * @param x
      * @return
+     * @Date - 01/15/2026
      */
     public ListNode partition(ListNode head, int x) {
         ListNode vhead = new ListNode(0);
@@ -373,12 +376,12 @@ public class LinkedList {
         vhead.next = head;
         ListNode cur = vhead;
         ListNode ncur = nvhead;
-        while(cur.next!=null){
-            if (cur.next!=null && cur.next.val<x){
+        while (cur.next != null) {
+            if (cur.next != null && cur.next.val < x) {
                 ncur.next = cur.next;
                 ncur = ncur.next;
                 cur.next = cur.next.next;
-            }else{
+            } else {
                 cur = cur.next;
             }
         }
@@ -388,9 +391,10 @@ public class LinkedList {
 
     /**
      * 82. Remove Duplicates from Sorted List II - Medium
-     * @Date - 01/16/2026
+     *
      * @param head
      * @return
+     * @Date - 01/16/2026
      */
 
     public ListNode deleteDuplicates(ListNode head) {
@@ -398,10 +402,10 @@ public class LinkedList {
         vhead.next = head;
         ListNode cur = vhead;
         ListNode track = vhead;
-        while(cur.next!=null){
-            if(cur.next.next!=null && cur.next.val==cur.next.next.val){
+        while (cur.next != null) {
+            if (cur.next.next != null && cur.next.val == cur.next.next.val) {
                 track = cur.next;
-                while(track.val == track.next.val){
+                while (track.val == track.next.val) {
                     track = track.next;
                 }
                 cur.next = track.next;
@@ -414,31 +418,42 @@ public class LinkedList {
 
     /**
      * 77. Combinations - Medium
-     * @Date - 01/16/2026
-     * @param n
-     * @param k
+     *
+     * @param n range [1,n]
+     * @param k number of elements
      * @return
+     * @Date - 01/16/2026
      */
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         // the first number
 
-        for (int i = 1; i <= n-1; i++) {
-            List<Integer> list = new ArrayList<>();
-            list.add(i);
+        result = combine(n, k, new ArrayList<>(), result);
 
-            for (int j = i+1; j <=i+1+k ; j++) {
-                list.add(j);
-                result.add(list);
-                list.remove(list.size()-1);
-            }
+        return result;
+    }
+
+    /**
+     * @param list the current processing list
+     * @param result add the list to result
+     * @return
+     */
+    public List<List<Integer>> combine(int n, int k, List<Integer> list, List<List<Integer>> result) {
+        if (k == 0) {
+            result.add(new ArrayList<>(list));
+            return result;
+        }
+        for (int i = n; i >= k; i--) {
+            list.add(i);
+            combine(i - 1, k - 1, list, result);
+            list.remove(list.size() - 1);
         }
         return result;
     }
 
     public static void main(String[] args) {
         String str = "fhurfhiwe";
-        if(str.contains("urfh")){
+        if (str.contains("urfh")) {
             System.out.println("true");
         }
     }
