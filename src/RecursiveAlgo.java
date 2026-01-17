@@ -283,9 +283,11 @@ public class RecursiveAlgo {
         int rows = board.length;
         int cols = board[0].length;
 
+        // if out of bound / visited / not equal
         if (row >= rows || col >= cols || row < 0 || col < 0 || visit[row][col] || board[row][col] != word.charAt(start)) {
             return false;
         }
+        // reached the end
         if (start == word.length() - 1) {
             return true;
         }

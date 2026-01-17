@@ -21,10 +21,42 @@ public class Tree {
         }
     }
 
+    /**
+     * 104. Maximum Depth of Binary Tree - Easy
+     * @Date - 01/16/2026
+     */
     public int maxDepth(TreeNode root) {
         if (root == null) {
             return 0;
         }
         return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
     }
+
+    /**
+     * 100. Same Tree - Easy
+     * @Date - 01/17/2026
+     * @param p
+     * @param q
+     * @return
+     */
+    //    left:true        1        right: true
+    //                    / \
+    //    left:true      2   3      right: true
+    //                  /   / \
+    //    left:true    4   4   5    right: true
+    //                / \ / \ / \
+    //            null null null null
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null)
+            return true;
+        if (p == null || q == null)
+            return false;
+        if (p.val != q.val)
+            return false;
+
+        // is left tree same and right tree same
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
 }
