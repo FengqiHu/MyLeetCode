@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author louishu
@@ -408,5 +410,36 @@ public class LinkedList {
         }
         return vhead.next;
 
+    }
+
+    /**
+     * 77. Combinations - Medium
+     * @Date - 01/16/2026
+     * @param n
+     * @param k
+     * @return
+     */
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        // the first number
+
+        for (int i = 1; i <= n-1; i++) {
+            List<Integer> list = new ArrayList<>();
+            list.add(i);
+
+            for (int j = i+1; j <=i+1+k ; j++) {
+                list.add(j);
+                result.add(list);
+                list.remove(list.size()-1);
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String str = "fhurfhiwe";
+        if(str.contains("urfh")){
+            System.out.println("true");
+        }
     }
 }
