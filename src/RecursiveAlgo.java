@@ -222,6 +222,37 @@ public class RecursiveAlgo {
         }
     }
 
+    /**
+     * 39. Combination Sum - Medium
+     * @Date - 01/17/2026
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        combinationNums(candidates, target, res, new ArrayList<>(), 0);
+        return res;
+    }
+
+    private void combinationNums(int[] candidates, int target, List<List<Integer>> res, List<Integer> list,int start ) {
+        if (target==0){
+            res.add(new ArrayList<>(list));
+            // must return, avoid execute target = -2
+            return;
+        }else if (target < 0){
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            if (target > candidates[i]) {
+                list.add(candidates[i]);
+                combinationNums(candidates, target - candidates[i], res, list, i);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         int nums[] = {2, 3, 1, 1, 4};
         System.out.println(climbStairs(44));
