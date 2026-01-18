@@ -109,11 +109,16 @@ public class Tree {
      * @Date - 01/17/2026
      */
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        return buildTree(preorder, inorder, 0, 0, inorder.length - 1);
+        return buildTreeInorder(preorder, inorder, 0, 0, inorder.length - 1);
     }
 
-    public static TreeNode buildTree(int[] preorder, int[] inorder, int preRoot, int inStart, int inEnd) {
-        System.out.println("inStart: " + inStart + " inEnd: " + inEnd);
+    /**
+     * @param preRoot current root node
+     * @param inStart the start index of current tree in inorder
+     * @param inEnd
+     * @return
+     */
+    public static TreeNode buildTreeInorder(int[] preorder, int[] inorder, int preRoot, int inStart, int inEnd) {
         if (inStart > inEnd)
             return null;
 
@@ -121,9 +126,41 @@ public class Tree {
 
         for (int i = inStart; i <= inEnd; i++) {
             if (preorder[preRoot] == inorder[i]) {
+                // calculate the left tree length
                 int leftLen = i - inStart;
-                root.left = buildTree(preorder, inorder, preRoot + 1, inStart, i - 1);
-                root.right = buildTree(preorder, inorder, preRoot + leftLen + 1, i + 1, inEnd);
+
+                root.left = buildTreeInorder(preorder, inorder, preRoot + 1, inStart, i - 1);
+                root.right = buildTreeInorder(preorder, inorder, preRoot + leftLen + 1, i + 1, inEnd);
+                break;
+            }
+        }
+        return root;
+    }
+
+    /**
+     * 106. Construct Binary Tree from Inorder and Postorder Traversal - Medium
+     * @Date - 01/18/2026
+     * @param inorder
+     * @param postorder
+     * @return
+     */
+    public TreeNode buildTreePostorder(int[] inorder, int[] postorder) {
+        return buildTreePostorder(inorder, postorder, postorder.length - 1, 0, inorder.length - 1);
+    }
+
+    public static TreeNode buildTreePostorder(int[] inorder, int[] postorder, int postRoot, int inStart, int inEnd) {
+        if (inStart > inEnd)
+            return null;
+
+        TreeNode root = new TreeNode(postorder[postRoot]);
+
+        // searching in postorder
+        for (int i = inStart; i <= inEnd; i++) {
+            if (postorder[postRoot] == inorder[i]) {
+                // calculate the left tree length
+                int rightLen = inEnd-i;
+                root.left = buildTreePostorder(inorder, postorder, postRoot - rightLen-1,inStart,  i - 1);
+                root.right = buildTreePostorder(inorder, postorder, postRoot-1 ,i + 1, inEnd);
                 break;
             }
 
