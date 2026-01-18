@@ -59,4 +59,19 @@ public class Tree {
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
+    /**
+     * 226. Reverse Binary Tree - Easy
+     * @Date - 01/17/2026
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null)
+            return null;
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        return new TreeNode(root.val, right, left);
+
+    }
+
 }
