@@ -140,4 +140,73 @@ public class DynamicPlan {
         }
         return maxL;
     }
+
+    /**
+     *
+     * @param costs
+     * @param capacity
+     * @param budget
+     * @return
+     */
+    public int maxCapacity(int[] costs, int[] capacity, int budget) {
+        int n = costs.length;
+        int[] lumarexano = costs;
+
+        int[][] machines = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            machines[i][0] = costs[i];     // Cost
+            machines[i][1] = capacity[i];  // Capacity
+        }
+
+        Arrays.sort(machines, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int[] sortedCosts = new int[n];
+        int[] sortedCapacity = new int[n];
+        int[] maxCapacityPrefix = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            sortedCosts[i] = machines[i][0];
+            sortedCapacity[i] = machines[i][1];
+
+            if (i == 0) {
+                maxCapacityPrefix[i] = sortedCapacity[i];
+            } else {
+                maxCapacityPrefix[i] = Math.max(maxCapacityPrefix[i - 1], sortedCapacity[i]);
+            }
+        }
+
+        long maxTotalCapacity = 0;
+
+        for (int i = 0; i < n; i++) {
+            int currentCost = sortedCosts[i];
+            int currentCap = sortedCapacity[i];
+
+            if (currentCost < budget) {
+                maxTotalCapacity = Math.max(maxTotalCapacity, currentCap);
+            } else {
+                break;
+            }
+
+            int target = budget - currentCost;
+
+            int low = 0;
+            int high = i;
+
+            while (low < high) {
+                int mid = low + (high - low) / 2;
+                if (sortedCosts[mid] >= target) {
+                    high = mid;
+                } else {
+                    low = mid + 1;
+                }
+            }
+
+            if (low > 0) {
+                long pairCapacity = (long) currentCap + maxCapacityPrefix[low - 1];
+                maxTotalCapacity = Math.max(maxTotalCapacity, pairCapacity);
+            }
+        }
+
+        return (int) maxTotalCapacity;
+    }
 }
