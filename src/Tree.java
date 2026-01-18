@@ -74,4 +74,26 @@ public class Tree {
 
     }
 
+    /**
+     * 101. Symmetric Tree - Easy
+     * @Date - 01/17/2026
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        return checkSymmetric(root.left, root.right);
+    }
+    public static boolean checkSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null){
+            return true;
+        }
+        if (left == null || right == null){
+            return false;
+        }
+        if (left.val != right.val){
+            return false;
+        }
+        return checkSymmetric(left.left, right.right) && checkSymmetric(left.right, right.left);
+    }
+
 }
