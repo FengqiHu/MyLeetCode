@@ -155,7 +155,7 @@ public class Tree {
 
         TreeNode root = new TreeNode(postorder[postRoot]);
 
-        // searching in postorder
+        // searching in inorder
         for (int i = inStart; i <= inEnd; i++) {
             if (postorder[postRoot] == inorder[i]) {
                 // calculate the left tree length
@@ -171,16 +171,17 @@ public class Tree {
 
     /**
      * 112. Path Sum - Easy
-     * @Date - 01/18/2026
+     *
      * @param root
      * @param targetSum
      * @return
+     * @Date - 01/18/2026
      */
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
 
         boolean isLeaf = root.left == null && root.right == null;
-        if (isLeaf && targetSum == root.val){
+        if (isLeaf && targetSum == root.val) {
             return true;
         } else if (isLeaf && targetSum != 0) {
             return false;
@@ -188,6 +189,25 @@ public class Tree {
         boolean left = hasPathSum(root.left, targetSum - root.val);
         boolean right = hasPathSum(root.right, targetSum - root.val);
         return left || right;
+    }
+
+    public void flatten(TreeNode root) {
+        while(root != null){
+            // enter the left node
+            if(root.left != null){
+                // to the most right node
+                // set a start, from left branch
+                TreeNode rightNode = root.left;
+                while(rightNode.right!=null){
+                    rightNode = rightNode.right;
+                }
+                // connect this node to the right branch
+                rightNode.right = root.right;
+                root.right = root.left;
+                root.left = null;
+            }
+            root = root.right;
+        }
     }
 
     public static void main(String[] args) {
