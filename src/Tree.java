@@ -191,6 +191,11 @@ public class Tree {
         return left || right;
     }
 
+    /**
+     * 114. Flatten Binary Tree to Linked List - Medium
+     * @Date - 01/18/2026
+     * @param root
+     */
     public void flatten(TreeNode root) {
         while(root != null){
             // enter the left node

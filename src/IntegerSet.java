@@ -364,7 +364,6 @@ public class IntegerSet {
     }
 
 
-
     /**
      * 169. Majority Element - Easy
      *
@@ -417,63 +416,100 @@ public class IntegerSet {
 
     /**
      * 88. Merge Sorted Array - Easy
-     * @Date 01/11/2026
+     *
      * @param nums1
      * @param m
      * @param nums2
      * @param n
+     * @Date 01/11/2026
      */
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int sum = m+n;
-        for(int i = m;i<sum;i++){
-            nums1[i] = nums2[i-m];
+        int sum = m + n;
+        for (int i = m; i < sum; i++) {
+            nums1[i] = nums2[i - m];
         }
         Arrays.sort(nums1);
     }
 
     /**
      * 167. Two Sum II - Input Array Is Sorted - Medium
-     * @Date 01/11/2026
+     *
      * @param numbers
      * @param target
      * @return
+     * @Date 01/11/2026
      */
     public int[] twoSum167(int[] numbers, int target) {
         int left = 0, right = numbers.length - 1;
         int res[] = new int[2];
         while (left < right) {
             int sum = numbers[left] + numbers[right];
-            if (sum == target){
-                res[0] = left+1;
-                res[1] = right+1;
+            if (sum == target) {
+                res[0] = left + 1;
+                res[1] = right + 1;
                 return res;
-            }else if (sum > target){
+            } else if (sum > target) {
                 right--;
-            }else {
+            } else {
                 left++;
             }
         }
         return res;
     }
 
-    public static void main(String[] args) {
-        // Create a LinkedHashMap to preserve insertion order
-        Map<String, Integer> map = new LinkedHashMap<>();
-        map.put("FirstKey", 10);
-        map.put("SecondKey", 20); // This is the key we want to retrieve
-        map.put("ThirdKey", 30);
+    /**
+     * 18. 4Sum - Medium
+     *
+     * @param nums
+     * @param target
+     * @return
+     * @Date - 01/21/2026
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
 
-        // Get all keys as a Set, then convert to an ArrayList
-        List<String> keys = new ArrayList<>(map.keySet());
+        sumFour(nums, target, 0, 0, res, new ArrayList<>());
+        return res;
+    }
 
-        // Check if there are at least two items
-        if (keys.size() >= 2) {
-            String secondKey = keys.get(1);
-            System.out.println("The second key is: " + secondKey);
-            // You can then get the value associated with this key if needed:
-            // Integer secondValue = map.get(secondKey);
-        } else {
-            System.out.println("The map does not have a second key.");
+    private void sumFour(int[] nums, double target, int count, int start, List<List<Integer>> res, List<Integer> path) {
+        if (count == 2) {
+            int left = start, right = nums.length - 1;
+            while (left < right) {
+                int sum = nums[left] + nums[right];
+                if (sum == target) {
+                    List<Integer> tmp = new ArrayList<>(path);
+                    tmp.add(nums[left]);
+                    tmp.add(nums[right]);
+                    res.add(tmp);
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1]) left++;
+                    while (left < right && nums[right] == nums[right + 1]) right--;
+                } else if (sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+            return;
         }
+        for (int i = start; i < nums.length - count; i++) {
+            if (i > start && nums[i] == nums[i - 1]) continue;
+            path.add(nums[i]);
+            sumFour(nums, target - nums[i], count + 1, i + 1, res, path);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int a = 1000000000+1000000000+1000000000+1000000000;
+        if (a>Integer.MAX_VALUE){
+            System.out.println("yes");
+        }
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(a);
     }
 }
