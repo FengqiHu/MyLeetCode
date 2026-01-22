@@ -414,7 +414,29 @@ public class LinkedList {
             cur = cur.next;
         }
         return vhead.next;
+    }
 
+    /**
+     * 24. Swap Nodes in Pairs - Medium
+     * @Date - 01/21/2026
+     * @param head
+     * @return
+     */
+    public ListNode swapPairs(ListNode head) {
+        ListNode vhead = new ListNode(0);
+        vhead.next = head;
+        ListNode pre = vhead;
+        ListNode cur = head;
+
+        while(cur.next!=null){
+            if (cur.next != null){
+                pre.next = cur.next;
+                cur.next = cur.next.next;
+                pre.next.next = cur;
+            }
+            pre = cur;
+        }
+        return vhead.next;
     }
 
 
