@@ -418,9 +418,10 @@ public class LinkedList {
 
     /**
      * 24. Swap Nodes in Pairs - Medium
-     * @Date - 01/21/2026
+     *
      * @param head
      * @return
+     * @Date - 01/21/2026
      */
     public ListNode swapPairs(ListNode head) {
         ListNode vhead = new ListNode(0);
@@ -428,13 +429,38 @@ public class LinkedList {
         ListNode pre = vhead;
         ListNode cur = head;
 
-        while(cur.next!=null){
-            if (cur.next != null){
+        while (cur.next != null) {
+            if (cur.next != null) {
                 pre.next = cur.next;
                 cur.next = cur.next.next;
                 pre.next.next = cur;
             }
             pre = cur;
+        }
+        return vhead.next;
+    }
+
+    /**
+     * 83. Remove Duplicates from Sorted List - Easy
+     *
+     * @param head
+     * @return
+     * @Date - 01/21/2026
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode vhead = new ListNode(0);
+        vhead.next = head;
+        ListNode cur = head;
+
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
+                ListNode tmp = cur.next;
+                while (tmp.val == tmp.next.val) {
+                    tmp = tmp.next;
+                }
+                cur.next = tmp.next;
+            }
+            cur = cur.next;
         }
         return vhead.next;
     }
