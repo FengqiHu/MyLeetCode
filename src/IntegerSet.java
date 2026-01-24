@@ -530,6 +530,48 @@ public class IntegerSet {
         }
     }
 
+    /**
+     * 34. Find First and Last Position of Element in Sorted Array - Medium
+     * @Date 01/24/2026
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int start = -1;
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] == target) {
+                start = mid;
+                break;
+            } else if (target < nums[mid]) {
+                right=mid -1;
+            }else {
+                left = mid +1;
+            }
+        }
+        if (start == -1){
+            return new int[]{-1, -1};
+        }else{
+            left = start;
+            right = start;
+            while(left>0){
+                if (nums[left-1]!= target){
+                    break;
+                }
+                left--;
+            }
+            while(right<nums.length-1){
+                if (nums[right+1]!= target){
+                    break;
+                }
+                right++;
+            }
+            return new int[]{left, right};
+        }
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
