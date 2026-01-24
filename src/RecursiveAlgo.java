@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -222,6 +223,38 @@ public class RecursiveAlgo {
             list.add(nums[i]);
             permuteNums(nums, res, list);
             list.remove(list.size() - 1);
+        }
+    }
+
+    /**
+     * 47. Permutations II - Medium
+     * @Date - 01/17/2026
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        boolean used[] = new boolean[nums.length];
+        Arrays.sort(nums);
+        permuteNumsUnique(nums, res, new ArrayList<>(), used);
+        return res;
+    }
+
+    public void permuteNumsUnique(int[] nums, List<List<Integer>> res, List<Integer> list, boolean used[]) {
+        if (list.size() == nums.length) {
+            res.add(new ArrayList<>(list));
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i])
+                continue;
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+                continue;
+            }
+            used[i] = true;
+            list.add(nums[i]);
+            permuteNumsUnique(nums, res, list, used);
+            list.remove(list.size() - 1);
+            used[i] = false;
         }
     }
 
