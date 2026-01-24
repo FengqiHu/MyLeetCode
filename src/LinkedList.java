@@ -447,7 +447,7 @@ public class LinkedList {
      * @return
      * @Date - 01/21/2026
      */
-    public ListNode deleteDuplicates(ListNode head) {
+    public ListNode deleteDuplicates83(ListNode head) {
         ListNode vhead = new ListNode(0);
         vhead.next = head;
         ListNode cur = head;

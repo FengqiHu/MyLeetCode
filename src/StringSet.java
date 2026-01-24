@@ -440,6 +440,55 @@ public class StringSet {
         return true;
     }
 
+    /**
+     * 10. Regular Expression Matching - Hard
+     * 01/23/2026
+     * @param str
+     * @param pattern
+     * @return
+     */
+    public boolean isMatch(String str, String pattern) {
+        boolean dp[][] = new boolean[str.length()+1][pattern.length()+1];
+        // dp[i][j] : str[0...i-1] matches pattern[0...j-1]
+        dp[0][0] = true;
+
+        // 2. 初始化: 处理 str 为空，但 pattern 包含 '*' 的情况 ("a*", "a*b*")
+        // 这些 pattern 可以匹配空字符串，因为 '*' 可以表示 0 个前面的字符
+        for (int j = 1; j <= pattern.length(); j++) {
+            if (pattern.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 2];
+            }
+        }
+        for (int i = 1; i <= str.length(); i++) {
+            for (int j = 1; j <= pattern.length(); j++) {
+                char s = str.charAt(i-1);
+                char p = pattern.charAt(j-1);
+
+                if (p != '*') {
+                    // just check the two chars
+                    if (isCharMatch(s,p)){
+                        dp[i][j] = dp[i-1][j-1];
+                    }
+                } else {
+                    // eliminate (a*)
+                    dp[i][j] = dp[i][j-2];
+                    // ....a...
+                    // ...a*...
+                    if (isCharMatch(s, pattern.charAt(j-2))){
+                        dp[i][j] = dp[i-1][j] || dp[i][j];
+                    }
+                }
+
+            }
+        }
+        return dp[str.length()][pattern.length()];
+    }
+    public boolean isCharMatch(char a, char b){
+        if (a==b || b=='.'){
+            return true;
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         String str = "wordgoodgoodgoodbestword";
