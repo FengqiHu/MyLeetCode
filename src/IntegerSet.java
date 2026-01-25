@@ -708,20 +708,47 @@ public class IntegerSet {
         // if a or b has number, or has carry
         while (i >= 0 || j >= 0 || carry == 1) {
             // carry represents the current bringing number
-            if (i>=0){
+            if (i >= 0) {
                 carry += a.charAt(i) - '0';
                 i--;
             }
-            if (j>=0){
+            if (j >= 0) {
                 carry += b.charAt(j) - '0';
                 j--;
             }
-            res = carry%2 + res;
+            res = carry % 2 + res;
             // if = 2 -> add 1 to the next
-            carry/=2;
+            carry /= 2;
         }
         return res;
 
+    }
+
+    /**
+     * 69. Sqrt(x) - Easy
+     *
+     * @param x
+     * @return
+     * @Date - 01/25/2026
+     * @Date - 01/25/2026
+     */
+    public int mySqrt(int x) {
+        int left = 0, right = x;
+        int ans = 0;
+        if (x<2)
+            return x;
+        while (left <= right) {
+            // avoiding overflow
+            int mid = left + (right - left) / 2;
+            long temp = (long)mid * mid;
+            if (temp > x) {
+                right = mid - 1;
+            } else {
+                ans = mid;
+                left = mid + 1;
+            }
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
