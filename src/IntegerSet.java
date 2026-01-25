@@ -585,7 +585,7 @@ public class IntegerSet {
         sum[0] = nums[0];
         int n = nums.length;
         for (int i = 1; i < n; i++) {
-            sum[i] = sum[i-1] + nums[i];
+            sum[i] = sum[i - 1] + nums[i];
         }
         //min stores the minimum prefix
         int min = 0, max = sum[0];
@@ -599,9 +599,10 @@ public class IntegerSet {
 
     /**
      * 56. Merge Intervals - Medium
-     * @Date - 01/24/2026
+     *
      * @param intervals
      * @return
+     * @Date - 01/24/2026
      */
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
@@ -612,13 +613,51 @@ public class IntegerSet {
 
 
         for (int i = 1; i < n; i++) {
-            if (intervals[i][0] <= pre[1]){
+            if (intervals[i][0] <= pre[1]) {
                 // compare the end, [1,4][2,3]
                 pre[1] = Math.max(pre[1], intervals[i][1]);
+                // set the end
                 res.set(res.size() - 1, pre);
-            }else{
+            } else {
                 res.add(intervals[i]);
                 pre = intervals[i];
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+
+    /**
+     * 57. Insert Interval - Medium
+     * @Date - 01/24/2026
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> intervalList = new ArrayList<>(Arrays.asList(intervals));
+        intervalList.add(newInterval);
+        Collections.sort(intervalList, (a, b) -> Integer.compare(a[0], b[0]));
+
+        if (intervals==null || intervals.length == 0){
+            return new int[][]{newInterval};
+        }
+
+        List<int[]> res = new ArrayList<>();
+        res.add(intervalList.get(0));
+
+        int[] pre = intervalList.get(0);
+
+
+        for (int i = 1; i < intervalList.size(); i++) {
+            System.out.println("pre:" + pre[0] + " " + pre[1]);
+            int[] interval = intervalList.get(i);
+            if (interval[0] <= pre[1]) {
+                // compare the end, [1,4][2,3]
+                pre[1] = Math.max(pre[1], interval[1]);
+                res.set(res.size() - 1, pre);
+            } else {
+                res.add(interval);
+                pre = interval;
             }
         }
         return res.toArray(new int[res.size()][]);
