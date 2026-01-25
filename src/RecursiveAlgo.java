@@ -234,6 +234,7 @@ public class RecursiveAlgo {
      */
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
+        // marks the status
         boolean used[] = new boolean[nums.length];
         Arrays.sort(nums);
         permuteNumsUnique(nums, res, new ArrayList<>(), used);
@@ -245,11 +246,14 @@ public class RecursiveAlgo {
             res.add(new ArrayList<>(list));
         }
         for (int i = 0; i < nums.length; i++) {
+            // skip the same number - this is for the next arrays that not to add the same number
             if (used[i])
                 continue;
+            // if the same number and had been used
             if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
                 continue;
             }
+            // mark the current number
             used[i] = true;
             list.add(nums[i]);
             permuteNumsUnique(nums, res, list, used);

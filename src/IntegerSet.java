@@ -532,10 +532,11 @@ public class IntegerSet {
 
     /**
      * 34. Find First and Last Position of Element in Sorted Array - Medium
-     * @Date 01/24/2026
+     *
      * @param nums
      * @param target
      * @return
+     * @Date 01/24/2026
      */
     public int[] searchRange(int[] nums, int target) {
         int start = -1;
@@ -546,30 +547,54 @@ public class IntegerSet {
                 start = mid;
                 break;
             } else if (target < nums[mid]) {
-                right=mid -1;
-            }else {
-                left = mid +1;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
-        if (start == -1){
+        if (start == -1) {
             return new int[]{-1, -1};
-        }else{
+        } else {
             left = start;
             right = start;
-            while(left>0){
-                if (nums[left-1]!= target){
+            while (left > 0) {
+                if (nums[left - 1] != target) {
                     break;
                 }
                 left--;
             }
-            while(right<nums.length-1){
-                if (nums[right+1]!= target){
+            while (right < nums.length - 1) {
+                if (nums[right + 1] != target) {
                     break;
                 }
                 right++;
             }
             return new int[]{left, right};
         }
+    }
+
+    /**
+     * 53. Maximum Subarray - Medium
+     *
+     * @param nums
+     * @return
+     * @Date - 01/24/2026
+     */
+    public int maxSubArray(int[] nums) {
+        int sum[] = new int[nums.length];
+        sum[0] = nums[0];
+        int n = nums.length;
+        for (int i = 1; i < n; i++) {
+            sum[i] = sum[i-1] + nums[i];
+        }
+        //min stores the minimum prefix
+        int min = 0, max = sum[0];
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, sum[i] - min);
+            if (sum[i] < min)
+                min = sum[i];
+        }
+        return max;
     }
 
     public static void main(String[] args) {
