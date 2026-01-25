@@ -628,17 +628,18 @@ public class IntegerSet {
 
     /**
      * 57. Insert Interval - Medium
-     * @Date - 01/24/2026
+     *
      * @param intervals
      * @param newInterval
      * @return
+     * @Date - 01/24/2026
      */
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> intervalList = new ArrayList<>(Arrays.asList(intervals));
         intervalList.add(newInterval);
         Collections.sort(intervalList, (a, b) -> Integer.compare(a[0], b[0]));
 
-        if (intervals==null || intervals.length == 0){
+        if (intervals == null || intervals.length == 0) {
             return new int[][]{newInterval};
         }
 
@@ -661,6 +662,33 @@ public class IntegerSet {
             }
         }
         return res.toArray(new int[res.size()][]);
+    }
+
+    /**
+     * 66. Plus One - Easy
+     * @Date - 01/25/2026
+     * @param digits
+     * @return
+     */
+    public int[] plusOne(int[] digits) {
+        digits[digits.length - 1]++;
+        int i = digits.length - 1;
+        System.out.println();
+        while (i > 0 && digits[i] == 10) {
+            digits[i] = 0;
+            digits[i - 1]++;
+        }
+        if (digits[0] == 10) {
+            digits[0]=0;
+            int res[] = new int[digits.length + 1] ;
+            res[0] = 1;
+            for (int j = 0; j < digits.length; j++) {
+                res[j+1] = digits[j];
+            }
+            return res;
+        }else{
+            return digits;
+        }
     }
 
     public static void main(String[] args) {
