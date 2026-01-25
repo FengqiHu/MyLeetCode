@@ -597,6 +597,33 @@ public class IntegerSet {
         return max;
     }
 
+    /**
+     * 56. Merge Intervals - Medium
+     * @Date - 01/24/2026
+     * @param intervals
+     * @return
+     */
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        int n = intervals.length;
+        List<int[]> res = new ArrayList<>();
+        res.add(intervals[0]);
+        int[] pre = intervals[0];
+
+
+        for (int i = 1; i < n; i++) {
+            if (intervals[i][0] <= pre[1]){
+                // compare the end, [1,4][2,3]
+                pre[1] = Math.max(pre[1], intervals[i][1]);
+                res.set(res.size() - 1, pre);
+            }else{
+                res.add(intervals[i]);
+                pre = intervals[i];
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
