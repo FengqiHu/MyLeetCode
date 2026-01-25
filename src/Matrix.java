@@ -88,6 +88,32 @@ public class Matrix {
         return res;
     }
 
+    public int[][] generateMatrixLoop(int n) {
+        // initially, stop y (row), move x (column)
+        int x = 0, y = 0, dx = 1, dy = 0;
+        int[][] res = new int[n][n];
+
+        for (int i = 0; i < n * n; i++) {
+            // i is the number
+            // x is column index, y is row index
+            res[y][x] = i + 1;
+
+            // the requirement of filling the array: within the range [0,n), and has not been filled (0)
+            if (!(x + dx >=0 && x + dx < n && 0 <= y + dy && y + dy < n && res[y+dy][x+dx] == 0)) {
+                // change the direction
+                // swap the stop direction and change the direction
+                int temp = dx;
+                dx = -dy;
+                dy = temp;
+            }
+
+            x += dx;
+            y += dy;
+        }
+
+        return res;
+    }
+
     /**
      * 48. Rotate Image - Medium
      *
