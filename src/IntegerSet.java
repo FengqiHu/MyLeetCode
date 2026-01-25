@@ -666,9 +666,10 @@ public class IntegerSet {
 
     /**
      * 66. Plus One - Easy
-     * @Date - 01/25/2026
+     *
      * @param digits
      * @return
+     * @Date - 01/25/2026
      */
     public int[] plusOne(int[] digits) {
         digits[digits.length - 1]++;
@@ -679,16 +680,48 @@ public class IntegerSet {
             digits[i - 1]++;
         }
         if (digits[0] == 10) {
-            digits[0]=0;
-            int res[] = new int[digits.length + 1] ;
+            digits[0] = 0;
+            int res[] = new int[digits.length + 1];
             res[0] = 1;
             for (int j = 0; j < digits.length; j++) {
-                res[j+1] = digits[j];
+                res[j + 1] = digits[j];
             }
             return res;
-        }else{
+        } else {
             return digits;
         }
+    }
+
+    /**
+     * 67. Add Binary - Easy
+     *
+     * @param a
+     * @param b
+     * @return
+     * @date 01/25/2026
+     */
+    public String addBinary(String a, String b) {
+        String res = "";
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int carry = 0;
+        // if a or b has number, or has carry
+        while (i >= 0 || j >= 0 || carry == 1) {
+            // carry represents the current bringing number
+            if (i>=0){
+                carry += a.charAt(i) - '0';
+                i--;
+            }
+            if (j>=0){
+                carry += b.charAt(j) - '0';
+                j--;
+            }
+            res = carry%2 + res;
+            // if = 2 -> add 1 to the next
+            carry/=2;
+        }
+        return res;
+
     }
 
     public static void main(String[] args) {
