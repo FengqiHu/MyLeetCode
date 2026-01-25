@@ -49,6 +49,45 @@ public class Matrix {
         return res;
     }
 
+
+    /**
+     * 59. Spiral Matrix II - Medium
+     * @Date - 01/25/2026
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrix(int n) {
+        int top = 0,bottom = n - 1;
+        int left = 0, right = n - 1;
+        int num = 1;
+        int res[][] = new int[n][n];
+        while (left < right && top < bottom) {
+            // left to right >>>>>
+            for (int i = left; i <= right; i++){
+                res[top][i] = num++;
+            }
+            top++;
+            // deal with right column
+            // up to down
+            for (int i = top; i <=bottom; i++) {
+                res[i][right] = num++;
+            }
+            right--;
+            // right to left  <<<<
+            for (int i = right; i >=left ; i--) {
+                res[bottom][i] = num++;
+            }
+            bottom--;
+            // down to up
+            for (int i = bottom; i >=top ; i--) {
+                System.out.println("i = " + i+ ",num = "+num);
+                res[i][left] = num++;
+            }
+            left++;
+        }
+        return res;
+    }
+
     /**
      * 48. Rotate Image - Medium
      *
