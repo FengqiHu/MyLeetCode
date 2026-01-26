@@ -316,6 +316,37 @@ public class RecursiveAlgo {
         return flag;
     }
 
+
+    public static Boolean wordSearch(int row, int col, String word, char[][] board, boolean visit[][], int start) {
+        int rows = board.length;
+        int cols = board[0].length;
+
+        // if out of bound / visited / not equal
+        if (row >= rows || col >= cols || row < 0 || col < 0 ||
+                visit[row][col] ||
+                board[row][col] != word.charAt(start)) {
+            return false;
+        }
+        // reached the word's end
+        if (start == word.length() - 1) {
+            return true;
+        }
+
+        // mark visit status
+        visit[row][col] = true;
+        // if any direction is true, return true
+        boolean flag = (wordSearch(row - 1, col, word, board, visit, start + 1)
+                //  down
+                || wordSearch(row + 1, col, word, board, visit, start + 1)
+                // left
+                || wordSearch(row, col - 1, word, board, visit, start + 1)
+                // right
+                || wordSearch(row, col + 1, word, board, visit, start + 1));
+        //backtrack
+        visit[row][col] = false;
+        return flag;
+    }
+
     /**
      * 78. Subsets - Medium
      * @Date - 01/25/2026
@@ -333,36 +364,12 @@ public class RecursiveAlgo {
         for (int i = start; i < nums.length; i++) {
             System.out.println("i:" + i);
             list.add(nums[i]);
+            // make a copy
             res.add(new ArrayList<>(list));
 
-            System.out.println("--------");
             subSetsHelper(nums, i + 1, list, res);
             list.remove(list.size() - 1);
         }
-    }
-
-    public static Boolean wordSearch(int row, int col, String word, char[][] board, boolean visit[][], int start) {
-        int rows = board.length;
-        int cols = board[0].length;
-
-        // if out of bound / visited / not equal
-        if (row >= rows || col >= cols || row < 0 || col < 0 || visit[row][col] || board[row][col] != word.charAt(start)) {
-            return false;
-        }
-        // reached the end
-        if (start == word.length() - 1) {
-            return true;
-        }
-
-        // mark
-        visit[row][col] = true;
-        boolean flag = (wordSearch(row - 1, col, word, board, visit, start + 1)
-                || wordSearch(row + 1, col, word, board, visit, start + 1)
-                || wordSearch(row, col - 1, word, board, visit, start + 1)
-                || wordSearch(row, col + 1, word, board, visit, start + 1));
-        //backtrack
-        visit[row][col] = false;
-        return flag;
     }
 
 

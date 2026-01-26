@@ -735,12 +735,12 @@ public class IntegerSet {
     public int mySqrt(int x) {
         int left = 0, right = x;
         int ans = 0;
-        if (x<2)
+        if (x < 2)
             return x;
         while (left <= right) {
             // avoiding overflow
             int mid = left + (right - left) / 2;
-            long temp = (long)mid * mid;
+            long temp = (long) mid * mid;
             if (temp > x) {
                 right = mid - 1;
             } else {
@@ -753,9 +753,10 @@ public class IntegerSet {
 
     /**
      * 71. Simplify Path - Medium
-     * @Date - 01/25/2026
+     *
      * @param path
      * @return
+     * @Date - 01/25/2026
      */
     public String simplifyPath(String path) {
         String paths[] = path.split("/");
@@ -765,22 +766,22 @@ public class IntegerSet {
         Stack<String> stack = new Stack<>();
         for (int i = 0; i < paths.length; i++) {
             // other circumstance, ignore
-            if (paths[i].equals(".")|| paths[i].equals("/")){
+            if (paths[i].equals(".") || paths[i].equals("/")) {
                 continue;
             }
             // parent path, back to the previous path
-            else if (paths[i].equals("..")){
+            else if (paths[i].equals("..")) {
                 if (!stack.isEmpty())
                     stack.pop();
-            }else if(paths[i].length()>0){
+            } else if (paths[i].length() > 0) {
                 stack.push(paths[i]);
             }
         }
         String res = "";
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             res = "/" + stack.pop() + res;
         }
-        if (res==""){
+        if (res == "") {
             return "/";
         }
         return res;
@@ -788,8 +789,9 @@ public class IntegerSet {
 
     /**
      * 75. Sort Colors - Medium
-     * @Date - 01/25/2026
+     *
      * @param nums
+     * @Date - 01/25/2026
      */
     public void sortColors(int[] nums) {
         HashMap<Integer, Integer> count = new HashMap<>();
@@ -809,6 +811,51 @@ public class IntegerSet {
                 index++;
             }
         }
+    }
+
+    /**
+     * 81. Search in Rotated Sorted Array II - Medium
+     *
+     * @param nums
+     * @param target
+     * @return
+     * @Date - 01/25/2026
+     */
+    public boolean search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        // make sure right numb has reached the end (most left pos)
+        while (left < right && nums[left] == nums[right]) {
+            right--;
+        }
+        // find the start point (left margin)
+        while (left < right) {
+            // find the left, make the mid-point slide to right
+            int mid = left+(right-left)/2+1;
+            if (nums[0] <= nums[mid])
+                left = mid;
+            else
+                right = mid - 1;
+        }
+        // finally, left == right
+        int pivot = left;
+        if (target >= nums[0]) {
+            left = 0;
+            right = pivot;
+        } else {
+            left = pivot;
+            right = nums.length - 1;
+        }
+        while (left < right) {
+            // find the left, make the mid-point slide to right
+            int mid = left+(right-left)/2+1;
+            if (nums[mid] == target)
+                return true;
+            if (nums[mid] <= target)
+                left = mid;
+            else
+                right = mid-1;
+        }
+        return nums[left] == target ? true : false;
     }
 
     public static void main(String[] args) {
