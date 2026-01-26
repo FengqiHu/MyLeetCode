@@ -316,6 +316,31 @@ public class RecursiveAlgo {
         return flag;
     }
 
+    /**
+     * 78. Subsets - Medium
+     * @Date - 01/25/2026
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        result.add(list);
+        subSetsHelper(nums, 0, list, result);
+        return result;
+    }
+    public static void subSetsHelper(int nums[], int start, List<Integer> list, List<List<Integer>> res){
+        for (int i = start; i < nums.length; i++) {
+            System.out.println("i:" + i);
+            list.add(nums[i]);
+            res.add(new ArrayList<>(list));
+
+            System.out.println("--------");
+            subSetsHelper(nums, i + 1, list, res);
+            list.remove(list.size() - 1);
+        }
+    }
+
     public static Boolean wordSearch(int row, int col, String word, char[][] board, boolean visit[][], int start) {
         int rows = board.length;
         int cols = board[0].length;
