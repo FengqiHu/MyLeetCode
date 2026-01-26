@@ -751,6 +751,41 @@ public class IntegerSet {
         return ans;
     }
 
+    /**
+     * 71. Simplify Path - Medium
+     * @Date - 01/25/2026
+     * @param path
+     * @return
+     */
+    public String simplifyPath(String path) {
+        String paths[] = path.split("/");
+        for (int i = 0; i < paths.length; i++) {
+            System.out.println(paths[i]);
+        }
+        Stack<String> stack = new Stack<>();
+        for (int i = 0; i < paths.length; i++) {
+            // other circumstance, ignore
+            if (paths[i].equals(".")|| paths[i].equals("/")){
+                continue;
+            }
+            // parent path, back to the previous path
+            else if (paths[i].equals("..")){
+                if (!stack.isEmpty())
+                    stack.pop();
+            }else if(paths[i].length()>0){
+                stack.push(paths[i]);
+            }
+        }
+        String res = "";
+        while (!stack.isEmpty()){
+            res = "/" + stack.pop() + res;
+        }
+        if (res==""){
+            return "/";
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
