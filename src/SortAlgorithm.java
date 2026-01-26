@@ -17,6 +17,11 @@ public class SortAlgorithm {
         return num;
     }
 
+    /**
+     * choose the minimum value and swap with the first one
+     * @param num
+     * @return
+     */
     public static int[] selectSort(int[] num) {
         for (int i = 0; i < num.length; i++) {
             // assume the minimum value is [i]
