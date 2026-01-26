@@ -249,68 +249,25 @@ public class Funs {
         return h;
     }
 
-    /**
-     * 33. Search in Rotated Sorted Array - Medium
-     *
-     * @param nums
-     * @param target
-     * @return
-     * @Date 01/11/2026
-     */
-    public int search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (nums[mid] == target) {
-                return mid;
-//            } else if (target < nums[mid]) {
-                // search right side
-//                for (int i = mid + 1; i < right; i++) {
-//                    if (nums[i] == target) {
-//                        return i;
-//                    }
-//                }
-//                right = mid - 1;
-            } else if (nums[left] <= nums[mid]) {
-                if (target <= nums[mid] && target >= nums[left]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } else {
-                // search left side
-//                for (int i = left; i < mid - 1; i++) {
-//                    if (nums[i] == target) {
-//                        return i;
-//                    }
-//                }
-//                left = mid + 1;
-                if (target >= nums[mid] && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            }
-        }
-        return -1;
-    }
+
 
     /**
      * 151. Reverse Words in a String - Medium
-     * @Date 01/11/2026
+     *
      * @param s
      * @return
+     * @Date 01/11/2026
      */
     public String reverseWords(String s) {
         int start = 0;
         String res = "";
         List<String> str = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
-            while(i < s.length() && s.charAt(i) != ' '){
+            while (i < s.length() && s.charAt(i) != ' ') {
                 i++;
             }
             str.add(s.substring(start, i));
-            while(i < s.length()-1 && s.charAt(i)==' '){
+            while (i < s.length() - 1 && s.charAt(i) == ' ') {
                 i++;
             }
             start = i;
