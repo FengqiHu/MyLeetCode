@@ -403,6 +403,58 @@ public class RecursiveAlgo {
     }
 
 
+    /**
+     * 93. Restore IP Addresses - Medium
+     *
+     * @param s
+     * @return
+     * @Date 01/27/2026
+     */
+    public List<String> restoreIpAddresses(String s) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        int count = 0;
+        ipHelper(0, count, res, list, s);
+        List<String> ans = new ArrayList<>();
+        for (List<Integer> list1 : res) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < list1.size(); i++) {
+                sb.append(list1.get(i));
+                if (i != list1.size() - 1) {
+                    sb.append(".");
+                }
+            }
+            ans.add(sb.toString());
+        }
+        return ans;
+    }
+
+    public static void ipHelper(int start, int count, List<List<Integer>> res, List<Integer> list, String ip) {
+        if (count == 4 && start == ip.length()) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        // didn't use all the ip or didn't seg with 4 parts
+        if (count == 4 || start == ip.length())
+            return;
+
+        int num = 0;
+        for (int i = start; i < Math.min(start + 3, ip.length()); i++) {
+            char c = ip.charAt(i);
+
+            // start with 0 or exceed the length or not digit and .
+            if (i != start && ip.charAt(start) == '0') {
+                return;
+            }
+            num = num * 10 + (c - '0');
+            if (num >= 0 && num <= 255) {
+                list.add(num);
+                ipHelper(i + 1, count+1, res, list, ip);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int nums[] = {2, 3, 1, 1, 4};
         System.out.println(climbStairs(44));

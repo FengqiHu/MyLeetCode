@@ -443,12 +443,13 @@ public class StringSet {
     /**
      * 10. Regular Expression Matching - Hard
      * 01/23/2026
+     *
      * @param str
      * @param pattern
      * @return
      */
     public boolean isMatch(String str, String pattern) {
-        boolean dp[][] = new boolean[str.length()+1][pattern.length()+1];
+        boolean dp[][] = new boolean[str.length() + 1][pattern.length() + 1];
         // dp[i][j] : str[0...i-1] matches pattern[0...j-1]
         dp[0][0] = true;
 
@@ -461,21 +462,21 @@ public class StringSet {
         }
         for (int i = 1; i <= str.length(); i++) {
             for (int j = 1; j <= pattern.length(); j++) {
-                char s = str.charAt(i-1);
-                char p = pattern.charAt(j-1);
+                char s = str.charAt(i - 1);
+                char p = pattern.charAt(j - 1);
 
                 if (p != '*') {
                     // just check the two chars
-                    if (isCharMatch(s,p)){
-                        dp[i][j] = dp[i-1][j-1];
+                    if (isCharMatch(s, p)) {
+                        dp[i][j] = dp[i - 1][j - 1];
                     }
                 } else {
                     // eliminate (a*)
-                    dp[i][j] = dp[i][j-2];
+                    dp[i][j] = dp[i][j - 2];
                     // ....a...
                     // ...a*...
-                    if (isCharMatch(s, pattern.charAt(j-2))){
-                        dp[i][j] = dp[i-1][j] || dp[i][j];
+                    if (isCharMatch(s, pattern.charAt(j - 2))) {
+                        dp[i][j] = dp[i - 1][j] || dp[i][j];
                     }
                 }
 
@@ -483,10 +484,18 @@ public class StringSet {
         }
         return dp[str.length()][pattern.length()];
     }
-    public boolean isCharMatch(char a, char b){
-        if (a==b || b=='.'){
+
+    public boolean isCharMatch(char a, char b) {
+        if (a == b || b == '.') {
             return true;
         }
+        return false;
+    }
+
+
+    public boolean valid(char c) {
+        if ('0' <= c && c <= '9' || c == '.')
+            return true;
         return false;
     }
 
