@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author louishu
  * @date 1/16/26 20:34
@@ -213,6 +216,26 @@ public class Tree {
             }
             root = root.right;
         }
+    }
+
+    /**
+     * 94. Binary Tree Inorder Traversal - Easy
+     * @param root
+     * @return
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List< Integer> res = new ArrayList<>();
+        if (root!=null)
+            traverseTree(root,res);
+        return res;
+    }
+
+    public void traverseTree( TreeNode root, List<Integer> res){
+        if (root.left!=null)
+            traverseTree(root.left,res);
+        res.add(root.val);
+        if (root.right!=null)
+            traverseTree(root.right,res);
     }
 
     public static void main(String[] args) {
