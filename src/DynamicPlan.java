@@ -132,9 +132,9 @@ public class DynamicPlan {
         Arrays.fill(dp, 1);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-               if (nums[i] > nums[j]){
-                   dp[i] = Math.max(dp[i], dp[j] + 1);
-               }
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
             }
             maxL = Math.max(maxL, dp[i]);
         }
@@ -142,7 +142,6 @@ public class DynamicPlan {
     }
 
     /**
-     *
      * @param costs
      * @param capacity
      * @param budget
@@ -209,4 +208,33 @@ public class DynamicPlan {
 
         return (int) maxTotalCapacity;
     }
+
+    /**
+     * 91. Decode Ways - Medium
+     *
+     * @param s
+     * @return
+     * @Date 01/27/2026
+     */
+    public int numDecodings(String s) {
+        int dp[] = new int[3];
+        int n = s.length();
+        dp[0] = 1;
+        s = ' ' + s;
+        for (int i = 1; i <= n; i++) {
+            // check the single digit validation
+            int single = s.charAt(i) - '0';
+            // check the dual digit validation
+            int dual = (s.charAt(i - 1) - '0') * 10 + (s.charAt(i) - '0');
+            // reset everytime for adding the new result
+            dp[i % 3] = 0;
+            if (single >= 1 && single <= 9)
+                dp[i % 3] += dp[(i - 1) % 3];
+            // both single and dual are possible, so here using parallel if
+            if (dual >= 10 && dual <= 26)
+                dp[i % 3] += dp[(i - 2) % 3];
+        }
+        return dp[n % 3];
+    }
+
 }
