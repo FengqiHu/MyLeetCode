@@ -228,9 +228,10 @@ public class RecursiveAlgo {
 
     /**
      * 47. Permutations II - Medium
-     * @Date - 01/17/2026
+     *
      * @param nums
      * @return
+     * @Date - 01/17/2026
      */
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -349,9 +350,10 @@ public class RecursiveAlgo {
 
     /**
      * 78. Subsets - Medium
-     * @Date - 01/25/2026
+     *
      * @param nums
      * @return
+     * @Date - 01/25/2026
      */
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
@@ -360,14 +362,42 @@ public class RecursiveAlgo {
         subSetsHelper(nums, 0, list, result);
         return result;
     }
-    public static void subSetsHelper(int nums[], int start, List<Integer> list, List<List<Integer>> res){
+
+    public static void subSetsHelper(int nums[], int start, List<Integer> list, List<List<Integer>> res) {
         for (int i = start; i < nums.length; i++) {
-            System.out.println("i:" + i);
             list.add(nums[i]);
             // make a copy
             res.add(new ArrayList<>(list));
 
             subSetsHelper(nums, i + 1, list, res);
+            list.remove(list.size() - 1);
+        }
+    }
+
+    /**
+     * 90. Subsets II - Medium
+     *
+     * @param nums
+     * @return
+     * @Date - 01/26/2026
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        result.add(new ArrayList<>(list));
+        subsetsWithDupHelper(nums, 0, list, result);
+        return result;
+    }
+
+    public static void subsetsWithDupHelper(int nums[], int start, List<Integer> list, List<List<Integer>> res) {
+        for (int i = start; i < nums.length; i++) {
+            if (i > start && nums[i] == nums[i - 1])
+                continue;
+            list.add(nums[i]);
+            // make a copy
+            res.add(new ArrayList<>(list));
+
+            subsetsWithDupHelper(nums, i + 1, list, res);
             list.remove(list.size() - 1);
         }
     }
