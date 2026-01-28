@@ -858,6 +858,26 @@ public class IntegerSet {
         return nums[left] == target ? true : false;
     }
 
+
+    /**
+     * 41. First Missing Positive - Hard
+     * @Date - 01/27/2026
+     * @param nums
+     * @return
+     */
+    public int firstMissingPositive(int[] nums) {
+        Arrays.sort(nums);
+        int target = 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                target++;
+            } else if (nums[i] > target) {
+                return target;
+            }
+        }
+        return target;
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
