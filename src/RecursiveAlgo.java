@@ -513,9 +513,10 @@ public class RecursiveAlgo {
 
     /**
      * 38. Count and Say - Medium
-     * @Date 01/27/2026
+     *
      * @param n
      * @return
+     * @Date 01/27/2026
      */
     public String countAndSay(int n) {
 //        String res = "";
@@ -541,6 +542,39 @@ public class RecursiveAlgo {
             }
         }
         return res.toString();
+    }
+
+    /**
+     * 40. Combination Sum II - Medium
+     *
+     * @param candidates
+     * @param target
+     * @return
+     * @Date 01/27/2026
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(candidates);
+        combinationNums2(candidates, target, 0, res, new ArrayList<>());
+        return res;
+    }
+
+    private void combinationNums2(int[] candidates, int target, int start, List<List<Integer>> res, ArrayList<Integer> list) {
+        if (target == 0) {
+                res.add(new ArrayList<>(list));
+        }
+
+        for (int i = start; i < candidates.length; i++) {
+            if (target - candidates[i] < 0) {
+                break;
+            }
+            if (i > start && candidates[i] == candidates[i - 1]) {
+                continue;
+            }
+            list.add(candidates[i]);
+            combinationNums2(candidates, target - candidates[i], i + 1, res, list);
+            list.remove(list.size() - 1);
+        }
     }
 
     public static void main(String[] args) {
