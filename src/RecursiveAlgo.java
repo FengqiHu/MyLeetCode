@@ -1,8 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author louishu
@@ -449,10 +446,101 @@ public class RecursiveAlgo {
             num = num * 10 + (c - '0');
             if (num >= 0 && num <= 255) {
                 list.add(num);
-                ipHelper(i + 1, count+1, res, list, ip);
+                ipHelper(i + 1, count + 1, res, list, ip);
                 list.remove(list.size() - 1);
             }
         }
+    }
+
+    public void solveSudoku(char[][] board) {
+        List<Set<Character>> rowRes = new ArrayList<>();
+        List<Set<Character>> colRes = new ArrayList<>();
+        List<Set<Character>> boxRes = new ArrayList<>();
+        Set<Character> list = new HashSet<>();
+        for (int i = 1; i <= 9; i++) {
+            list.add((char) ('0' + i));
+        }
+        for (int i = 0; i < 9; i++) {
+            rowRes.add(new HashSet<>(list));
+            colRes.add(new HashSet<>(list));
+            boxRes.add(new HashSet<>(list));
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.') {
+                    rowRes.get(i).remove(board[i][j]);
+                    colRes.get(j).remove(board[i][j]);
+                    boxRes.get(i / 3 * 3 + j / 3).remove(board[i][j]);
+                }
+            }
+        }
+        sodukuDfs(board, rowRes, colRes, boxRes);
+
+    }
+
+    public static boolean sodukuDfs(char[][] board, List<Set<Character>> rowRes, List<Set<Character>> colRes, List<Set<Character>> boxRes) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') {
+                    // try every number
+                    for (char c = '1'; c <= '9'; c++) {
+                        // verify validation
+                        if (!rowRes.get(i).contains(c) || colRes.get(j).contains(c) || boxRes.get(i / 3 * 3 + j / 3).contains(c))
+                            continue;
+
+                        board[i][j] = c;
+                        rowRes.get(i).remove(c);
+                        colRes.get(j).remove(c);
+                        boxRes.get(i / 3 * 3 + j / 3).remove(c);
+
+                        if (sodukuDfs(board, rowRes, colRes, boxRes))
+                            return true;
+
+                        board[i][j] = '.';
+                        rowRes.get(i).add(c);
+                        colRes.get(j).add(c);
+                        boxRes.get(i / 3 * 3 + j / 3).add(c);
+                    }
+                    // tried every c, if no number can be placed here, return false
+                    return false;
+
+                }
+
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 38. Count and Say - Medium
+     * @Date 01/27/2026
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+//        String res = "";
+        // Better to use StringBuilder since using String to concat will generate a new String, which is really slow
+        StringBuilder res = new StringBuilder();
+
+        if (n == 1) {
+            return "1";
+        } else {
+            String s = countAndSay(n - 1);
+
+            int sum = 1;
+            for (int i = 0; i < s.length(); i++) {
+                char curNum = s.charAt(i);
+                if (i < s.length() - 1 && curNum == s.charAt(i + 1)) {
+                    sum++;
+                } else {
+                    String c = Integer.toString(sum);
+//                    res = res + c + curNum;
+                    res.append(c).append(curNum);
+                    sum = 1;
+                }
+            }
+        }
+        return res.toString();
     }
 
     public static void main(String[] args) {
