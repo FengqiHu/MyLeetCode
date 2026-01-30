@@ -889,19 +889,10 @@ public class IntegerSet {
     public int removeDuplicatesII(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
         int res = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (map.get(nums[i]) == null || map.get(nums[i]) < 2) {
-                map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-                res++;
-            }
-        }
-        int index = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (i < nums.length - 1 && nums[i] == nums[i + 1])
-                continue;
-            int freq = map.get(nums[i]);
-            for (int j = 0; j < freq; j++) {
-                nums[index++] = nums[i];
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+            if (map.get(num) <= 2) {
+                nums[res++] = num;
             }
         }
         return res;
