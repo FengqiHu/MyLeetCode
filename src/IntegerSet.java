@@ -830,7 +830,7 @@ public class IntegerSet {
         // find the start point (left margin)
         while (left < right) {
             // find the left, make the mid-point slide to right
-            int mid = left+(right-left)/2+1;
+            int mid = left + (right - left) / 2 + 1;
             if (nums[0] <= nums[mid])
                 left = mid;
             else
@@ -847,13 +847,13 @@ public class IntegerSet {
         }
         while (left < right) {
             // find the left, make the mid-point slide to right
-            int mid = left+(right-left)/2+1;
+            int mid = left + (right - left) / 2 + 1;
             if (nums[mid] == target)
                 return true;
             if (nums[mid] <= target)
                 left = mid;
             else
-                right = mid-1;
+                right = mid - 1;
         }
         return nums[left] == target ? true : false;
     }
@@ -861,9 +861,10 @@ public class IntegerSet {
 
     /**
      * 41. First Missing Positive - Hard
-     * @Date - 01/27/2026
+     *
      * @param nums
      * @return
+     * @Date - 01/27/2026
      */
     public int firstMissingPositive(int[] nums) {
         Arrays.sort(nums);
@@ -876,6 +877,34 @@ public class IntegerSet {
             }
         }
         return target;
+    }
+
+    /**
+     * 80. Remove Duplicates from Sorted Array II - Medium
+     *
+     * @param nums
+     * @return
+     * @Date - 01/29/2026
+     */
+    public int removeDuplicatesII(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (map.get(nums[i]) == null || map.get(nums[i]) < 2) {
+                map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+                res++;
+            }
+        }
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i < nums.length - 1 && nums[i] == nums[i + 1])
+                continue;
+            int freq = map.get(nums[i]);
+            for (int j = 0; j < freq; j++) {
+                nums[index++] = nums[i];
+            }
+        }
+        return res;
     }
 
     public static void main(String[] args) {

@@ -499,6 +499,13 @@ public class StringSet {
         return false;
     }
 
+    /**
+     * 43. Multiply Strings - Medium
+     * @Date - 01/29/2026
+     * @param num1
+     * @param num2
+     * @return
+     */
     public String multiply(String num1, String num2) {
         int m = num1.length(), n = num2.length();
         int res[] = new int[m + n + 1];
@@ -535,4 +542,5 @@ public class StringSet {
         String[] words = {"word", "good", "best", "good"};
 
     }
+
 }
