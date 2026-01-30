@@ -499,6 +499,37 @@ public class StringSet {
         return false;
     }
 
+    public String multiply(String num1, String num2) {
+        int m = num1.length(), n = num2.length();
+        int res[] = new int[m + n + 1];
+        if (num1.equals("0") || num2.equals("0"))
+            return "0";
+        // calculate the sum in each digit
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int a = num1.charAt(i) - '0';
+                int b = num2.charAt(j) - '0';
+                res[i + j + 1] += a * b;
+            }
+        }
+        int carry = 0;
+        for (int i = res.length - 1; i >= 0; i--) {
+            System.out.println("before: " + res[i]);
+
+            int temp = res[i] + carry;
+            res[i] = temp % 10;
+            carry = temp / 10;
+            System.out.println(res[i]);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = res.length - 1; i >= 0; i--) {
+            if (res[i] == 0 && i ==0)
+                continue;
+            sb.append(res[i]);
+        }
+        return sb.reverse().toString();
+    }
+
     public static void main(String[] args) {
         String str = "wordgoodgoodgoodbestword";
         String[] words = {"word", "good", "best", "good"};
