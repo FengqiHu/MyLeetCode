@@ -492,19 +492,48 @@ public class StringSet {
         return false;
     }
 
+    /**
+     * 97. Interleaving String - Medium
+     *
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     * @Date - 01/29/2026
+     */
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int m = s1.length(), n = s2.length();
 
-    public boolean valid(char c) {
-        if ('0' <= c && c <= '9' || c == '.')
-            return true;
-        return false;
+        if (m + n != s3.length())
+            return false;
+
+        s1 = ' ' + s1;
+        s2 = ' ' + s2;
+        s3 = ' ' + s3;
+
+        // dp[i][j]: the first i chars of s1 and first j chars of s2 can form the first i + j chars of s3
+        boolean dp[][] = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                // end with s1's end
+                if (i > 0 && s3.charAt(i + j) == s1.charAt(i))
+                    dp[i][j] = dp[i - 1][j];
+                // end with s2's end
+                if (j > 0 && s3.charAt(i + j) == s2.charAt(j))
+                    dp[i][j] = dp[i][j] || dp[i][j - 1];
+            }
+        }
+        return dp[m][n];
     }
 
     /**
      * 43. Multiply Strings - Medium
-     * @Date - 01/29/2026
+     *
      * @param num1
      * @param num2
      * @return
+     * @Date - 01/29/2026
      */
     public String multiply(String num1, String num2) {
         int m = num1.length(), n = num2.length();
@@ -530,17 +559,10 @@ public class StringSet {
         }
         StringBuilder sb = new StringBuilder();
         for (int i = res.length - 1; i >= 0; i--) {
-            if (res[i] == 0 && i ==0)
+            if (res[i] == 0 && i == 0)
                 continue;
             sb.append(res[i]);
         }
         return sb.reverse().toString();
     }
-
-    public static void main(String[] args) {
-        String str = "wordgoodgoodgoodbestword";
-        String[] words = {"word", "good", "best", "good"};
-
-    }
-
 }
