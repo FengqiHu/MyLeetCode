@@ -244,9 +244,9 @@ public class Tree {
     /**
      * 95. Unique Binary Search Trees II - Medium
      *
-     * @Date - 02/01/2026
      * @param n
      * @return
+     * @Date - 02/01/2026
      */
     public List<TreeNode> generateTrees(int n) {
         return buildTree(1, n);
@@ -259,7 +259,7 @@ public class Tree {
         for (int i = start; i <= end; i++) {
             List<TreeNode> leftNode = buildTree(start, i - 1);
             List<TreeNode> rightNode = buildTree(i + 1, end);
-            if(leftNode ==null || rightNode == null)
+            if (leftNode == null || rightNode == null)
                 continue;
             // enum the left and right trees
             for (int j = 0; j < leftNode.size(); j++) {
@@ -269,7 +269,7 @@ public class Tree {
                     root.right = rightNode.get(k);
                     res.add(root);
                 }
-                
+
             }
         }
         return res;
@@ -277,9 +277,10 @@ public class Tree {
 
     /**
      * 96. Unique Binary Search Trees - Medium
-     * @Date - 02/01/2026
+     *
      * @param n
      * @return
+     * @Date - 02/01/2026
      */
     public int numTrees(int n) {
         int dp[] = new int[n + 1];
@@ -293,6 +294,26 @@ public class Tree {
         return dp[n];
     }
 
+    /**
+     * 97. Validate Binary Search Tree - Medium
+     *
+     * @param root
+     * @return
+     * @Date - 02/01/2026
+     */
+    public boolean isValidBST(TreeNode root) {
+        return validateBST(root, null, null);
+    }
+
+    private boolean validateBST(TreeNode root, Integer lower, Integer upper) {
+        if (root == null)
+            return true;
+        if (lower != null && root.val <= lower)
+            return false;
+        if (upper!=null && root.val >= upper)
+            return false;
+        return validateBST(root.left, lower, root.val) && validateBST(root.right, root.val, upper);
+    }
 
     public static void main(String[] args) {
         int[] preorder = {3, 9, 20, 15, 7};
