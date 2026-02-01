@@ -492,6 +492,50 @@ public class StringSet {
         return false;
     }
 
+
+    /**
+     * 65. Valid Number - Hard
+     *
+     * @param s
+     * @return
+     * @Date - 01/30/2026
+     */
+    public boolean isNumber(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'e' || s.charAt(i) == 'E'){
+                // before must be int or dot, after must be int
+                return check(0, i-1, s, false) && check(i+1, s.length()-1, s, true) ;
+            }
+        }
+        // check the entire sequence
+        return check(0, s.length()-1, s, false);
+
+    }
+    public boolean check(int start, int end, String s, boolean isInt){
+        if (s.charAt(start) == '+' || s.charAt(start) == '-')
+            start++;
+        boolean hasDot = false, hasDigit = false;
+        for (int i = start; i <= end; i++) {
+            if (s.charAt(i) == '.'){
+                // must be int or has dot before
+                if (isInt || hasDot)  return false;
+                hasDot = true;
+            }else if(Character.isDigit(s.charAt(i))){
+                hasDigit = true;
+            }else {
+                return false;
+            }
+        }
+        return hasDigit;
+    }
+
+    public boolean isValidNum(char c) {
+        if (Character.isDigit(c) || c == '+' || c == '-' || c == '.' || c == 'e' || c == 'E') {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 97. Interleaving String - Medium
      *
