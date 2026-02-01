@@ -465,6 +465,34 @@ public class LinkedList {
         return vhead.next;
     }
 
+    /**
+     * 23. Merge k Sorted Lists - Hard
+     * @Date 01/30/2026
+     * @param lists
+     * @return
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0)
+            return null;
+        ListNode resHead = new ListNode(0);
+        resHead.next = lists[0];
+        for (int i = 1; i < lists.length; i++) {
+            ListNode target = lists[i];
+            ListNode cur = resHead;
+            while(target!=null){
+                ListNode tmp = target;
+                while(cur.next!=null && cur.next.val<tmp.val){
+                    cur = cur.next;
+                }
+                target = target.next;
+
+                tmp.next = cur.next;
+                cur.next = tmp;
+            }
+        }
+        return resHead.next;
+    }
+
 
     public static void main(String[] args) {
         String str = "fhurfhiwe";
