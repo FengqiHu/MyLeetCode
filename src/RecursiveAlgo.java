@@ -1,6 +1,8 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
+import static java.util.Collections.*;
+
 /**
  * @author louishu
  * @date 1/5/26 14:42
@@ -197,7 +199,7 @@ public class RecursiveAlgo {
     }
 
     /**
-     * 46. Permutations - Medium
+     * 46. tations - Medium
      *
      * @param nums
      * @return
@@ -575,6 +577,52 @@ public class RecursiveAlgo {
             combinationNums2(candidates, target - candidates[i], i + 1, res, list);
             list.remove(list.size() - 1);
         }
+    }
+
+    /**
+     * 31. Next Permutation - Medium
+     * @Date- 01/31/2026
+     * @param nums
+     */
+    public void nextPermutation(int[] nums) {
+        // find first decreasing element from right
+        // 2 3 5 4 1 -> start = 5
+        int start = nums.length-1;
+        while (start > 0 && nums[start - 1] >= nums[start]) {
+            start--;
+        }
+        if (start <= 0){
+            for(int i = 0; i < nums.length / 2; i++){
+                int temp = nums[i];
+                nums[i] = nums[nums.length - i - 1];
+                nums[nums.length - i - 1] = temp;
+            }
+        }else {
+            // find element just larger than nums[start - 1]
+            // find 4
+            int end = nums.length - 1;
+            while(nums[end] <= nums[start - 1]){
+                end--;
+            }
+            // swap the two numbers
+            // swap 3 and 4 -> 2 4 5 3 1
+            int tmp = nums[start - 1];
+            nums[start - 1] = nums[end];
+            nums[end] = tmp;
+
+            // reverse the rest
+            // 2 4 5 3 1 -> 2 4 1 3 5
+            int l = start, r = nums.length - 1;
+            while (l < r) {
+                int temp = nums[l];
+                nums[l] = nums[r];
+                nums[r] = temp;
+                l++;
+                r--;
+            }
+
+        }
+
     }
 
     public static void main(String[] args) {
