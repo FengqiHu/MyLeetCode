@@ -275,6 +275,25 @@ public class Tree {
         return res;
     }
 
+    /**
+     * 96. Unique Binary Search Trees - Medium
+     * @Date - 02/01/2026
+     * @param n
+     * @return
+     */
+    public int numTrees(int n) {
+        int dp[] = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                // left * right tree
+                dp[i] += dp[j - 1] * dp[i - j];
+            }
+        }
+        return dp[n];
+    }
+
+
     public static void main(String[] args) {
         int[] preorder = {3, 9, 20, 15, 7};
         int[] inorder = {9, 3, 15, 20, 7};
