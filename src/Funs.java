@@ -44,6 +44,33 @@ public class Funs {
     }
 
     /**
+     * 89. Gray Code - Medium
+     * @Date - 02/01/2026
+     * @param n
+     * @return
+     */
+    public static List<Integer> grayCode(int n) {
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0);
+
+        while (n> 0) {
+            for (int i = ans.size() - 1; i >= 0; i--) {
+                int val = ans.get(i);
+                // move one digit left
+                val <<= 1;
+                //update value
+                ans.set(i, val);
+                System.out.println( val);
+                ans.add(val + 1);
+            }
+            n--;
+        }
+
+        return ans;
+    }
+
+
+    /**
      * 22. Generate Parentheses - Medium
      * 01/04/2026
      *
@@ -283,7 +310,7 @@ public class Funs {
 
     public static void main(String[] args) {
         String str = "sg";
-        System.out.println(str.substring(1, str.length()));
+        System.out.println(grayCode(3));
     }
 
 }
