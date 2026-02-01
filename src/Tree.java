@@ -196,17 +196,18 @@ public class Tree {
 
     /**
      * 114. Flatten Binary Tree to Linked List - Medium
-     * @Date - 01/18/2026
+     *
      * @param root
+     * @Date - 01/18/2026
      */
     public void flatten(TreeNode root) {
-        while(root != null){
+        while (root != null) {
             // enter the left node
-            if(root.left != null){
+            if (root.left != null) {
                 // to the most right node
                 // set a start, from left branch
                 TreeNode rightNode = root.left;
-                while(rightNode.right!=null){
+                while (rightNode.right != null) {
                     rightNode = rightNode.right;
                 }
                 // connect this node to the right branch
@@ -220,22 +221,58 @@ public class Tree {
 
     /**
      * 94. Binary Tree Inorder Traversal - Easy
+     *
      * @param root
      * @return
      */
     public List<Integer> inorderTraversal(TreeNode root) {
-        List< Integer> res = new ArrayList<>();
-        if (root!=null)
-            traverseTree(root,res);
+        List<Integer> res = new ArrayList<>();
+        if (root != null)
+            traverseTree(root, res);
         return res;
     }
 
-    public void traverseTree( TreeNode root, List<Integer> res){
-        if (root.left!=null)
-            traverseTree(root.left,res);
+    public void traverseTree(TreeNode root, List<Integer> res) {
+        if (root.left != null)
+            traverseTree(root.left, res);
         res.add(root.val);
-        if (root.right!=null)
-            traverseTree(root.right,res);
+        if (root.right != null)
+            traverseTree(root.right, res);
+    }
+
+
+    /**
+     * 95. Unique Binary Search Trees II - Medium
+     *
+     * @Date - 02/01/2026
+     * @param n
+     * @return
+     */
+    public List<TreeNode> generateTrees(int n) {
+        return buildTree(1, n);
+    }
+
+    public List<TreeNode> buildTree(int start, int end) {
+        if (start > end)
+            return null;
+        List<TreeNode> res = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftNode = buildTree(start, i - 1);
+            List<TreeNode> rightNode = buildTree(i + 1, end);
+            if(leftNode ==null || rightNode == null)
+                continue;
+            // enum the left and right trees
+            for (int j = 0; j < leftNode.size(); j++) {
+                for (int k = 0; k < rightNode.size(); k++) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftNode.get(j);
+                    root.right = rightNode.get(k);
+                    res.add(root);
+                }
+                
+            }
+        }
+        return res;
     }
 
     public static void main(String[] args) {
