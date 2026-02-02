@@ -50,6 +50,15 @@ public class Funs {
      * @return
      */
     public static List<Integer> grayCode(int n) {
+        /**
+         * n = 2
+         * 00
+         * 10
+         * ---
+         * 11
+         * 01
+         * 除最后一位外，每一位的数字，都是从0开始，并且上下对称，所以n基于n-1的结果，左移一位，变成2进制后，再复制一遍+1
+         */
         List<Integer> ans = new ArrayList<>();
         ans.add(0);
 

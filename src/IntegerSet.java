@@ -898,6 +898,38 @@ public class IntegerSet {
         return res;
     }
 
+    /**
+     * 29. Divide two intergers
+     *
+     * @param dividend
+     * @param divisor
+     * @return
+     * @Date - 02/01/2026
+     */
+    public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1)
+            return Integer.MAX_VALUE;
+
+        long a = Math.abs((long) dividend);
+        long b = Math.abs((long) divisor);
+
+        // decide the sign
+        int sign = ((dividend < 0 && divisor < 0) || (dividend > 0 && divisor > 0)) ? 1 : -1;
+        long res = 0;
+
+        while (a >= b) {
+            long tmp = b, count = 1;
+            while ((tmp * 2) <= a) {
+                tmp *= 2;
+                count *= 2;
+            }
+            a -= tmp;
+            res += count;
+        }
+
+        return (int) (sign * res);
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
