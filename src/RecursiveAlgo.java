@@ -563,7 +563,7 @@ public class RecursiveAlgo {
 
     private void combinationNums2(int[] candidates, int target, int start, List<List<Integer>> res, ArrayList<Integer> list) {
         if (target == 0) {
-                res.add(new ArrayList<>(list));
+            res.add(new ArrayList<>(list));
         }
 
         for (int i = start; i < candidates.length; i++) {
@@ -581,27 +581,28 @@ public class RecursiveAlgo {
 
     /**
      * 31. Next Permutation - Medium
-     * @Date- 01/31/2026
+     *
      * @param nums
+     * @Date- 01/31/2026
      */
     public void nextPermutation(int[] nums) {
         // find first decreasing element from right
         // 2 3 5 4 1 -> start = 5
-        int start = nums.length-1;
+        int start = nums.length - 1;
         while (start > 0 && nums[start - 1] >= nums[start]) {
             start--;
         }
-        if (start <= 0){
-            for(int i = 0; i < nums.length / 2; i++){
+        if (start <= 0) {
+            for (int i = 0; i < nums.length / 2; i++) {
                 int temp = nums[i];
                 nums[i] = nums[nums.length - i - 1];
                 nums[nums.length - i - 1] = temp;
             }
-        }else {
+        } else {
             // find element just larger than nums[start - 1]
             // find 4
             int end = nums.length - 1;
-            while(nums[end] <= nums[start - 1]){
+            while (nums[end] <= nums[start - 1]) {
                 end--;
             }
             // swap the two numbers
@@ -622,7 +623,56 @@ public class RecursiveAlgo {
             }
 
         }
+    }
 
+    /**
+     * 51. N-Queens - Hard
+     *
+     * @param n
+     * @return
+     * @Date - 02/02/2026
+     */
+    public List<List<String>> solveNQueens(int n) {
+        boolean leftMemo[] = new boolean[2 * n - 1];
+        boolean rightMemo[] = new boolean[2 * n - 1];
+        boolean colMemo[] = new boolean[n];
+        List<List<String>> res = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+        queenHelper(n, 0, leftMemo, rightMemo, colMemo, list, res);
+        return res;
+    }
+
+    public static void queenHelper(int n, int start, boolean[] leftMemo, boolean rightMemo[], boolean[] colMemo, List<String> list, List<List<String>> res) {
+
+        // is reach the end, indicating a valid solution, add to result
+        if (start == n) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        // start is row index, so we just need to loop the column to find possible position
+        for (int i = 0; i < n; i++) {
+            char[] arr = new char[n];
+            Arrays.fill(arr, '.');
+
+            // if obey the rules
+            if (leftMemo[i - start+n-1] || rightMemo[i + start] || colMemo[i]) {
+                // this pos is illegal
+                continue;
+            } else {
+                arr[i] =  'Q';
+                colMemo[i] = true;
+                leftMemo[i - start+n-1] = true;
+                rightMemo[i + start] = true;
+                // add this possible position
+                list.add(new String(arr));
+                queenHelper(n, start + 1, leftMemo, rightMemo, colMemo, list, res);
+                // recursive back
+                colMemo[i] = false;
+                leftMemo[i - start+n-1] = false;
+                rightMemo[i + start] = false;
+                list.remove(list.size() - 1);
+            }
+        }
     }
 
     public static void main(String[] args) {
