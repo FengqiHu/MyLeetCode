@@ -237,4 +237,41 @@ public class DynamicPlan {
         return dp[n % 3];
     }
 
+    /**
+     * 45. Jump Game II - Medium
+     *
+     * @param nums
+     * @return
+     * @Date - 02/01/2026
+     */
+    public int jump(int[] nums) {
+        int step[] = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            step[i] = i;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int end = Math.min(nums.length - 1, i + nums[i]);
+            for (int j = i + 1; j <= end; j++) {
+                step[j] = Math.min(step[j], step[i] + 1);
+
+            }
+        }
+        return step[nums.length - 1];
+    }
+
+    public int jumpGreedy(int[] nums) {
+        int step = 0;
+        int maxPos = 0;
+        int curEnd = 0;
+        for (int i = 0; i < nums.length-1; i++) {
+            // the farest point that the current point can reach
+            maxPos = Math.max(maxPos ,i+nums[i]);
+            if (i==curEnd){
+                step++;
+                curEnd = maxPos;
+            }
+        }
+        return step;
+    }
+
 }
