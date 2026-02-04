@@ -655,22 +655,65 @@ public class RecursiveAlgo {
             Arrays.fill(arr, '.');
 
             // if obey the rules
-            if (leftMemo[i - start+n-1] || rightMemo[i + start] || colMemo[i]) {
+            if (leftMemo[i - start + n - 1] || rightMemo[i + start] || colMemo[i]) {
                 // this pos is illegal
                 continue;
             } else {
-                arr[i] =  'Q';
+                arr[i] = 'Q';
                 colMemo[i] = true;
-                leftMemo[i - start+n-1] = true;
+                leftMemo[i - start + n - 1] = true;
                 rightMemo[i + start] = true;
                 // add this possible position
                 list.add(new String(arr));
                 queenHelper(n, start + 1, leftMemo, rightMemo, colMemo, list, res);
                 // recursive back
                 colMemo[i] = false;
-                leftMemo[i - start+n-1] = false;
+                leftMemo[i - start + n - 1] = false;
                 rightMemo[i + start] = false;
                 list.remove(list.size() - 1);
+            }
+        }
+    }
+
+    int sumQueen = 0;
+
+    /**
+     * 52. N-Queens II - Hard
+     * @Date - 02/02/2026
+     * @param n
+     * @return
+     */
+    public int totalNQueens(int n) {
+        boolean leftMemo[] = new boolean[2 * n - 1];
+        boolean rightMemo[] = new boolean[2 * n - 1];
+        boolean colMemo[] = new boolean[n];
+        queenHelperTotal(n, 0, leftMemo, rightMemo, colMemo);
+        return sumQueen;
+    }
+
+    private void queenHelperTotal(int n, int start, boolean[] leftMemo, boolean rightMemo[], boolean[] colMemo) {
+
+        // is reach the end, indicating a valid solution, add to result
+        if (start == n) {
+            sumQueen++;
+            return;
+        }
+        // start is row index, so we just need to loop the column to find possible position
+        for (int i = 0; i < n; i++) {
+            // if obey the rules
+            if (leftMemo[i - start + n - 1] || rightMemo[i + start] || colMemo[i]) {
+                // this pos is illegal
+                continue;
+            } else {
+                colMemo[i] = true;
+                leftMemo[i - start + n - 1] = true;
+                rightMemo[i + start] = true;
+                // add this possible position
+                queenHelperTotal(n, start + 1, leftMemo, rightMemo, colMemo);
+                // recursive back
+                colMemo[i] = false;
+                leftMemo[i - start + n - 1] = false;
+                rightMemo[i + start] = false;
             }
         }
     }
