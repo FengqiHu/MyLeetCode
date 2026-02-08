@@ -930,6 +930,39 @@ public class IntegerSet {
         return (int) (sign * res);
     }
 
+    /**
+     * 60. Permutation Sequence - Hard
+     *
+     * @param n
+     * @param k
+     * @return
+     * @Date - 02/07/2026
+     */
+    public String getPermutation(int n, int k) {
+        String res = "";
+        int fact[] = new int[n + 1];
+        fact[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            fact[i] = fact[i - 1] * i;
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+        k--;
+        while (list.size() > 0) {
+            // begin from fact(n)
+            int groupSize = fact[n-1];
+            int pos = k / groupSize;
+
+            res += list.get(pos);
+            list.remove(pos);
+            k = k%groupSize;
+            n--;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
         if (a > Integer.MAX_VALUE) {
