@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -41,6 +43,65 @@ public class StackSet {
                     }
                 }
             }
+        }
+        return res;
+    }
+
+    // Q84 单调栈 - Monotonous stack
+    public static int largestRectangleAreaStack(int[] heights) {
+        int n = heights.length;
+        int leftMin[] = new int[n];
+        int rightMin[] = new int[n];
+        leftMin[0] = -1;
+        rightMin[n - 1] = n;
+        for (int i = 1; i < n; i++) {
+            int t = i - 1;
+            while (t >= 0 && heights[t] >= heights[i]) {
+                // jump to the previous smaller element
+                t = leftMin[t];
+            }
+            leftMin[i] = t;
+        }
+
+        rightMin[n - 1] = n;
+        for (int i = n - 2; i >= 0; i--) {
+            int t = i + 1;
+            while (t < n && heights[t] >= heights[i]) {
+                t = rightMin[t];
+            }
+            rightMin[i] = t;
+        }
+        int res = 0;
+        // the water can be stored between leftMax and rightMax
+        for (int i = 0; i < n; i++) {
+            // width = (leftMin[i]- rightMin[i])
+            res = Math.max(res, heights[i] * (rightMin[i] - leftMin[i] - 1));
+        }
+        return res;
+    }
+
+    /**
+     * 739. Daily Temperatures - medium
+     *
+     * @param temp
+     * @return
+     * @Date - 02/09/2026
+     */
+    public int[] dailyTemperatures(int[] temp) {
+        // find the first one that bigger than current
+        int n = temp.length;
+        int res[] = new int[n];
+        // Deque is must faster than Stack
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            // Monotonous stack
+            // if stack is empty or the top element is smaller than current
+            while (!stack.isEmpty() && temp[stack.peek()] < temp[i]) {
+                res[stack.peek()] = i - stack.peek();
+                stack.pop();
+            }
+             // finally push the current element into stack
+            stack.push(i);
         }
         return res;
     }
