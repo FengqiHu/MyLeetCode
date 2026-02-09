@@ -310,9 +310,35 @@ public class Tree {
             return true;
         if (lower != null && root.val <= lower)
             return false;
-        if (upper!=null && root.val >= upper)
+        if (upper != null && root.val >= upper)
             return false;
         return validateBST(root.left, lower, root.val) && validateBST(root.right, root.val, upper);
+    }
+
+
+
+    /**
+     * 543. Diameter of Binary Tree - Easy
+     *
+     * @param root
+     * @return
+     * @Date- 02/03/2026
+     */
+    int res = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        diameter( root);
+        return res;
+    }
+
+    private int diameter(TreeNode root){
+        if (root == null)
+            return 0;
+        else{
+            int left = diameter(root.left);
+            int right = diameter(root.right);
+            res = Math.max(res, left+right);
+            return Math.max(left, right)+ 1;
+        }
     }
 
     public static void main(String[] args) {
