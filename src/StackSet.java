@@ -52,32 +52,36 @@ public class StackSet {
         int n = heights.length;
         int leftMin[] = new int[n];
         int rightMin[] = new int[n];
-        leftMin[0] = -1;
-        rightMin[n - 1] = n;
-        for (int i = 1; i < n; i++) {
-            int t = i - 1;
-            while (t >= 0 && heights[t] >= heights[i]) {
-                // jump to the previous smaller element
-                t = leftMin[t];
-            }
-            leftMin[i] = t;
-        }
+        Deque<Integer> stack = new ArrayDeque<>();
 
-        rightMin[n - 1] = n;
-        for (int i = n - 2; i >= 0; i--) {
-            int t = i + 1;
-            while (t < n && heights[t] >= heights[i]) {
-                t = rightMin[t];
-            }
-            rightMin[i] = t;
-        }
-        int res = 0;
-        // the water can be stored between leftMax and rightMax
+        // record the first smaller element to the left
         for (int i = 0; i < n; i++) {
-            // width = (leftMin[i]- rightMin[i])
-            res = Math.max(res, heights[i] * (rightMin[i] - leftMin[i] - 1));
+            // Monotonous stack
+            // if stack is empty or the top element is smaller than current
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
+            }
+            leftMin[i] = stack.isEmpty() ? -1 : stack.peek();
+
+            // finally push the current element into stack
+            stack.push(i);
         }
-        return res;
+        stack.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            // Monotonous stack
+            // if stack is empty or the top element is smaller than current
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
+            }
+            rightMin[i] = stack.isEmpty() ? n : stack.peek();
+            // finally push the current element into stack
+            stack.push(i);
+        }
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, heights[i] * (rightMin[i] - leftMin[i] - 1));
+        }
+        return max;
     }
 
     /**
@@ -100,7 +104,7 @@ public class StackSet {
                 res[stack.peek()] = i - stack.peek();
                 stack.pop();
             }
-             // finally push the current element into stack
+            // finally push the current element into stack
             stack.push(i);
         }
         return res;
