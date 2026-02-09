@@ -338,6 +338,7 @@ public class Funs {
         for (int i = n - 2; i >= 0; i--) {
             rightMax[i] = Math.max(rightMax[i + 1], height[i]);
         }
+        // the water can be stored between leftMax and rightMax
         for (int i = 0; i < n; i++) {
             int h = Math.min(leftMax[i], rightMax[i]);
             if (h > height[i]) {
@@ -345,12 +346,51 @@ public class Funs {
             }
         }
         return sum;
+    }
 
+    /**
+     * 84. Largest Rectangle in Histogram - Hard
+     * @Date - 02/08/2026
+     *
+     * @param heights
+     * @return
+     * @Date - 02/07/2026
+     */
+    public static int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        int leftMin[] = new int[n];
+        int rightMin[] = new int[n];
+        leftMin[0] = -1;
+        rightMin[n - 1] = n;
+        for (int i = 1; i < n; i++) {
+            int t = i - 1;
+            while (t >= 0 && heights[t] >= heights[i]) {
+                // jump to the previous smaller element
+                t = leftMin[t];
+            }
+            leftMin[i] = t;
+        }
+
+        rightMin[n - 1] = n;
+        for (int i = n - 2; i >= 0; i--) {
+            int t = i + 1;
+            while (t < n && heights[t] >= heights[i]) {
+                t = rightMin[t];
+            }
+            rightMin[i] = t;
+        }
+        int res = 0;
+        // the water can be stored between leftMax and rightMax
+        for (int i = 0; i < n; i++) {
+            res = Math.max(res, heights[i] * (rightMin[i]- leftMin[i]-1));
+        }
+        return res;
     }
 
     public static void main(String[] args) {
         String str = "sg";
-        System.out.println(grayCode(3));
+        int i[] = {2,1,5,6,2,3};
+        System.out.println(largestRectangleArea(i));
     }
 
 }
