@@ -938,7 +938,7 @@ public class IntegerSet {
      * @return
      * @Date - 02/07/2026
      */
-    public String getPermutation(int n, int k) {
+    public static String getPermutation(int n, int k) {
         String res = "";
         int fact[] = new int[n + 1];
         fact[0] = 1;
@@ -949,15 +949,17 @@ public class IntegerSet {
         for (int i = 1; i <= n; i++) {
             list.add(i);
         }
+        // 0-based
         k--;
         while (list.size() > 0) {
             // begin from fact(n)
-            int groupSize = fact[n-1];
+            int groupSize = fact[n - 1];
             int pos = k / groupSize;
 
             res += list.get(pos);
             list.remove(pos);
-            k = k%groupSize;
+            // k 在“当前组选中的那一块”里排第几个
+            k = k % groupSize;
             n--;
         }
         return res;
@@ -968,8 +970,6 @@ public class IntegerSet {
         if (a > Integer.MAX_VALUE) {
             System.out.println("yes");
         }
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(a);
+        System.out.println(getPermutation(4, 9));
     }
 }

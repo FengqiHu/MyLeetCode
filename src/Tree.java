@@ -397,6 +397,30 @@ public class Tree {
         levelOrderDfs(root.right, level + 1, res);
     }
 
+    /**
+     * 108. Convert Sorted Array to Binary Search Tree - Easy
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
+     * @param nums
+     * @return
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        int n = nums.length;
+        return sortedArrayToBSTDfs(nums, 0, n - 1);
+    }
+
+    private TreeNode sortedArrayToBSTDfs(int[] nums, int start, int end) {
+        if (start > end)
+            return null;
+        int mid = (start + end) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        // left must less than mid
+        root.left = sortedArrayToBSTDfs(nums, start, mid - 1);
+        // right must bigger than mid
+        root.right = sortedArrayToBSTDfs(nums, mid + 1, end);
+
+        return root;
+    }
 
     public static void main(String[] args) {
         int[] preorder = {3, 9, 20, 15, 7};
