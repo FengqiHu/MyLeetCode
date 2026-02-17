@@ -315,7 +315,31 @@ public class Tree {
         return validateBST(root.left, lower, root.val) && validateBST(root.right, root.val, upper);
     }
 
+    /**
+     * 99. Recover Binary Search Tree - Medium
+     *
+     * @param root
+     * @Date - 02/01/2026
+     */
+    public void recoverTree(TreeNode root) {
+        testTree(root, null, null);
+    }
 
+    public TreeNode testTree(TreeNode root, Integer lower, Integer upper) {
+        if (root == null)
+            return null;
+        // if exceed the range, indicating has problem
+        if ((lower != null && root.val <= lower) || (upper != null && root.val >= upper))
+            return root;
+
+        TreeNode valid = testTree(root.left, lower, root.val) != null ? testTree(root.left, lower, root.val) : testTree(root.right, root.val, upper);
+        if (valid != null) {
+            int tmp = valid.val;
+            valid.val = root.val;
+            root.val = tmp;
+        }
+        return root;
+    }
 
     /**
      * 543. Diameter of Binary Tree - Easy
@@ -325,21 +349,54 @@ public class Tree {
      * @Date- 02/03/2026
      */
     int res = 0;
+
     public int diameterOfBinaryTree(TreeNode root) {
-        diameter( root);
+        diameter(root);
         return res;
     }
 
-    private int diameter(TreeNode root){
+    private int diameter(TreeNode root) {
         if (root == null)
             return 0;
-        else{
+        else {
             int left = diameter(root.left);
             int right = diameter(root.right);
-            res = Math.max(res, left+right);
-            return Math.max(left, right)+ 1;
+            res = Math.max(res, left + right);
+            return Math.max(left, right) + 1;
         }
     }
+
+    /**
+     * 102. Binary Tree Level Order Traversal - Medium
+     *
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        levelOrderDfs(root, 0, res);
+        return res;
+    }
+
+    private void levelOrderDfs(TreeNode root, int level, List<List<Integer>> res) {
+        if (root == null)
+            return;
+
+        // leaf node or this is the first node in current level
+        if (res == null || level >= res.size()) {
+            List<Integer> list = new ArrayList<>();
+            list.add(root.val);
+            res.add(list);
+        } else {
+            res.get(level).add(root.val);
+        }
+        levelOrderDfs(root.left, level + 1, res);
+        levelOrderDfs(root.right, level + 1, res);
+    }
+
 
     public static void main(String[] args) {
         int[] preorder = {3, 9, 20, 15, 7};
