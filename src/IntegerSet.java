@@ -965,11 +965,35 @@ public class IntegerSet {
         return res;
     }
 
-    public static void main(String[] args) {
-        int a = 1000000000 + 1000000000 + 1000000000 + 1000000000;
-        if (a > Integer.MAX_VALUE) {
-            System.out.println("yes");
+    /**
+     * 118. Pascal's Triangle
+     * @Date - 02/17/2026
+     * Happy Chinese New Year!
+     * @param numRows
+     * @return
+     */
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        res.add(new ArrayList<>(list));
+
+        for (int i = 1; i < numRows; i++) {
+            list.clear();
+            list.add(1);
+            // i is the number of current row
+            List<Integer> before = res.get(i-1);
+            for (int j = 1; j <= i-1; j++) {
+                list.add(before.get(j) + before.get(j-1));
+            }
+            list.add(1);
+            res.add(new ArrayList<>(list));
         }
-        System.out.println(getPermutation(4, 9));
+        return res;
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(generate(5));
     }
 }
