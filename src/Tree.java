@@ -369,10 +369,10 @@ public class Tree {
     /**
      * 102. Binary Tree Level Order Traversal - Medium
      *
-     * @Date 02/17/2026
-     * Happy Chinese New Year!
      * @param root
      * @return
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
      */
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
@@ -399,10 +399,11 @@ public class Tree {
 
     /**
      * 108. Convert Sorted Array to Binary Search Tree - Easy
-     * @Date 02/17/2026
-     * Happy Chinese New Year!
+     *
      * @param nums
      * @return
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
      */
     public TreeNode sortedArrayToBST(int[] nums) {
         int n = nums.length;
@@ -420,6 +421,30 @@ public class Tree {
         root.right = sortedArrayToBSTDfs(nums, mid + 1, end);
 
         return root;
+    }
+
+    /**
+     * 199. Binary Tree Right Side View - Medium
+     *
+     * @param root
+     * @return
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
+     */
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        rightSideViewDfs(root, 0, res);
+        return res;
+    }
+
+    private void rightSideViewDfs(TreeNode root, int level, List<Integer> res) {
+        if (root == null)
+            return;
+        if (res.size() == level)
+            res.add(root.val);
+        level++;
+        rightSideViewDfs(root.right, level, res);
+        rightSideViewDfs(root.left, level, res);
     }
 
     public static void main(String[] args) {
