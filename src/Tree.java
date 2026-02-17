@@ -440,11 +440,43 @@ public class Tree {
     private void rightSideViewDfs(TreeNode root, int level, List<Integer> res) {
         if (root == null)
             return;
+
+        // make sure only one node in each level
         if (res.size() == level)
             res.add(root.val);
+
         level++;
+
         rightSideViewDfs(root.right, level, res);
-        rightSideViewDfs(root.left, level, res);
+        if (res.size() > level)
+            rightSideViewDfs(root.left, level, res);
+    }
+
+    /**
+     * 230. Kth Smallest Element in a BST
+     *
+     * @param root
+     * @param k
+     * @return
+     * @Date 02/17/2026
+     * Happy Chinese New Year!
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
+        kthSmallestDfs(root, k, res);
+        return res.get(k - 1);
+    }
+
+    private void kthSmallestDfs(TreeNode root, int k, List<Integer> res) {
+        if (root == null)
+            return;
+
+        // using inorder traversal
+        kthSmallestDfs(root.left, k, res);
+        res.add(root.val);
+        if (k==res.size())
+            return;
+        kthSmallestDfs(root.right, k, res);
     }
 
     public static void main(String[] args) {
