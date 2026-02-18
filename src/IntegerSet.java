@@ -967,10 +967,11 @@ public class IntegerSet {
 
     /**
      * 118. Pascal's Triangle
-     * @Date - 02/17/2026
-     * Happy Chinese New Year!
+     *
      * @param numRows
      * @return
+     * @Date - 02/17/2026
+     * Happy Chinese New Year!
      */
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> res = new ArrayList<>();
@@ -982,9 +983,9 @@ public class IntegerSet {
             list.clear();
             list.add(1);
             // i is the number of current row
-            List<Integer> before = res.get(i-1);
-            for (int j = 1; j <= i-1; j++) {
-                list.add(before.get(j) + before.get(j-1));
+            List<Integer> before = res.get(i - 1);
+            for (int j = 1; j <= i - 1; j++) {
+                list.add(before.get(j) + before.get(j - 1));
             }
             list.add(1);
             res.add(new ArrayList<>(list));
@@ -992,8 +993,43 @@ public class IntegerSet {
         return res;
     }
 
+    /**
+     * 138. single number - easy
+     *
+     * @param nums
+     * @return
+     * @Date 02/17/2026
+     */
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        // using XOR (with binary)
+        for (int a : nums) {
+            ans ^= a;
+        }
+        return ans;
+    }
+
+    /**
+     * 189. rotate array - medium
+     * @Date 02/17/2026
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        int tmp[] = new int[n];
+
+        for (int i = 0; i < n; i++) {
+           tmp[i] = nums[(i+k)%n];
+        }
+        for (int i = 0; i < n; i++) {
+            nums[i] = tmp[i];
+        }
+
+
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(generate(5));
     }
 }
