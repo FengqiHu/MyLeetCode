@@ -263,15 +263,54 @@ public class DynamicPlan {
         int step = 0;
         int maxPos = 0;
         int curEnd = 0;
-        for (int i = 0; i < nums.length-1; i++) {
+        for (int i = 0; i < nums.length - 1; i++) {
             // the farest point that the current point can reach
-            maxPos = Math.max(maxPos ,i+nums[i]);
-            if (i==curEnd){
+            maxPos = Math.max(maxPos, i + nums[i]);
+            if (i == curEnd) {
                 step++;
                 curEnd = maxPos;
             }
         }
         return step;
+    }
+
+    /**
+     * 72. Edit Distance - Medium
+     *
+     * @param word1
+     * @param word2
+     * @return
+     * @Date 02/18/2026
+     */
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int dp[][] = new int[m + 1][n + 1];
+        dp[0][0] = 0;
+
+        for (int i = 0; i <= m; i++) dp[i][0] = i;
+        for (int j = 0; j <= n; j++) dp[0][j] = j;
+
+        for (int i = 1; i <= m; i++) {
+            char a = word1.charAt(i - 1);
+            for (int j = 1; j <= n; j++) {
+                char b = word2.charAt(j - 1);
+                if (a == b) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    // delete word 1
+                    int delete = dp[i - 1][j] + 1;
+                    // add in word 2
+                    // add and delete are reversible
+                    int add = dp[i][j - 1] + 1;
+                    // replace the current one
+                    int replace = dp[i - 1][j - 1] + 1;
+                    int min = Math.min(add, delete);
+                    dp[i][j] = Math.min(min, replace);
+                }
+            }
+        }
+        return dp[m][n];
     }
 
 }
