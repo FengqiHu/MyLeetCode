@@ -380,7 +380,6 @@ public class Funs {
             rightMin[i] = t;
         }
         int res = 0;
-        // the water can be stored between leftMax and rightMax
         for (int i = 0; i < n; i++) {
             res = Math.max(res, heights[i] * (rightMin[i]- leftMin[i]-1));
         }

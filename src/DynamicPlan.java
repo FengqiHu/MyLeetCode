@@ -1,7 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author louishu
@@ -311,6 +309,48 @@ public class DynamicPlan {
             }
         }
         return dp[m][n];
+    }
+
+    public int maximalRectangle(char[][] matrix) {
+        int width = matrix[0].length;
+        int height = matrix.length;
+        int h[] = new int[width];
+        Deque<Integer> stack = new ArrayDeque<>();
+        int max = 0;
+
+        for (int i = 0; i < height; i++) {
+            // update height
+            stack.clear();
+            for (int j = 0; j < width; j++) {
+                if (matrix[i][j]=='0')
+                    h[j] = 0;
+                else h[j] ++;
+            }
+
+            int leftMin[] = new int[width];
+            int rightMin[] = new int[width];
+            leftMin[0] = -1;
+            rightMin[width - 1] = width;
+
+            for (int j = 0; j < width; j++) {
+                while (!stack.isEmpty() && h[stack.peek()] >= h[j])
+                    stack.pop();
+
+                leftMin[j] = stack.isEmpty() ? -1 : stack.peek();
+                stack.push(j);
+            }
+            stack.clear();
+            for (int j = width - 1; j >= 0; j--) {
+                while (!stack.isEmpty() && h[stack.peek()] >= h[j])
+                    stack.pop();
+                rightMin[j] = stack.isEmpty() ? width : stack.peek();
+                stack.push(j);
+            }
+            for (int j = 0; j < width; j++) {
+                max = Math.max(max, h[j] * (rightMin[j] - leftMin[j] - 1));
+            }
+        }
+        return max;
     }
 
 }
