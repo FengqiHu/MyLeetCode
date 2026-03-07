@@ -7,6 +7,11 @@ import java.util.LinkedList;
  * @description
  */
 public class LRUCache {
+    /**
+     * Q146 LRU
+     *
+     * @Date - 03/06/2026
+     */
     int capacity;
     Map<Integer, Integer> cache = new HashMap<>();
     Queue<Integer> keyCache = new LinkedList<>();
@@ -43,13 +48,71 @@ public class LRUCache {
         cache.put(key, value);
     }
 
-    public static void main(String[] args) {
-        LRUCache lRUCache = new LRUCache(2);
-        lRUCache.put(2, 1); // cache is {1=1}
-        lRUCache.put(3, 2); // cache is {1=1, 2=2}
-        lRUCache.get(3);    // return -1 (not found)
-        lRUCache.get(2);    // return 3
-        lRUCache.put(4, 1); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+    class LRU {
+        private class Node {
+            int key, value;
+            Node prev, next;
 
+            Node(int key, int value) {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        private final int capacity;
+        private final Map<Integer, Node> cache;
+        private final Node head, tail;
+
+        public LRU(int capacity) {
+            this.capacity = capacity;
+            this.cache = new HashMap<>();
+            this.head = new Node(0, 0);
+            this.tail = new Node(0, 0);
+            // point to each other
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public int get(int key) {
+            if (!cache.containsKey(key)) {
+                return -1;
+            }
+            Node node = cache.get(key);
+            remove(node);
+            insertToHead(node);
+            return node.value;
+        }
+
+        public void put(int key, int value) {
+            if (cache.containsKey(key)) {
+                Node node = cache.get(key);
+                node.value = value;
+                remove(node);
+                insertToHead(node);
+                return;
+            }
+
+            if (cache.size() == capacity) {
+                Node lru = tail.prev;
+                remove(lru);
+                cache.remove(lru.key);
+            }
+
+            Node newNode = new Node(key, value);
+            cache.put(key, newNode);
+            insertToHead(newNode);
+        }
+
+        private void remove(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+
+        private void insertToHead(Node node) {
+            node.next = head.next;
+            node.prev = head;
+            head.next.prev = node;
+            head.next = node;
+        }
     }
 }
