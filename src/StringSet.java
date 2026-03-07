@@ -502,27 +502,28 @@ public class StringSet {
      */
     public boolean isNumber(String s) {
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == 'e' || s.charAt(i) == 'E'){
+            if (s.charAt(i) == 'e' || s.charAt(i) == 'E') {
                 // before must be int or dot, after must be int
-                return check(0, i-1, s, false) && check(i+1, s.length()-1, s, true) ;
+                return check(0, i - 1, s, false) && check(i + 1, s.length() - 1, s, true);
             }
         }
         // check the entire sequence
-        return check(0, s.length()-1, s, false);
+        return check(0, s.length() - 1, s, false);
 
     }
-    public boolean check(int start, int end, String s, boolean isInt){
+
+    public boolean check(int start, int end, String s, boolean isInt) {
         if (s.charAt(start) == '+' || s.charAt(start) == '-')
             start++;
         boolean hasDot = false, hasDigit = false;
         for (int i = start; i <= end; i++) {
-            if (s.charAt(i) == '.'){
+            if (s.charAt(i) == '.') {
                 // must be int or has dot before
-                if (isInt || hasDot)  return false;
+                if (isInt || hasDot) return false;
                 hasDot = true;
-            }else if(Character.isDigit(s.charAt(i))){
+            } else if (Character.isDigit(s.charAt(i))) {
                 hasDigit = true;
-            }else {
+            } else {
                 return false;
             }
         }
@@ -608,5 +609,44 @@ public class StringSet {
             sb.append(res[i]);
         }
         return sb.reverse().toString();
+    }
+
+    /**
+     * 76. Minimum Window Substring - Hard
+     *
+     * @param s
+     * @param t
+     * @return
+     * @Date - 02/19/2026
+     */
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap<Character, Integer> targetMap = new HashMap<>();
+        int start = 0, end = 0;
+        int count = 0;
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!targetMap.containsKey(c)){
+                end++;
+                continue;
+            }else{
+                map.put(c, map.getOrDefault(c, 0) + 1);
+                end++;
+                if (targetMap.get(c)<=map.get(c) && s.indexOf(start) ==c){
+                    // move to the next valid digit
+                    start++;
+                    while(!targetMap.containsKey(t.charAt(start))){
+                        start++;
+                    }
+                }
+            }
+        }
+        System.out.println(start + ","+ end);
+        String res = s.substring(start, end+1);
+        return res;
     }
 }

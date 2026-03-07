@@ -375,15 +375,18 @@ public class DynamicPlan {
         boolean dp[][] = new boolean[m + 1][n + 1];
         dp[0][0] = true;
 
+        // dp[i][0]: when p is 0, it is impossible to match s. So is false, don't need to initialize
+        // but dp[0][i] depends on whether p contains *
+        // e.g. s="abcde", p = "*a". They are unmatch because of the last digit
         for (int i = 1; i <= n; i++) {
-            if (p.charAt(i-1) =='*' && dp[0][i-1])
-            dp[0][i] = true;
+            if (p.charAt(i - 1) == '*' && dp[0][i - 1])
+                dp[0][i] = true;
         }
 
         for (int i = 1; i <= m; i++) {
-            char a = s.charAt(i-1);
+            char a = s.charAt(i - 1);
             for (int j = 1; j <= n; j++) {
-                char b = p.charAt(j-1);
+                char b = p.charAt(j - 1);
                 if (a == b || b == '?') {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else if (b == '*') {
