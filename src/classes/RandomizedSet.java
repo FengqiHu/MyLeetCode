@@ -1,7 +1,5 @@
 package classes;
 
-import org.w3c.dom.Node;
-
 import java.util.*;
 
 /**
@@ -9,46 +7,57 @@ import java.util.*;
  *
  * @author louishu
  * @date 3/7/26 14:01
- * @description
+ * @description Implement a data structure that supports insert, remove, and getRandom in O(1) time.
+ *
  */
 public class RandomizedSet {
-    List<Integer> list;
-
-    class Node{
-        int num;
-        Node next;
-
-        public Node(int num){
-            this.num = num;
-        }
-    }
+    private Map<Integer, Integer> indexMap;  // value -> index in list
+    private List<Integer> list;               // actual nums, get vals from here
+    private Random random;
 
     public RandomizedSet() {
+        this.indexMap = new HashMap<>();
         this.list = new ArrayList<>();
-
+        this.random = new Random();
     }
 
     public boolean insert(int val) {
-        if (list.contains(val))
+        if (indexMap.containsKey(val)) {
             return false;
+        }
+        indexMap.put(val, list.size());
         list.add(val);
         return true;
-
     }
 
     public boolean remove(int val) {
-        if (!list.contains(val))
+        if (!indexMap.containsKey(val)) {
             return false;
-        list.remove(Integer.valueOf(val));
-        return true;
+        }
 
+        // swap the last num with val, then delete the last num
+        int currentIndex = indexMap.get(val);
+        int lastNum = list.get(list.size()-1);
+
+        // swap two nums
+        int tmp = list.get(currentIndex);
+        list.set(currentIndex, lastNum);
+
+        // update index of the last num
+        indexMap.put(lastNum,currentIndex);
+
+        // remove the last num in two lists
+        indexMap.remove(val);
+        list.remove(list.size()-1);
+
+
+
+        return true;
     }
 
     public int getRandom() {
-        Random random = new Random();
-        int n = random.nextInt(list.size());
-        return list.get(n);
-
+        int randomIndex = random.nextInt(list.size());
+        return list.get(randomIndex);
     }
 
 }
