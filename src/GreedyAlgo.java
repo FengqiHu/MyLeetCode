@@ -14,9 +14,9 @@ public class GreedyAlgo {
      * start    = {10, 5, 15, 18, 30};
      * duration = {30, 12, 20, 35, 35};
      * volume   = {50, 51, 20, 25, 10};
-     *
+     * <p>
      * Output: 76 (Call 2 + Call 4 = 51 + 25)
-     *
+     * <p>
      * This is local optimal solution
      */
     static class Order {
@@ -68,6 +68,7 @@ public class GreedyAlgo {
 
         return (int) dp[n - 1];
     }
+
     public static int searchClosest(List<Order> orders, int index) {
         int left = 0, right = index - 1;
         int result = -1;
@@ -86,18 +87,19 @@ public class GreedyAlgo {
     }
 
     /**
-     *  This is global optimal solution, unlike PhoneCall problem.
+     * This is global optimal solution, unlike PhoneCall problem.
      */
-    static class Item{
+    static class Item {
         int weight;
         int value;
-        public Item(int weight, int value){
+
+        public Item(int weight, int value) {
             this.weight = weight;
             this.value = value;
         }
     }
 
-    public static int backpackProblem(int volume, int weights[], int values[]){
+    public static int backpackProblem(int volume, int weights[], int values[]) {
         int n = weights.length;
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < n; i++) {
@@ -127,6 +129,7 @@ public class GreedyAlgo {
 
     /**
      * 416. Partition Equal Subset Sum - Medium
+     *
      * @Date 01/15/2026
      */
     public boolean canPartition(int[] nums) {
@@ -141,7 +144,7 @@ public class GreedyAlgo {
         int target = sum / 2;
 
         // the maximum value can get when volume remains j
-        int dp [] = new int[target+1];
+        int dp[] = new int[target + 1];
 
         for (int num : nums) {
             for (int j = target; j >= num; j--) {
@@ -155,10 +158,11 @@ public class GreedyAlgo {
 
     /**
      * 62. Unique Paths - medium
-     * @Date - 01/15/2026
+     *
      * @param m
      * @param n
      * @return
+     * @Date - 01/15/2026
      */
     public int uniquePaths(int m, int n) {
         int path[][] = new int[m][n];
@@ -177,10 +181,12 @@ public class GreedyAlgo {
         return path[m - 1][n - 1];
 
     }
+
     /**
      * 63. Unique Paths II - medium
-     * @Date - 01/15/2026
+     *
      * @return
+     * @Date - 01/15/2026
      */
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
@@ -215,9 +221,10 @@ public class GreedyAlgo {
 
     /**
      * 64. Minimum Path Sum - medium
-     * @Date - 01/15/2026
+     *
      * @param grid
      * @return
+     * @Date - 01/15/2026
      */
     public int minPathSum(int[][] grid) {
         int m = grid.length;
@@ -232,7 +239,7 @@ public class GreedyAlgo {
         }
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                path[i][j] = Math.min(path[i-1][j] + grid[i][j], path[i][j-1] + grid[i][j]);
+                path[i][j] = Math.min(path[i - 1][j] + grid[i][j], path[i][j - 1] + grid[i][j]);
             }
 
         }
@@ -240,11 +247,35 @@ public class GreedyAlgo {
 
     }
 
+    /**
+     * 376. Wiggle Subsequence
+     *
+     * @param nums
+     * @return
+     * @Date 03/07/2026
+     */
+    public int wiggleMaxLength(int[] nums) {
+        int n = nums.length;
+        int sum = 1;
+        if (n < 2)
+            return n;
+        int preDiff = 0;
+        for (int i = 1; i < n; i++) {
+            int curDiff = nums[i]-nums[i-1];
+            if ((preDiff>=0 && curDiff<0) || (preDiff<=0 && curDiff>0)) {
+                sum++;
+                preDiff = curDiff;
+            }
+        }
+
+        return sum;
+    }
+
 
     public static void main(String[] args) {
-        int[] start = {10,10,50,60,40};
-        int[] duration = {20,40,50,30,100};
-        int[] volume = {10,20,30,40,50};
+        int[] start = {10, 10, 50, 60, 40};
+        int[] duration = {20, 40, 50, 30, 100};
+        int[] volume = {10, 20, 30, 40, 50};
 
         System.out.println(backpackProblem(100, duration, volume));
     }
