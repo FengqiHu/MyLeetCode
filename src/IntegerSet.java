@@ -584,6 +584,7 @@ public class IntegerSet {
         int sum[] = new int[nums.length];
         sum[0] = nums[0];
         int n = nums.length;
+        // prefix
         for (int i = 1; i < n; i++) {
             sum[i] = sum[i - 1] + nums[i];
         }
@@ -1011,16 +1012,17 @@ public class IntegerSet {
 
     /**
      * 189. rotate array - medium
-     * @Date 02/17/2026
+     *
      * @param nums
      * @param k
+     * @Date 02/17/2026
      */
     public void rotate(int[] nums, int k) {
         int n = nums.length;
         int tmp[] = new int[n];
 
         for (int i = 0; i < n; i++) {
-           tmp[i] = nums[(i+k)%n];
+            tmp[i] = nums[(i + k) % n];
         }
         for (int i = 0; i < n; i++) {
             nums[i] = tmp[i];

@@ -261,14 +261,34 @@ public class GreedyAlgo {
             return n;
         int preDiff = 0;
         for (int i = 1; i < n; i++) {
-            int curDiff = nums[i]-nums[i-1];
-            if ((preDiff>=0 && curDiff<0) || (preDiff<=0 && curDiff>0)) {
+            int curDiff = nums[i] - nums[i - 1];
+            if ((preDiff >= 0 && curDiff < 0) || (preDiff <= 0 && curDiff > 0)) {
                 sum++;
                 preDiff = curDiff;
             }
         }
 
         return sum;
+    }
+
+    /**
+     * 122. Best Time to Buy and Sell Stock II
+     *
+     * @param prices
+     * @return
+     * @Date 03/07/2026
+     */
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int n = prices.length;
+        for (int i = 1; i < n; i++) {
+            // calculate every day's profit
+            int profit = prices[i] - prices[i - 1];
+            if (profit > 0)
+                maxProfit += profit;
+        }
+
+        return maxProfit;
     }
 
 
