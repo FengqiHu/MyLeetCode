@@ -44,6 +44,7 @@ public class SortAlgorithm {
 
     public static int[] insertSort(int[] num) {
         for (int i = 1; i < num.length; i++) {
+            // assign the current one, insert the current one to the sorted subarray
             int j = i;
             while (j > 0 && num[j] < num[j - 1]) {
                 int tmp = num[j];
@@ -140,11 +141,87 @@ public class SortAlgorithm {
 
     }
 
+    public static void quickSortMy(int[] nums, int start, int end) {
+        if (start > end)
+            return;
+
+        int left = start, right = end;
+        int pivot = nums[start];
+        while (left < right) {
+            while (left < right && nums[right] > pivot)
+                right--;
+            while (left < right && nums[left] < pivot)
+                left++;
+
+            if (left < right) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+            }
+        }
+        nums[left] = pivot;
+        nums[start] = nums[right];
+
+        quickSort(nums, start, left - 1);
+        quickSort(nums, left + 1, end);
+    }
+
+    public static void mergeSort(int[] nums, int left, int right) {
+        if (right <= left)
+            return;
+
+        // mid is the end point of the first part
+        int mid = (left + right) / 2;
+        mergeSort(nums, left, mid);
+        mergeSort(nums, mid + 1, right);
+
+        merge(nums, left, mid, right);
+    }
+
+    public static void merge(int[] nums, int left, int mid, int right) {
+        int[] temp = new int[right - left + 1];
+
+        // the starter of the first part, used to tract
+        int i = left;
+        // the starter of the second part, used to tract
+        int j = mid + 1;
+        // index of merged array
+        int k = 0;
+
+        // use two points
+        while (i <= mid && j <= right) {
+            // assign the smaller one to temp[]
+            if (nums[i] <= nums[j]) {
+                temp[k++] = nums[i++];
+            } else {
+                temp[k++] = nums[j++];
+            }
+        }
+
+        // fill the rest if first one has rests
+        while (i <= mid) {
+            temp[k++] = nums[i++];
+        }
+
+        // fill the rest if second one has rests
+        while (j <= right) {
+            temp[k++] = nums[j++];
+        }
+
+        // copy it to nums
+//        for (int m = 0; m < temp.length; m++) {
+//            nums[left + m] = temp[m];
+//        }
+
+        for (int m = left; m < right + 1; m++) {
+            nums[m] = temp[m - left];
+        }
+    }
 
     public static void main(String[] args) {
         int[] num = {5, 4, 6, 3, 2, 1, 8, 7};
 //        int[] num = {5, 4, 3, 2, 1};
-        quickSort(num,0,num.length-1);
+        mergeSort(num, 0, num.length - 1);
         System.out.println(Arrays.toString(num));
     }
 }
