@@ -98,14 +98,15 @@ public class StackSet {
         // Deque is must faster than Stack
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
-            // Monotonous stack
-            // if stack is empty or the top element is smaller than current
-            while (!stack.isEmpty() && temp[stack.peek()] < temp[i]) {
-                res[stack.peek()] = i - stack.peek();
-                stack.pop();
+            if (stack.isEmpty() || temp[stack.peek()]>temp[i]){
+                stack.push(i);
+            }else {
+                while(!stack.isEmpty() &&temp[stack.peek()]<temp[i]){
+                    res[stack.peek()] = i-stack.peek();
+                    stack.pop();
+                }
+                stack.push(i);
             }
-            // finally push the current element into stack
-            stack.push(i);
         }
         return res;
     }

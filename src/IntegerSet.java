@@ -530,6 +530,35 @@ public class IntegerSet {
         }
     }
 
+    public double findMedianSortedArraysTwoPoints(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int total = m + n;
+
+        int i = 0, j = 0;
+        int prev = 0, cur = 0;
+
+        for (int k = 0; k <= total / 2; k++) {
+            // keep the previous one
+            prev = cur;
+
+            // i < m, nums1 still has elements
+            // and nums1 is smaller
+            // j>=n: nums2 has been run out
+            if (i < m && (j >= n || nums1[i] <= nums2[j])) {
+                cur = nums1[i++];
+            } else {
+                cur = nums2[j++];
+            }
+        }
+
+        if (total % 2 == 0) {
+            return (prev + cur) / 2.0;
+        } else {
+            return cur;
+        }
+    }
+
     /**
      * 34. Find First and Last Position of Element in Sorted Array - Medium
      *

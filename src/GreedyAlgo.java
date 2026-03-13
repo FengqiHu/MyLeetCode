@@ -287,10 +287,8 @@ public class GreedyAlgo {
             if (profit > 0)
                 maxProfit += profit;
         }
-
         return maxProfit;
     }
-
 
     public static void main(String[] args) {
         int[] start = {10, 10, 50, 60, 40};
