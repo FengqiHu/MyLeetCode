@@ -1,6 +1,5 @@
+import java.util.*;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 
 public class DataStructure {
     class MyStack {
@@ -40,8 +39,7 @@ public class DataStructure {
      * @return
      */
     public boolean isValid(String s) {
-        Stack<Character> input = new Stack<>();
-        Stack<Character> output = new Stack<>();
+        Deque<Character> input = new ArrayDeque<>();
         if (s.length() % 2 == 1) {
             return false;
         }

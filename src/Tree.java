@@ -485,6 +485,4 @@ public class Tree {
         TreeNode root = buildTree(preorder, inorder);
         System.out.println(root);
     }
-
-
 }

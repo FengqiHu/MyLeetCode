@@ -592,6 +592,7 @@ public class RecursiveAlgo {
         while (start > 0 && nums[start - 1] >= nums[start]) {
             start--;
         }
+        // the num is completely descending --> reverse
         if (start <= 0) {
             for (int i = 0; i < nums.length / 2; i++) {
                 int temp = nums[i];
@@ -600,7 +601,8 @@ public class RecursiveAlgo {
             }
         } else {
             // find element just larger than nums[start - 1]
-            // find 4
+            // 2 3 5 4 1 -> start = 2 (num[start] = 5)
+            // finds 4, end = 3
             int end = nums.length - 1;
             while (nums[end] <= nums[start - 1]) {
                 end--;
@@ -611,7 +613,7 @@ public class RecursiveAlgo {
             nums[start - 1] = nums[end];
             nums[end] = tmp;
 
-            // reverse the rest
+            // reverse the rest, start from [start]
             // 2 4 5 3 1 -> 2 4 1 3 5
             int l = start, r = nums.length - 1;
             while (l < r) {
@@ -621,7 +623,6 @@ public class RecursiveAlgo {
                 l++;
                 r--;
             }
-
         }
     }
 
@@ -679,9 +680,10 @@ public class RecursiveAlgo {
 
     /**
      * 52. N-Queens II - Hard
-     * @Date - 02/02/2026
+     *
      * @param n
      * @return
+     * @Date - 02/02/2026
      */
     public int totalNQueens(int n) {
         boolean leftMemo[] = new boolean[2 * n - 1];
@@ -718,8 +720,56 @@ public class RecursiveAlgo {
         }
     }
 
+    /**
+     * find the largest number that smaller than n
+     *
+     * @param n
+     */
+    public static int findMaxNumber(int n, int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int max = i;
+            for (int j = i; j < nums.length; j++) {
+                if (nums[j] > nums[max])
+                    max = j;
+            }
+            if (max!=i){
+                int tmp = nums[i];
+                nums[i] = nums[max];
+                nums[max] = tmp;
+            }
+        }
+//        Arrays.sort(nums);
+
+        int digit = 0, tmp = n;
+        while (tmp > 0) {
+            tmp /= 10;
+            digit++;
+        }
+
+        return findDfs(n, nums, digit, 0, 0, 0);
+    }
+
+    private static int findDfs(int n, int[] nums, int digit, int max, int cur, int start) {
+        if (cur > n) {
+            return max;
+        }
+        int len = 0, i = 0;
+        while (len <= digit && i < nums.length) {
+            cur = cur * 10 + nums[i];
+            len++;
+            if (cur > max && cur<=n) {
+                max = cur;
+                System.out.println(max);
+            }
+            max = findDfs(n, nums, digit, max, cur, i + 1);
+            cur = (cur - nums[i]) / 10;
+            i++;
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        int nums[] = {2, 3, 1, 1, 4};
-        System.out.println(climbStairs(44));
+        int nums[] = {9,6,3,5,1,2};
+        System.out.println(findMaxNumber(56449, nums));
     }
 }

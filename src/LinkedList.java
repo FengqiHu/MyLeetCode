@@ -467,9 +467,10 @@ public class LinkedList {
 
     /**
      * 23. Merge k Sorted Lists - Hard
-     * @Date 01/30/2026
+     *
      * @param lists
      * @return
+     * @Date 01/30/2026
      */
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists.length == 0)
@@ -479,9 +480,9 @@ public class LinkedList {
         for (int i = 1; i < lists.length; i++) {
             ListNode target = lists[i];
             ListNode cur = resHead;
-            while(target!=null){
+            while (target != null) {
                 ListNode tmp = target;
-                while(cur.next!=null && cur.next.val<tmp.val){
+                while (cur.next != null && cur.next.val < tmp.val) {
                     cur = cur.next;
                 }
                 target = target.next;
@@ -491,6 +492,39 @@ public class LinkedList {
             }
         }
         return resHead.next;
+    }
+
+    /**
+     * 148. sort list - medium
+     *
+     * @param head
+     * @return
+     * @date 03/11/2026
+     */
+    public ListNode sortList(ListNode head) {
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;
+        // initialize
+        ListNode cur = head;
+        ListNode pre = preHead;
+        boolean flag = false;
+        while (cur != null) {
+            flag = false;
+            if (cur.val < preHead.next.val) {
+                pre.next = cur.next;
+                cur.next = preHead.next;
+                pre.next = cur;
+                flag = true;
+            }
+            if(flag){
+                cur = pre.next;
+            }else{
+                pre = cur;
+                cur = cur.next;
+            }
+
+        }
+        return preHead.next;
     }
 
 
