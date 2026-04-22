@@ -34,6 +34,27 @@ public class StringSet {
         return maxlength;
     }
 
+    public static int lengthOfLongestSubstringII(String s) {
+        int start = 0, end = 0, maxlength = 0;
+        Set<Character> map = new HashSet<>();
+        int n = s.length();
+
+        if (n == 0)
+            return 0;
+
+        while (end < n && start <= end) {
+            char c = s.charAt(end);
+
+            while (map.contains(c)) {
+                map.remove(s.charAt(start));
+                start++;
+            }
+            map.add(c);
+            maxlength = Math.max(maxlength, end - start + 1);
+            end++;
+        }
+        return maxlength;
+    }
 
     /**
      * 6. Zigzag Conversion
@@ -630,23 +651,85 @@ public class StringSet {
         }
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (!targetMap.containsKey(c)){
+            if (!targetMap.containsKey(c)) {
                 end++;
                 continue;
-            }else{
+            } else {
                 map.put(c, map.getOrDefault(c, 0) + 1);
                 end++;
-                if (targetMap.get(c)<=map.get(c) && s.indexOf(start) ==c){
+                if (targetMap.get(c) <= map.get(c) && s.indexOf(start) == c) {
                     // move to the next valid digit
                     start++;
-                    while(!targetMap.containsKey(t.charAt(start))){
+                    while (!targetMap.containsKey(t.charAt(start))) {
                         start++;
                     }
                 }
             }
         }
-        System.out.println(start + ","+ end);
-        String res = s.substring(start, end+1);
+        System.out.println(start + "," + end);
+        String res = s.substring(start, end + 1);
         return res;
     }
+
+    public String minWindowNew(String s, String t) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap<Character, Integer> targetMap = new HashMap<>();
+        int left = 0, right = 0;
+        // scan the origin str
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+        }
+        int nextPos[] = new int[s.length()];
+        int pre = 0;
+        while (left < right) {
+            char c = s.charAt(right);
+            if (map.containsKey(c)) {
+                map.put(c, map.getOrDefault(c, 0) + 1);
+                nextPos[pre] = right;
+                pre = right;
+            }
+            if (s.charAt(right) == s.charAt(left) && targetMap.get(c) == map.get(c)) {
+                map.put(c, map.get(c) - 1);
+                left = nextPos[left];
+            }
+            right++;
+        }
+        return s.substring(left, right);
+    }
+
+    /**
+     * 131. Palindrome Partitioning - Medium
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        findPalindromes(s, 0, res, new ArrayList<>());
+        return res;
+
+    }
+
+    public void findPalindromes(String s, int start, List<List<String>> lists, List<String> list) {
+        if (start == s.length()) {
+            lists.add(new ArrayList<>(list));
+            System.out.println(list.size());
+            return;
+        }
+        for (int i = start + 1; i <= s.length(); i++) {
+            if (isPalindrome(s.substring(start, i))) {
+                list.add(s.substring(start, i));
+                findPalindromes(s, i, lists, list);
+                list.remove(list.size() - 1);
+            }
+        }
+
+    }
+
+//    public boolean isPalindrome(String s){
+//        int n = s.length();
+//        for (int i = 0; i < n/2; i++) {
+//            if (s.charAt(i)!=s.charAt(n-i-1))
+//                return false;
+//        }
+//        return true;
+//    }
 }
