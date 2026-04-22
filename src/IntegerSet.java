@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.util.*;
 
 public class IntegerSet {
@@ -43,8 +44,6 @@ public class IntegerSet {
             }
             result = result * 10 + temp;
             x /= 10;
-            Character s = '2';
-            Integer.parseInt(s.toString());
         }
         return result;
     }
@@ -929,7 +928,7 @@ public class IntegerSet {
     }
 
     /**
-     * 29. Divide two intergers
+     * 29. Divide two integers
      *
      * @param dividend
      * @param divisor
@@ -1056,9 +1055,33 @@ public class IntegerSet {
         for (int i = 0; i < n; i++) {
             nums[i] = tmp[i];
         }
-
-
     }
+
+    /**
+     * 153. Find Minimum in Rotated Sorted Array - Medium
+     *
+     * @param nums
+     * @return
+     */
+    public int findMin(int[] nums) {
+        if (nums[0] < nums[nums.length - 1])
+            return nums[0];
+        int left = 0, right = nums.length - 1;
+        int min = nums[0], mid = 0;
+        while (left < right) {
+            mid = (left + right) / 2;
+            if (left == right - 1) {
+                return Math.min(nums[right], nums[left]);
+            }
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else if (nums[mid] > nums[left]) {
+                left = mid + 1;
+            }
+        }
+        return nums[left];
+    }
+
 
     public static void main(String[] args) {
 
