@@ -474,9 +474,37 @@ public class Tree {
         // using inorder traversal
         kthSmallestDfs(root.left, k, res);
         res.add(root.val);
-        if (k==res.size())
+        if (k == res.size())
             return;
         kthSmallestDfs(root.right, k, res);
+    }
+
+    /**
+     * 437. Path Sum III
+     *
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null)
+            return 0;
+        return pathSum(root.left, targetSum) +
+                pathSum(root.right, targetSum) +
+                pathDFS(root, targetSum);
+    }
+
+    private int pathDFS(TreeNode node, long remains) {
+        if (node == null) {
+            return 0;
+        }
+        int count = 0;
+        if (node.val == remains) {
+            count++;
+        }
+        count += pathDFS(node.left, remains - node.val);
+        count += pathDFS(node.right, remains - node.val);
+        return count;
     }
 
     public static void main(String[] args) {
