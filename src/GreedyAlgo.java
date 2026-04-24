@@ -174,11 +174,39 @@ public class GreedyAlgo {
         }
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
+                // image a backpack problem
+                // whether fill the bag (sum/2), each item's value equals their volume
                 path[i][j] = path[i - 1][j] + path[i][j - 1];
             }
 
         }
         return path[m - 1][n - 1];
+
+    }
+
+    /**
+     * 1049. last Stone Weight II
+     * imagine that split the sum into two parts, and try to fill one side
+     * similar with 416
+     * @param stones
+     * @return
+     */
+    public int lastStoneWeightII(int[] stones) {
+        int sum = 0;
+        for (int i : stones) {
+            sum += i;
+        }
+
+        int target = sum/2;
+
+        int dp[] = new int[target+1];
+
+        for (int store: stones){
+            for (int i = target; i >=store ; i--) {
+                dp[i] = Math.max(dp[i],dp[i-store] + store);
+            }
+        }
+        return Math.abs(sum-2*dp[target]);
 
     }
 
