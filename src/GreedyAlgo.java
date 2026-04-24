@@ -188,6 +188,7 @@ public class GreedyAlgo {
      * 1049. last Stone Weight II
      * imagine that split the sum into two parts, and try to fill one side
      * similar with 416
+     *
      * @param stones
      * @return
      */
@@ -197,17 +198,122 @@ public class GreedyAlgo {
             sum += i;
         }
 
-        int target = sum/2;
+        int target = sum / 2;
 
-        int dp[] = new int[target+1];
+        int dp[] = new int[target + 1];
 
-        for (int store: stones){
-            for (int i = target; i >=store ; i--) {
-                dp[i] = Math.max(dp[i],dp[i-store] + store);
+        for (int store : stones) {
+            for (int i = target; i >= store; i--) {
+                dp[i] = Math.max(dp[i], dp[i - store] + store);
             }
         }
-        return Math.abs(sum-2*dp[target]);
+        return Math.abs(sum - 2 * dp[target]);
 
+    }
+
+    /**
+     * 474. Ones and Zeroes
+     *
+     * @param strs
+     * @param m
+     * @param n
+     * @return
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        List<Number> list = new ArrayList<>();
+        for (int i = 0; i < strs.length; i++) {
+            String str = strs[i];
+            Number num = new Number();
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(j) == '0') {
+                    num.setZero(num.getZero() + 1);
+                } else {
+                    num.setOne(num.getOne() + 1);
+                }
+            }
+            list.add(num);
+        }
+
+        int dp[][] = new int[m + 1][n + 1];
+
+        for (Number num : list) {
+            for (int i = m; i >= num.getZero(); i--) {
+                for (int j = n; j >= num.getOne(); j--) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - num.getZero()][j - num.getOne()] + 1);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    class Number {
+        int one = 0;
+        int zero = 0;
+
+        public int getOne() {
+            return one;
+        }
+
+        public void setOne(int one) {
+            this.one = one;
+        }
+
+        public int getZero() {
+            return zero;
+        }
+
+        public void setZero(int zero) {
+            this.zero = zero;
+        }
+    }
+
+    /**
+     * 518. Coin Change II
+     *
+     * @param amount
+     * @param coins
+     * @return
+     */
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+
+        // has dp[i] solutions when amount = i
+        int dp[] = new int[amount + 1];
+        // has one solution if amount = 0 (not choose)
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] += dp[i - coin];
+            }
+        }
+        return dp[amount];
+    }
+
+    /**
+     * 494. Target Sum
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int i : nums) {
+            sum += i;
+        }
+        if ((sum + target) % 2 == 1 || (sum + target)<0) {
+            return 0;
+        }
+
+        int volume = (sum + target) / 2;
+        int dp[] = new int[volume + 1];
+        for (int num : nums) {
+            for (int j = volume; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+        return dp[volume];
     }
 
     /**
