@@ -293,6 +293,10 @@ public class GreedyAlgo {
     /**
      * 494. Target Sum
      *
+     * split the array into two subsets, one is +, one is -
+     * finally calculated the target volume  = (sum + target) / 2
+     * then equals Knapsack problem - try to use the nums in the array to fill the Knapsack
+     *
      * @param nums
      * @param target
      * @return
@@ -308,6 +312,11 @@ public class GreedyAlgo {
 
         int volume = (sum + target) / 2;
         int dp[] = new int[volume + 1];
+
+        // the first one should be initialized as 1
+        // when nums = [0] and target = 0, the total solution is 1
+        dp[0] = 1;
+
         for (int num : nums) {
             for (int j = volume; j >= num; j--) {
                 dp[j] += dp[j - num];
