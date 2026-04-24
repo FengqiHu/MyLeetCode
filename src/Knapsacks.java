@@ -271,4 +271,29 @@ public class Knapsacks {
         return dp[n];
     }
 
+    /**
+     * 139. Word Break
+     *
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();
+        boolean dp[] = new boolean[n + 1];
+
+        dp[0] = true;
+        for (int i = 0; i <= n; i++) {
+            for (String word : wordDict) {
+            int length = word.length();
+            // end of the word
+                if (i>=length && s.substring(i - length, i).equals(word))
+                    // use or to accumulate status
+                    dp[i] = dp[i] || dp[i - length];
+            }
+        }
+
+        return dp[n];
+    }
+
 }
