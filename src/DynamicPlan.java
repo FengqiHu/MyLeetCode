@@ -31,6 +31,48 @@ public class DynamicPlan {
         return dp[n - 1];
     }
 
+    /**
+     * 213. House Robber II - Medium
+     * This problem makes the array as a circle (you can't choose the first one and the last one at the same time)
+     * There are three occasions: exclude both the first and the last one, only exclude the first one, only exclude the last one
+     * But the first occasion has been included in the other two occasions, we only consider two occasions
+     *
+     * @Date 04/26/2026
+     */
+    public static int robII(int[] nums) {
+        int n = nums.length;
+        if (n == 1)
+            return nums[0];
+
+        int dp1[] = new int[n];
+        int dp2[] = new int[n];
+
+        for (int i = 0; i < n; i++)
+            dp1[i] = nums[i];
+        for (int i = 1; i < n; i++)
+            dp2[i] = nums[i];
+
+        // only calculate dp1, since dp2 doesn't include the first element
+        dp1[1] = Math.max(nums[1], nums[0]);
+
+        // exclude the last one
+        for (int i = 2; i < n - 1; i++) {
+            // rob: use the dp[i-2] + current value
+            // not rob: use the previous dp[i-1]
+            dp1[i] = Math.max(dp1[i - 2] + nums[i], dp1[i - 1]);
+        }
+
+        // exclude the first one
+        // we can start from 2. Although we will include dp2[0], the dp2[0] was never been initialized since we exclude it from initialization
+        // dp[2] = 0, so its save to start from 2
+        for (int i = 2; i < n; i++) {
+            // rob: use the dp[i-2] + current value
+            // not rob: use the previous dp[i-1]
+                dp2[i] = Math.max(dp2[i - 2] + nums[i], dp2[i - 1]);
+        }
+
+        return Math.max(dp1[n - 2], dp2[n - 1]);
+    }
 
     /**
      * 139. Word Break - Medium
@@ -125,9 +167,10 @@ public class DynamicPlan {
 
     /**
      * 300. Longest Increasing Subsequence - Medium
-     * @Date 04/26/2026
+     *
      * @param nums
      * @return
+     * @Date 04/26/2026
      */
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
