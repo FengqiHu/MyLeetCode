@@ -31,6 +31,7 @@ public class DynamicPlan {
         return dp[n - 1];
     }
 
+
     /**
      * 139. Word Break - Medium
      *
@@ -61,7 +62,7 @@ public class DynamicPlan {
     /**
      * 322. Coin Exchange - Medium
      *
-     * @Date 01/09/2026
+     * @Date 04/26/2026
      */
     public int coinChangeDP(int[] coins, int amount) {
         // store the result in dp[amount]
@@ -124,7 +125,7 @@ public class DynamicPlan {
 
     /**
      * 300. Longest Increasing Subsequence - Medium
-     *
+     * @Date 04/26/2026
      * @param nums
      * @return
      */

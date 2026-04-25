@@ -84,7 +84,7 @@ public class Knapsacks {
      * 1049. last Stone Weight II
      * imagine that split the sum into two parts, and try to fill one side
      * similar with 416
-     *
+     * @Date 04/26/2026
      * @param stones
      * @return
      */
@@ -109,7 +109,7 @@ public class Knapsacks {
 
     /**
      * 474. Ones and Zeroes
-     *
+     * @Date 04/26/2026
      * @param strs
      * @param m
      * @param n
@@ -165,7 +165,7 @@ public class Knapsacks {
 
     /**
      * 518. Coin Change II
-     *
+     * @Date 04/26/2026
      * @param amount
      * @param coins
      * @return
@@ -192,7 +192,7 @@ public class Knapsacks {
      * split the array into two subsets, one is +, one is -
      * finally calculated the target volume  = (sum + target) / 2
      * then equals Knapsack problem - try to use the nums in the array to fill the Knapsack
-     *
+     * @Date 04/26/2026
      * @param nums
      * @param target
      * @return
@@ -223,7 +223,7 @@ public class Knapsacks {
 
     /**
      * 377. Combination Sum IV
-     *
+     * @Date 04/26/2026
      * @param nums
      * @param target
      * @return
@@ -246,7 +246,7 @@ public class Knapsacks {
 
     /**
      * 279. Perfect Squares
-     *
+     * @Date 04/26/2026
      * @param n
      * @return
      */
@@ -273,7 +273,7 @@ public class Knapsacks {
 
     /**
      * 139. Word Break
-     *
+     * @Date 04/26/2026
      * @param s
      * @param wordDict
      * @return
