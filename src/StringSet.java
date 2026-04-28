@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.LinkedList;
 
 public class StringSet {
     /**
@@ -642,34 +643,58 @@ public class StringSet {
      */
     public String minWindow(String s, String t) {
         HashMap<Character, Integer> map = new HashMap<>();
+        // store the t
         HashMap<Character, Integer> targetMap = new HashMap<>();
-        int start = 0, end = 0;
-        int count = 0;
-        for (int i = 0; i < t.length(); i++) {
-            char c = t.charAt(i);
-            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+        // stores the digit's position in s
+        Queue<Integer> queue = new LinkedList<>();
+        int m = s.length();
+        int n = t.length();
+        int start = 0;
+        int minLength = m;
+        String res = "";
+
+        if (m < n)
+            return "";
+
+        // initialize map
+        for (int i = 0; i < n; i++) {
+            targetMap.put(t.charAt(i), targetMap.getOrDefault(t.charAt(i), 0) + 1);
         }
-        for (int i = 0; i < s.length(); i++) {
+
+
+        for (int i = 0; i < m; i++) {
             char c = s.charAt(i);
-            if (!targetMap.containsKey(c)) {
-                end++;
-                continue;
-            } else {
+            if (targetMap.containsKey(c)) {
+                queue.add(i);
                 map.put(c, map.getOrDefault(c, 0) + 1);
-                end++;
-                if (targetMap.get(c) <= map.get(c) && s.indexOf(start) == c) {
-                    // move to the next valid digit
-                    start++;
-                    while (!targetMap.containsKey(t.charAt(start))) {
-                        start++;
+
+                // can combine
+                while (!queue.isEmpty() && checkMap(map, targetMap)) {
+                    start = queue.peek();
+                    // save the result
+                    if (minLength >= i - start + 1) {
+                        res = s.substring(start, i + 1);
+                        minLength = i - start + 1;
                     }
+                    // shrink
+                    map.put(s.charAt(start), map.get(s.charAt(start)) - 1);
+                    queue.poll();
                 }
             }
         }
-        System.out.println(start + "," + end);
-        String res = s.substring(start, end + 1);
         return res;
     }
+
+    public static boolean checkMap(HashMap<Character, Integer> map, HashMap<Character, Integer> targetMap) {
+        for (Character key : targetMap.keySet()) {
+            if (!map.containsKey(key) || map.get(key) < targetMap.get(key)) {
+                System.out.println("key: " + key);
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public String minWindowNew(String s, String t) {
         HashMap<Character, Integer> map = new HashMap<>();
