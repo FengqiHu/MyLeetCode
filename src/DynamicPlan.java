@@ -68,10 +68,40 @@ public class DynamicPlan {
         for (int i = 2; i < n; i++) {
             // rob: use the dp[i-2] + current value
             // not rob: use the previous dp[i-1]
-                dp2[i] = Math.max(dp2[i - 2] + nums[i], dp2[i - 1]);
+            dp2[i] = Math.max(dp2[i - 2] + nums[i], dp2[i - 1]);
         }
 
         return Math.max(dp1[n - 2], dp2[n - 1]);
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public int rob(TreeNode root) {
+
+    }
+
+    public static void postOrder(TreeNode root, List<Integer> list){
+        if (root==null)
+            return;
+
+
     }
 
     /**
