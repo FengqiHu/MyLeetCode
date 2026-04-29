@@ -695,6 +695,52 @@ public class StringSet {
         return true;
     }
 
+    /**
+     * 76. Minimum Window Substring - Hard - optimization
+     * @param s
+     * @param t
+     * @return
+     */
+    public String minWindowII(String s, String t) {
+        if (s.length()<t.length())
+            return "";
+        Map<Character, Integer> targetMap = new HashMap<>();
+        for (char c : t.toCharArray())
+            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+
+
+        int left = 0, count = 0, minLen = Integer.MAX_VALUE, start = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+
+            if (targetMap.containsKey(c)) {
+                targetMap.put(c, targetMap.get(c) - 1);
+
+                // calculate the corresponding digit length of s
+                if (targetMap.get(c) >= 0)
+                    count++;
+            }
+
+            // shrink to the far left position that can fulfill the target
+            while (count == t.length()) {
+                // save the length
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    start = left;
+                }
+
+                char l = s.charAt(left++);
+                if (targetMap.containsKey(l)) {
+                    targetMap.put(l, targetMap.get(l) + 1);
+                    if (targetMap.get(l) > 0) count--;
+                }
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+
 
     public String minWindowNew(String s, String t) {
         HashMap<Character, Integer> map = new HashMap<>();
