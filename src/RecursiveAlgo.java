@@ -199,6 +199,70 @@ public class RecursiveAlgo {
     }
 
     /**
+     * 216. Combination Sum III
+     *
+     * @param k
+     * @param n
+     * @return
+     */
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        result = combineSums(1, k, n, new ArrayList<>(), result);
+
+        return result;
+    }
+
+    private List<List<Integer>> combineSums(int start, int k, int n, List<Integer> list, List<List<Integer>> result) {
+        if (n == 0 && list.size() == k) {
+            result.add(new ArrayList<>(list));
+            return result;
+        }
+
+        for (int i = start; i < 10; i++) {
+            list.add(i);
+            combineSums(i + 1, k, n - i, list, result);
+            list.remove(list.size() - 1);
+        }
+        return result;
+    }
+
+    /**
+     * 491 - Non-decreasing Subsequences - Mid
+     * 04/26/2026
+     * @return
+     */
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        combineSubs(0,0, nums, new ArrayList<>(), result);
+
+        return result;
+    }
+
+    private void combineSubs(int start, int end, int[] nums, List<Integer> list, List<List<Integer>> result) {
+        if (list.size() > 1) {
+            result.add(new ArrayList<>(list));
+        }
+
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = start; i < nums.length; i++) {
+            if (set.contains(nums[i]))
+                continue;
+
+            if (!list.isEmpty() && end > nums[i]){
+                continue;
+            }
+
+            set.add(nums[i]);
+
+            list.add(nums[i]);
+            combineSubs(i + 1, nums[i], nums, list, result);
+            list.remove(list.size() - 1);
+        }
+    }
+
+    /**
      * 46. tations - Medium
      *
      * @param nums
@@ -732,7 +796,7 @@ public class RecursiveAlgo {
                 if (nums[j] > nums[max])
                     max = j;
             }
-            if (max!=i){
+            if (max != i) {
                 int tmp = nums[i];
                 nums[i] = nums[max];
                 nums[max] = tmp;
@@ -757,7 +821,7 @@ public class RecursiveAlgo {
         while (len <= digit && i < nums.length) {
             cur = cur * 10 + nums[i];
             len++;
-            if (cur > max && cur<=n) {
+            if (cur > max && cur <= n) {
                 max = cur;
                 System.out.println(max);
             }
@@ -769,7 +833,7 @@ public class RecursiveAlgo {
     }
 
     public static void main(String[] args) {
-        int nums[] = {9,6,3,5,1,2};
+        int nums[] = {9, 6, 3, 5, 1, 2};
         System.out.println(findMaxNumber(56449, nums));
     }
 }
