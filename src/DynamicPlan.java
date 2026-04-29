@@ -93,15 +93,32 @@ public class DynamicPlan {
         }
     }
 
+    /**
+     * 337. House Robber III - Hard
+     * 04/29/2026
+     * @param root
+     * @return
+     */
     public int rob(TreeNode root) {
-
+        int res[] = new int[2];
+        res = findRob(root);
+        return Math.max(res[0], res[1]);
     }
 
-    public static void postOrder(TreeNode root, List<Integer> list){
+    public static int[] findRob(TreeNode root) {
         if (root==null)
-            return;
+            return new int[]{0,0};
 
+        int[] left = findRob(root.left);
+        int[] right = findRob(root.right);
 
+        int res[] = new int[2];
+        // 偷，左右不偷的状态 + 当前值
+        res[1] = root.val + left[0] + right[0];
+        // 不偷，找左右两边最大的状态之和
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+
+        return res;
     }
 
     /**
