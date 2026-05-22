@@ -96,6 +96,7 @@ public class DynamicPlan {
     /**
      * 337. House Robber III - Hard
      * 04/29/2026
+     *
      * @param root
      * @return
      */
@@ -106,8 +107,8 @@ public class DynamicPlan {
     }
 
     public static int[] findRob(TreeNode root) {
-        if (root==null)
-            return new int[]{0,0};
+        if (root == null)
+            return new int[]{0, 0};
 
         int[] left = findRob(root.left);
         int[] right = findRob(root.right);
@@ -527,6 +528,33 @@ public class DynamicPlan {
         }
         return dp[len2][len1];
 
+    }
+
+    /**
+     * 152. Maximum Product Subarray
+     *
+     * @param nums
+     * @return
+     */
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int dp[][] = new int[n + 1][2];
+
+        dp[0][0] = nums[0];
+        dp[0][1] = nums[0];
+        int min, max;
+
+        for (int i = 1; i < n; i++) {
+            min = Math.min(dp[i - 1][0] * nums[i], dp[i - 1][1] * nums[i]);
+            max = Math.max(dp[i - 1][0] * nums[i], dp[i - 1][1] * nums[i]);
+            dp[i][0] = Math.min(nums[i], min);
+            dp[i][1] = Math.max(nums[i], max);
+        }
+        max = nums[0];
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max,dp[i][1]);
+        }
+        return max;
     }
 
 
